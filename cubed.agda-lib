@@ -1,0 +1,11 @@
+name: cubed
+include:
+  src
+flags:
+  --erased-cubical
+  --erasure
+  --guardedness
+  --import-sorts
+  --postfix-projections
+  --rewriting
+  -WnoUnsupportedIndexedMatch
