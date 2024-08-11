@@ -5,3 +5,5 @@ open import Cubed.Core.Path public
 open import Cubed.Core.Types public
 open import Cubed.Core.Glue public
 
+open import Cubed.Core.InstanceSearch public
+

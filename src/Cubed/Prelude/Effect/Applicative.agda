@@ -2,6 +2,8 @@ module Cubed.Prelude.Effect.Applicative where
 
 open import Cubed.Core.Prelude
 
+open import Cubed.Prelude.Cat.Precat.Base
+
 open import Cubed.Prelude.Data.Dec.Base
 
 open import Cubed.Prelude.Effect.Functor
@@ -16,7 +18,7 @@ record is-applicative
   (F : Type ℓ → Type ℓ')
   (pure : ∀ {A} → A → F A)
   (seq : ∀ {A B} → F (A → B) → F A → F B)
-  (has-functor : Functor F) :
+  (has-functor : TypeFtor F) :
   Type (lsuc ℓ ⊔ ℓ') where
   instance _ = has-functor
   field
@@ -36,7 +38,7 @@ record Applicative
   (F : Type ℓ → Type ℓ') :
   Type (lsuc ℓ ⊔ ℓ') where
   field
-    overlap {{has-functor}} : Functor F
+    overlap {{has-functor}} : TypeFtor F
     pure : A → F A
     seq : F (A → B) → F A → F B
     has-is-applicative : is-applicative F pure seq has-functor
@@ -78,19 +80,22 @@ record make-applicative (F : Type ℓ → Type ℓ') : Type (lsuc ℓ ⊔ ℓ') 
     seq-hom : (f : A → B) (a : A) → seq (pure f) (pure a) ≡ pure (f a)
     seq-interchange : (f : F (A → B)) (a : A) → seq f (pure a) ≡ seq (pure (_$ a)) f
 
-  →Functor : Functor F
-  →Functor = make-functor.→Functor record
-      { map = λ f → seq (pure f)
-      ; map-id = seq-id
-      ; map-comp = λ f g a →
-        (sym $ cong (flip seq a) $ cong (flip seq (pure g))
-          (seq-hom _∘S_ f) ∙ seq-hom (f ∘S_) g)
-        ∙ seq-comp (pure f) (pure g) a
+  open Ftor-on
+
+  →TypeFtor : TypeFtor F
+  →TypeFtor = record
+    { map = λ f → seq (pure f)
+    ; has-is-ftor = record
+      { map-id = funext seq-id
+      ; map-seq = funext (λ Fa →
+        (sym ∘ cong (flip seq _) $ cong (flip seq _) (seq-hom _ _) ∙ seq-hom _ _)
+        ∙ seq-comp _ _ _)
       }
+    }
 
   →Applicative : Applicative F
   →Applicative = record
-    { has-functor = →Functor
+    { has-functor = →TypeFtor
     ; pure = pure
     ; seq = seq
     ; has-is-applicative = record

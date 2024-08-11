@@ -102,8 +102,8 @@ record make-monad (F : Type ℓ → Type ℓ') : Type (lsuc ℓ ⊔ ℓ') where
         ∙ sym (pure-bind _ _)
       }
 
-  →Functor : Functor F
-  →Functor = make-applicative.→Functor applicative-factory
+  →TypeFtor : TypeFtor F
+  →TypeFtor = make-applicative.→TypeFtor applicative-factory
 
   →Applicative : Applicative F
   →Applicative = make-applicative.→Applicative applicative-factory

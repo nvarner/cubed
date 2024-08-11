@@ -2,25 +2,23 @@ module Cubed.Prelude.Data.Maybe.Effectful where
 
 open import Cubed.Core.Prelude
 
+open import Cubed.Prelude.Cat.Precat.Base
+
 open import Cubed.Prelude.Data.Maybe.Base
 
-open import Cubed.Prelude.Effect.Alternative
-open import Cubed.Prelude.Effect.Applicative
-open import Cubed.Prelude.Effect.Choice
-open import Cubed.Prelude.Effect.Empty
+open import Cubed.Prelude.Effect.Functor
 
 private
   variable
     ℓ : Level
 
+open Ftor-on
+open is-ftor
+
 instance
-  applicative : Applicative {ℓ} Maybe
-  applicative = make-applicative.→Applicative record
-    { pure = just
-    ; seq = Maybe.rec (const nothing) (λ f → Maybe.rec nothing (just ∘ f))
-    ; seq-id = {!!}
-    ; seq-comp = {!!}
-    ; seq-hom = {!!}
-    ; seq-interchange = {!!}
-    }
+
+  functor : TypeFtor {ℓ} Maybe
+  functor .map f = Maybe.rec nothing (just ∘ f)
+  functor .has-is-ftor .map-id = funext (Maybe.elim refl (λ a → refl))
+  functor .has-is-ftor .map-seq = funext (Maybe.elim refl (λ a → refl))
 

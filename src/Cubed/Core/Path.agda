@@ -94,3 +94,17 @@ module J
 
 open J using (J) public
 
+module _ {B : I → Type ℓ} {b0 : B i0} {b1 : B i1} where
+  opaque
+    unfolding transport
+
+    Path→PathP : transport (λ i → B i) b0 ≡ b1 → PathP B b0 b1
+    Path→PathP p i = hcomp
+      (λ j → λ { (i = i0) → b0
+               ; (i = i1) → p j
+               })
+      (transp (λ j → B (i ∧ j)) (~ i) b0)
+
+    PathP→Path : PathP B b0 b1 → transport (λ i → B i) b0 ≡ b1
+    PathP→Path p i = transp (λ j → B (i ∨ j)) i (p i)
+

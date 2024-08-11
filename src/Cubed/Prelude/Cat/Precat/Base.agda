@@ -47,5 +47,5 @@ module _
   record Ftor : Type (ℓob ⊔ ℓhom ⊔ ℓob' ⊔ ℓhom') where
     field
       ob-map : C .ob → D .ob
-      map : {a b : C .ob} → C .hom a b → D .hom (ob-map a) (ob-map b)
+      ftor-on-ob-map : Ftor-on ob-map
 

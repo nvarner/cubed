@@ -14,9 +14,15 @@ module Maybe where
     using (Maybe ; just ; nothing)
     public
 
+  elim : {B : Maybe A → Type ℓ} →
+    B nothing →
+    ((a : A) → B (just a)) →
+    (a : Maybe A) → B a
+  elim b f (just a) = f a
+  elim b f nothing = b
+
   rec : B → (A → B) → Maybe A → B
-  rec b f (just a) = f a
-  rec b f nothing = b
+  rec = elim
 
 open Maybe
   using (Maybe ; just ; nothing)
