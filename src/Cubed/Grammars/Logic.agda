@@ -1,7 +1,7 @@
 {-# OPTIONS --lossy-unification #-}
 module Cubed.Grammars.Logic where
 
-open import Cubed.Prelude hiding (pure ; _>>=_ ; _<*>_ ; _<$>_)
+open import Cubed.Prelude hiding (pure ; _>>=_ ; _>>_ ; _<*>_ ; _<$>_)
 
 private
   variable
@@ -9,16 +9,6 @@ private
     n : Nat
     A B : Type ℓ
 
-
-record ⟦⟧-Notation (A : Type ℓ) : Typeω where
-  field
-    ⟦⟧-ℓ : Level
-    ⟦A⟧ : Type ⟦⟧-ℓ
-    ⟦_⟧ : A → ⟦A⟧
-
-open ⟦⟧-Notation {{...}}
-  using (⟦_⟧)
-  public
 
 IFun : Type ℓ → (ℓ' : Level) → Type (ℓ ⊔ lsuc ℓ')
 IFun A ℓ' = A → A → Type ℓ' → Type ℓ'
@@ -35,6 +25,9 @@ record RawIMonad {Idx : Type ℓ} (M : IFun Idx ℓ') : Type (ℓ ⊔ lsuc ℓ')
   field
     pure : ∀ {x} → A → M x x A
     _>>=_ : ∀ {x y z} → M x y A → (A → M y z B) → M x z B
+
+  _>>_ : ∀ {x y z} → M x y A → M y z B → M x z B
+  a >> b = a >>= const b
 
   rawIApplicative : RawIApplicative Idx M
   rawIApplicative = record
@@ -76,29 +69,12 @@ module _ (Σ₀ : Type ℓ) where
     subst (λ x → x List.++ bs ≡ []) lit-as is-split & List.¬cons≡nil
 
 
-  data NonLinCtxt : Type ℓ
-  data LinCtxt : Type ℓ
-  data Ctxt : Type ℓ
-  data LinTyp : Nat → Type ℓ
-  data Typ : Type ℓ
-  data LinTerm : Type ℓ
-  data _:Lin_ : LinTerm → LinTyp n → Type ℓ
-  --data _`:_ : Term → Typ → Type ℓ
-  --data _⊢_ : Ctxt → Judgement → Type ℓ
-
-  data Typ where
-    lin[_] : LinTyp n → Typ
-    U L : Nat → Typ
-    unit unitL : Typ
-    lit : Σ₀ → Typ
-    _⊗_ _⊕_ : Typ → Typ → Typ
-
-  data LinTyp where
+  data LinTyp : Nat → Type ℓ where
     end : LinTyp n
     lit : Σ₀ → LinTyp 0
     _⊗_ _⊕_ : LinTyp n → LinTyp n → LinTyp n
 
-  data LinTerm where
+  data LinTerm : Type ℓ where
     lit : Σ₀ → LinTerm
     _⊗_ _⊕_ : LinTerm → LinTerm → LinTerm
 
@@ -107,14 +83,10 @@ module _ (Σ₀ : Type ℓ) where
   LinTerm⟦ l ⊗ r ⟧ = concat-grammar LinTerm⟦ l ⟧ LinTerm⟦ r ⟧
   LinTerm⟦ l ⊕ r ⟧ = disjunct-grammar LinTerm⟦ l ⟧ LinTerm⟦ r ⟧
 
-  data _:Lin_ where
+  data _:Lin_ : LinTerm → LinTyp n → Type ℓ where
     lit : (c : Σ₀) → lit c :Lin lit c
 
-  data NonLinCtxt where
-    · : NonLinCtxt
-    _,_`:_ : NonLinCtxt → Typ → Typ → NonLinCtxt
-
-  data LinCtxt where
+  data LinCtxt : Type ℓ where
     · : LinCtxt
     _`:_⟨_⟩,_ : (term : LinTerm) (typ : LinTyp n) → term :Lin typ → LinCtxt → LinCtxt
 
@@ -122,26 +94,11 @@ module _ (Σ₀ : Type ℓ) where
   LinCtxt⟦ · ⟧ = ε-grammar
   LinCtxt⟦ term `: lin ⟨ term:lin ⟩, Δ ⟧ = concat-grammar LinTerm⟦ term ⟧ LinCtxt⟦ Δ ⟧
 
-  data Ctxt where
-    _∣_ : NonLinCtxt → LinCtxt → Ctxt
-
-  -- infix 2 _⊢_
-  -- infix 3 _`:_
-
-  private
-    variable
-      Γ' : Ctxt
-      Γ : NonLinCtxt
-
-  --data _⊢_ where
-  --   Usuc : Γ' ⊢ U n `: U (suc n)
-  --   Lsuc : Γ' ⊢ L n `: U (suc n)
 
   module _ where
     open ⟦⟧-Notation
 
     instance
-
       LinTerm-⟦⟧-Notation : ⟦⟧-Notation LinTerm
       LinTerm-⟦⟧-Notation .⟦⟧-ℓ = lsuc ℓ
       LinTerm-⟦⟧-Notation .⟦A⟧ = Grammar ℓ
@@ -175,6 +132,15 @@ module _ (Σ₀ : Type ℓ) where
 
 
     module _ (a b : Σ₀) where
-      test : Parser _ · Σ₀
-      test = char a >>= λ _ → char b
+      ab-parser : Parser (lit a `: lit a ⟨ lit a ⟩, (lit b `: lit b ⟨ lit b ⟩, ·)) · Σ₀
+      ab-parser = do
+        char a
+        char b
+
+      -- The first index can be inferred with --lossy-unification
+      ab-parser' : Parser _ · Σ₀
+      ab-parser' = do
+        char a
+        char b
+
 

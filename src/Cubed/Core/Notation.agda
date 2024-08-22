@@ -29,3 +29,12 @@ record ×Notation (op : Level → Level) (A : (ℓ : Level) → Type (op ℓ)) :
 
 open ×Notation {{...}} public hiding (op2)
 
+
+record ⟦⟧-Notation (A : Type ℓ) : Typeω where
+  field
+    ⟦⟧-ℓ : Level
+    ⟦A⟧ : Type ⟦⟧-ℓ
+    ⟦_⟧ : A → ⟦A⟧
+
+open ⟦⟧-Notation {{...}} public using (⟦_⟧)
+
