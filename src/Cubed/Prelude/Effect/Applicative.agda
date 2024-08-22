@@ -3,6 +3,7 @@ module Cubed.Prelude.Effect.Applicative where
 open import Cubed.Core.Prelude
 
 open import Cubed.Prelude.Cat.Precat.Base
+open import Cubed.Prelude.Cat.Ftor.Base
 
 open import Cubed.Prelude.Data.Dec.Base
 
@@ -63,10 +64,10 @@ record Applicative
   _<**>_ : F A → F (A → B) → F B
   _<**>_ = zip-with _&_
 
-  when : Dec A → F (A → Lift ⊤) → F (Lift ⊤)
+  when : Dec A → F (A → ⊤) → F ⊤
   when d f = d & Dec.rec (λ a → f <*> pure a) (const $ pure $ lift tt)
 
-  unless : Dec A → F (¬ A → Lift ⊤) → F (Lift ⊤)
+  unless : Dec A → F (¬ A → ⊤) → F ⊤
   unless d f = d & Dec.rec (const $ pure $ lift tt) (λ ¬a → f <*> pure ¬a)
 
 

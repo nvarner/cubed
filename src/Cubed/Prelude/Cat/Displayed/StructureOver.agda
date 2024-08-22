@@ -49,7 +49,7 @@ module _ (C : Precat ℓob ℓhom) where
     open StructureOver
     struct : StructureOver _ _
     struct .ob[_] = P
-    struct .hom[_] _ _ _ = ⊤
+    struct .hom[_] _ _ _ = Types.⊤
     struct .idᴰ = tt
     struct .seqᴰ _ _ = tt
     struct .homᴰ-is-prop = ⊤-is-prop

@@ -3,6 +3,7 @@ module Cubed.Prelude.Effect.Functor where
 open import Cubed.Core.Prelude
 
 open import Cubed.Prelude.Cat.Instance.Types
+open import Cubed.Prelude.Cat.Ftor.Base
 open import Cubed.Prelude.Cat.Precat.Base
 
 private
@@ -34,6 +35,6 @@ module _ {F : Type ℓ → Type ℓ'} {{ftor : TypeFtor F}} where
   unzip : F (A × B) → F A × F B
   unzip x = (fst <$> x) , (snd <$> x)
 
-  void : F A → F (Lift ⊤)
+  void : F A → F (Lift Types.⊤)
   void = lift tt <$_
 

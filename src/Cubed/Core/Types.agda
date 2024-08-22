@@ -1,6 +1,7 @@
 module Cubed.Core.Types where
 
 open import Cubed.Core.Primitives
+open import Cubed.Core.Notation
 
 private
   variable
@@ -9,69 +10,95 @@ private
     B : A → Type ℓ
     C : (a : A) → B a → Type ℓ
 
-open import Agda.Builtin.Unit using (⊤ ; tt) public
 
-data ⊥ : Type where
+module Types where
 
-¬_ : Type ℓ → Type ℓ
-¬ A = A → ⊥
+  private module ⊤' where
+    open import Agda.Builtin.Unit
+      using (tt)
+      renaming (⊤ to ⊤')
+      public
+  open ⊤' renaming (⊤' to ⊤) public
 
-infix 3 ¬_
+  private module ⊥' where
+    data ⊥' : Type where
+  open ⊥' renaming (⊥' to ⊥) public
 
-open import Agda.Builtin.Sigma public
-infix 2 Σ-syntax
+  ¬_ : Type ℓ → Type ℓ
+  ¬ A = A → ⊥'.⊥'
 
-Σ-syntax : ∀ {ℓ ℓ'} (A : Type ℓ) (B : A → Type ℓ') → Type (ℓ ⊔ ℓ')
-Σ-syntax = Σ
+  infix 3 ¬_
 
-syntax Σ-syntax A (λ x → B) = Σ[ x ∈ A ] B
+  open import Agda.Builtin.Sigma public
+  infix 2 Σ-syntax
 
-_×_ : Type ℓ → Type ℓ' → Type _
-A × A' = Σ A (λ _ → A')
+  Σ-syntax : ∀ {ℓ ℓ'} (A : Type ℓ) (B : A → Type ℓ') → Type (ℓ ⊔ ℓ')
+  Σ-syntax = Σ
 
-infixr 5 _×_
+  syntax Σ-syntax A (λ x → B) = Σ[ x ∈ A ] B
 
-record Lift (A : Type ℓ) : Type (ℓ ⊔ ℓ') where
-  constructor lift
-  field
-    lower : A
+  private module ×' where
+    _×'_ : Type ℓ → Type ℓ' → Type _
+    A ×' A' = Σ A (λ _ → A')
+    infixr 5 _×'_
+  open ×' renaming (_×'_ to _×_) public
 
-open Lift public
+  record Lift (A : Type ℓ) : Type (ℓ ⊔ ℓ') where
+    constructor lift
+    field
+      lower : A
 
-_∘_ : ({a : A} → (b : B a) → C a b) → (f : (a : A) → B a) → (a : A) → C a (f a)
-(g ∘ f) a = g (f a)
-{-# INLINE _∘_ #-}
+  open Lift public
 
-_∘S_ : (A' → A'') → (A → A') → A → A''
-(g ∘S f) a = g (f a)
-{-# INLINE _∘S_ #-}
+  _∘_ : ({a : A} → (b : B a) → C a b) → (f : (a : A) → B a) → (a : A) → C a (f a)
+  (g ∘ f) a = g (f a)
+  {-# INLINE _∘_ #-}
 
-infixr 9 _∘_
+  _∘S_ : (A' → A'') → (A → A') → A → A''
+  (g ∘S f) a = g (f a)
+  {-# INLINE _∘S_ #-}
 
-_$_ : ((a : A) → B a) → (a : A) → B a
-f $ a = f a
-{-# INLINE _$_ #-}
+  infixr 9 _∘_
 
-infixr -2 _$_
+  _$_ : ((a : A) → B a) → (a : A) → B a
+  f $ a = f a
+  {-# INLINE _$_ #-}
 
-_&_ : (a : A) → ((a : A) → B a) → B a
-a & f = f a
-{-# INLINE _&_ #-}
+  infixr -2 _$_
 
-infixl -1 _&_
+  _&_ : (a : A) → ((a : A) → B a) → B a
+  a & f = f a
+  {-# INLINE _&_ #-}
 
-idfun : A → A
-idfun a = a
-{-# INLINE idfun #-}
+  infixl -1 _&_
 
-flip :
-  {B : Type ℓ} {C : (a : A) (b : B) → Type ℓ'} →
-  ((a : A) (b : B) → C a b) →
-  ((b : B) (a : A) → C a b)
-flip f b a = f a b
-{-# INLINE flip #-}
+  idfun : A → A
+  idfun a = a
+  {-# INLINE idfun #-}
 
-const : {B : Type ℓ} → A → B → A
-const a b = a
-{-# INLINE const #-}
+  flip :
+    {B : Type ℓ} {C : (a : A) (b : B) → Type ℓ'} →
+    ((a : A) (b : B) → C a b) →
+    ((b : B) (a : A) → C a b)
+  flip f b a = f a b
+  {-# INLINE flip #-}
+
+  const : {B : Type ℓ} → A → B → A
+  const a b = a
+  {-# INLINE const #-}
+
+  instance
+    inst-⊤ : ⊤Notation lsuc (λ ℓ → Type ℓ)
+    inst-⊤ .⊤Notation.⊤ = Lift ⊤'.⊤'
+
+    inst-⊥ : ⊥Notation lsuc (λ ℓ → Type ℓ)
+    inst-⊥ .⊥Notation.⊥ = Lift ⊥'.⊥'
+
+    inst-× : ×Notation lsuc (λ ℓ → Type ℓ)
+    inst-× .×Notation.op2 = _⊔_
+    inst-× .×Notation._×_ = ×'._×'_
+
+open Types
+  using (tt ; ¬_ ; Σ ; Σ-syntax ; _,_ ; fst ; snd ; Lift ; lift ; lower ; _∘_ ; _∘S_ ; _$_ ; _&_ ; idfun ; flip ; const)
+  public
 

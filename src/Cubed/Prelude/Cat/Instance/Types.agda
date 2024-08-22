@@ -16,7 +16,7 @@ Types ℓ .seq-id = refl
 Types ℓ .seq-assoc f g h = refl
 
 
-module _ where
+private module _ where
 
   open import Cubed.Prelude.Cat.Displayed.Base
   open import Cubed.Prelude.Cat.Displayed.StructureOver
@@ -41,12 +41,22 @@ module _ where
   Decidable : (ℓ : Level) → Precat (lsuc ℓ) ℓ
   Decidable ℓ = ∫ (Decidableᴰ ℓ)
 
-  ⊤' : Prop lzero .ob
-  ⊤' = ⊤ , known!
+  instance
+    inst-⊤-Prop : ⊤Notation lsuc (λ ℓ → Prop ℓ .ob)
+    inst-⊤-Prop .⊤Notation.⊤ = ⊤ , known!
 
-  _×'_ : Prop ℓ .ob → Prop ℓ' .ob → Prop (ℓ ⊔ ℓ') .ob
-  p ×' q = (p .fst × q .fst) , known!
-    where instance _ = p .snd ; _ = q .snd
+    inst-×-Prop : ×Notation lsuc (λ ℓ → Prop ℓ .ob)
+    inst-×-Prop .×Notation.op2 = _⊔_
+    inst-×-Prop .×Notation._×_ p q = (p .fst × q .fst) , known!
+      where instance _ = p .snd ; _ = q .snd
+
+    inst-⊤-Dec : ⊤Notation lsuc (λ ℓ → Decidable ℓ .ob)
+    inst-⊤-Dec .⊤Notation.⊤ = ⊤ , known!
+
+    inst-×-Dec : ×Notation lsuc (λ ℓ → Decidable ℓ .ob)
+    inst-×-Dec .×Notation.op2 = _⊔_
+    inst-×-Dec .×Notation._×_ A B = (A .fst × B .fst) , known!
+      where instance _ = A .snd ; _ = B .snd
 
   _→'_ : Prop ℓ .ob → Prop ℓ' .ob → Prop (ℓ ⊔ ℓ') .ob
   p →' q = (p .fst → q .fst) , known!
@@ -54,5 +64,8 @@ module _ where
 
 
   test : Prop lzero .ob
-  test = ⊤' ×' (⊤' →' ⊤')
+  test = ⊤ × (⊤ →' ⊤)
+
+  test2 : Decidable lzero .ob
+  test2 = ⊤ × (⊤ × ⊤)
 
