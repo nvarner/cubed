@@ -10,112 +10,143 @@ private
 
 module _ (Σ₀ : Type ℓ) where
 
-  infix 4 _⦂_
-  infix 3 _∋U_
-  infix 4 _,_
+  module U where
+    infix 1 _⊢_⦂_
+    infixl 4 _,,_
 
-  infix 3 _∣_
-  infix 2 _⊢_
+    data Term : Type ℓ
+    data Ctxt : Type ℓ
+    data _⊢_⦂_ : Ctxt → Term → Term → Type ℓ
 
-  data Term : Type ℓ
-  data _⦂_ : Term → Term → Type ℓ
+    private
+      variable
+        Γ : Ctxt
+        A B a b f : Term
 
-  private variable
-    A B : Term
+    data Term where
+      U : Nat → Term
+      Var : Nat → Term
+      Char ⊤Term ⊥Term : Term
+      _×Term_ _+Term_ _⟶Term_ : Term → Term → Term
+      tt : Term
+      _,_ : Term → Term → Term
+      inl⟨·⟩⟨_⟩_ inr⟨_⟩⟨·⟩_ : Term → Term → Term
+      ƛ⟨_⟩_ _ap_ : Term → Term → Term
 
-  data Term where
-    U : Nat → Term
-    Char : Term
-    _×Term_ _+Term_ :
-      (A B : Term)
-      {{_ : A ⦂ U n}}
-      {{_ : B ⦂ U n}} →
-      Term
-    Lin :
-      (A : Term)
-      {{_ : A ⦂ U n}} →
-      Term
-    Lit : Σ₀ → Term
-    lit : Σ₀ → Term
-    _⊗_ _⊕_ :
-      (G H : Term)
-      {{_ : A ⦂ U n}}
-      {{_ : B ⦂ U n}}
-      {{_ : G ⦂ Lin A}}
-      {{_ : H ⦂ Lin B}} →
-      Term
+    data Ctxt where
+      · : Ctxt
+      _,,_ : Ctxt → Term → Ctxt
 
-  -- private variable
-  --   c : Σ₀
-  --   g h G H : Term
+    data _⊢_⦂_ where
+      instance
+        Var-zero :
+          Γ ,, A ⊢ Var zero ⦂ A
+        Var-suc :
+          {{_ : Γ ⊢ Var n ⦂ A}}
+          →
+          Γ ,, B ⊢ Var (suc n) ⦂ A
+        U-is-U :
+          Γ ⊢ U n ⦂ U (suc n)
+        Char-is-U :
+          Γ ⊢ Char ⦂ U zero
+        ⊤-is-U :
+          Γ ⊢ ⊤Term ⦂ U zero
+        ⊥-is-U :
+          Γ ⊢ ⊥Term ⦂ U zero
+        ×-is-U :
+          {{_ : Γ ⊢ A ⦂ U n}}
+          {{_ : Γ ⊢ B ⦂ U n}}
+          →
+          Γ ⊢ A ×Term B ⦂ U n
+        +-is-U :
+          {{_ : Γ ⊢ A ⦂ U n}}
+          {{_ : Γ ⊢ B ⦂ U n}}
+          →
+          Γ ⊢ A +Term B ⦂ U n
+        ⟶-is-U :
+          {{_ : Γ ⊢ A ⦂ U n}}
+          {{_ : Γ ⊢ B ⦂ U n}}
+          →
+          Γ ⊢ A ⟶Term B ⦂ U n
+        tt-is-⊤ :
+          Γ ⊢ tt ⦂ ⊤Term
+        ,-is-× :
+          {{_ : Γ ⊢ a ⦂ A}}
+          {{_ : Γ ⊢ b ⦂ B}}
+          →
+          Γ ⊢ a , b ⦂ A ×Term B
+        inl-is-+ :
+          {{_ : Γ ⊢ a ⦂ A}}
+          →
+          Γ ⊢ inl⟨·⟩⟨ B ⟩ a ⦂ A +Term B
+        inr-is-+ :
+          {{_ : Γ ⊢ b ⦂ B}}
+          →
+          Γ ⊢ inr⟨ A ⟩⟨·⟩ b ⦂ A +Term B
+        ƛ-is-⟶ :
+          {{_ : Γ ,, A ⊢ b ⦂ B}}
+          →
+          Γ ⊢ ƛ⟨ A ⟩ b ⦂ A ⟶Term B
+        ap-is-ret :
+          {{_ : Γ ⊢ f ⦂ A ⟶Term B}}
+          {{_ : Γ ⊢ a ⦂ A}}
+          →
+          Γ ⊢ f ap a ⦂ B
 
-  -- data _⦂_ where
-  --   instance
-  --     U-is-U :
-  --       U n ⦂ U (suc n)
-  --     Char-is-U :
-  --       Char ⦂ U zero
-  --     ×-is-U :
-  --       {{_ : A ⦂ U n}}
-  --       {{_ : B ⦂ U n}} →
-  --       A ×Term B ⦂ U n
-  --     +-is-U :
-  --       {{_ : A ⦂ U n}}
-  --       {{_ : B ⦂ U n}} →
-  --       A +Term B ⦂ U n
-  --     Lin-is-U :
-  --       {{_ : A ⦂ U n}} →
-  --       Lin A ⦂ U (suc n)
-  --     Lit-is-Lin :
-  --       Lit c ⦂ Lin Char
-  --     ⊗-is-Lin :
-  --       {{_ : A ⦂ U n}}
-  --       {{_ : B ⦂ U n}}
-  --       {{_ : G ⦂ Lin A}}
-  --       {{_ : H ⦂ Lin B}} →
-  --       G ⊗ H ⦂ Lin (A ×Term B)
-  --     ⊕-is-Lin :
-  --       {{_ : A ⦂ U n}}
-  --       {{_ : B ⦂ U n}}
-  --       {{_ : G ⦂ Lin A}}
-  --       {{_ : H ⦂ Lin B}} →
-  --       G ⊕ H ⦂ Lin (A +Term B)
-  --     lit-is-Lit :
-  --       lit c ⦂ Lit c
 
-  -- UTerm : Nat → Type ℓ
-  -- UTerm n = Σ[ A ∈ Term ] A ⦂ U n
+  module Lin where
+    infix 1 _∣_⊢_⦂_
+    infixl 4 _,,_
 
-  -- _⦂U_ : (A : Term) (n : Nat) {{_ : A ⦂ U n}} → UTerm n
-  -- _⦂U_ A n {{A⦂Un}} = A , A⦂Un
+    infixl 10 _⊗_
+    infixl 9 _⊕_
 
-  -- LinTerm : UTerm n → Type ℓ
-  -- LinTerm A = Σ[ G ∈ Term ] G ⦂ (Lin (A .fst) {{A .snd}})
+    data Term : Type ℓ
+    data Ctxt : Type ℓ
+    data _∣_⊢_⦂_ : U.Ctxt → Ctxt → Term → Term → Type ℓ
 
-  -- _⦂Lin_ : (G : Term) (A : UTerm n) {{_ : G ⦂ Lin (A .fst) {{A .snd}}}} → LinTerm A
-  -- _⦂Lin_ G A {{G⦂LinA}} = G , G⦂LinA
+    private variable
+      Γ : U.Ctxt
+      A B : U.Term
+      Δ Δ' : Ctxt
+      e e' G H : Term
+      c : Σ₀
 
-  -- data UCtxt : Type ℓ where
-  --   · : UCtxt
-  --   _,_ : UTerm n → UCtxt → UCtxt
+    data Term where
+      Lin : U.Term → Term
+      Lit : Σ₀ → Term
+      _⊗_ _⊕_ : Term → Term → Term
+      lit : Σ₀ → Term
 
-  -- data LinCtxt : Type ℓ where
-  --   · : LinCtxt
-  --   _,_ : {A : UTerm n} → LinTerm A → LinCtxt → LinCtxt
+    data Ctxt where
+      · : Ctxt
+      [_] : Term → Ctxt
+      _,,_ : Ctxt → Ctxt → Ctxt
 
-  -- data Ctxt : Type ℓ where
-  --   _∣_ : UCtxt → LinCtxt → Ctxt
+    data _∣_⊢_⦂_ where
+      instance
+        Lit-is-Lin :
+          {c : Σ₀}
+          →
+          Γ ∣ Δ ⊢ Lit c ⦂ Lin U.Char
+        ⊗-is-Lin :
+          {{_ : Γ ∣ Δ ⊢ G ⦂ Lin A}}
+          {{_ : Γ ∣ Δ' ⊢ H ⦂ Lin B}}
+          →
+          Γ ∣ Δ ⊢ G ⊗ H ⦂ Lin (A U.×Term B)
+        ⊕-is-Lin :
+          {{_ : Γ ∣ Δ ⊢ G ⦂ Lin A}}
+          {{_ : Γ ∣ Δ ⊢ H ⦂ Lin B}}
+          →
+          Γ ∣ Δ ⊢ G ⊕ H ⦂ Lin (A U.+Term B)
+        lit-is-Lit :
+          Γ ∣ [ lit c ] ⊢ lit c ⦂ Lit c
+        ⊗-is-⊗ :
+          {{_ : Γ ∣ Δ ⊢ e ⦂ G}}
+          {{_ : Γ ∣ Δ' ⊢ e' ⦂ H}}
+          →
+          Γ ∣ Δ ,, Δ' ⊢ e ⊗ e' ⦂ G ⊗ H
 
-  -- private variable
-  --   Γ : UCtxt
-
-  -- data _∋U_ {n : Nat} : UCtxt → UTerm n → Type ℓ where
-  --   Z :
-  --     {A : UTerm n} →
-  --     A , Γ ∋U A
-
-  --   S_ :
-  --     {A : UTerm n} {m : Nat} {B : UTerm m} →
-  --     Γ ∋U A →
-  --     B , Γ ∋U A
+    test : (a b c : Σ₀) → Term
+    test a b c = (lit a ⊗ lit b ⊗ lit c) ⊕ (lit c ⊗ lit b ⊗ lit a)
 
