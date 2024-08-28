@@ -14,7 +14,6 @@ module _ (Σ₀ : Type ℓ) where
   infixl 4 _,,_
 
   data Term : Type ℓ
-
   Ctxt : Type ℓ
   Ctxt = List Term
 
@@ -30,6 +29,13 @@ module _ (Σ₀ : Type ℓ) where
     Γ Δ : Ctxt
     A B a b f : Term
 
+  -- data SortU where
+  --   U : SortU n
+  --   L : Term → SortU
+  --   ⊤U ⊥U : SortU
+  --   _⟶U_ _+U_ : SortU → SortU → SortU
+  --   ΠU ΣU : SortU → ? → SortU
+
   data Term where
     U : Nat → Term
     L : Term → Term
@@ -38,25 +44,34 @@ module _ (Σ₀ : Type ℓ) where
     -- Nonlinear types
     ⊤U ⊥U : Term
     ΠU ΣU : Term → Term → Term
-    _⟶U_ _+U_ : Term → Term → Term
+    _+U_ : Term → Term → Term
 
     -- Nonlinear values
     tt : Term
     _,_ : Term → Term → Term
+    πl πr : Term → Term
     inl⟨·⟩⟨_⟩_ inr⟨_⟩⟨·⟩_ : Term → Term → Term
-    depfun⟨_⟩⟨_⟩_ : Term → Term → Term → Term
-    fun⟨_⟩_ _ap_ : Term → Term → Term
+    fun⟨_⟩⟨_⟩_ : Term → Term → Term → Term
+    _ap_ : Term → Term → Term
 
-    -- Linear types
-    Lit : Σ₀ → Term
-
-  apply⟶ :
-    (Γ : Ctxt) (f a : Term)
-    {{_ : Γ ⊢ f ⦂ A ⟶U B}}
-    {{_ : Γ ⊢ a ⦂ A}}
-    →
-    Term
-  apply⟶ Γ f a = ?
+  sub : Term → Nat → Term → Term
+  sub (U n) k x = U n
+  sub (L A) k x = L (sub A k x)
+  sub (UVar n) k x = n ≟ k & Dec.rec ? ?
+  sub (LVar n) k x = {!!}
+  sub ⊤U k x = {!!}
+  sub ⊥U k x = {!!}
+  sub (ΠU A B) k x = {!!}
+  sub (ΣU A B) k x = {!!}
+  sub (A +U B) k x = {!!}
+  sub tt k x = {!!}
+  sub (a , b) k x = {!!}
+  sub (πl a) k x = {!!}
+  sub (πr a) k x = {!!}
+  sub (inl⟨·⟩⟨ B ⟩ a) k x = {!!}
+  sub (inr⟨ A ⟩⟨·⟩ b) k x = {!!}
+  sub (fun⟨ A ⟩⟨ B ⟩ f) k x = {!!}
+  sub (a ap b) k x = {!!}
 
   data ok-U where
     instance
@@ -126,12 +141,6 @@ module _ (Σ₀ : Type ℓ) where
         {{_ : A ∷ Γ ⊢ B ⦂ U n}}
         →
         Γ ⊢ ΣU A B ⦂ U n
-      ⟶-is-U :
-        {{_ : ok-U Γ}}
-        {{_ : Γ ⊢ A ⦂ U n}}
-        {{_ : Γ ⊢ B ⦂ U n}}
-        →
-        Γ ⊢ A ⟶U B ⦂ U n
       +-is-U :
         {{_ : ok-U Γ}}
         {{_ : Γ ⊢ A ⦂ U n}}
@@ -149,19 +158,32 @@ module _ (Σ₀ : Type ℓ) where
         {{_ : Γ ⊢ UVar n ⦂ A}}
         →
         B ∷ Γ ⊢ UVar (suc n) ⦂ A
-      tt-is-⊤ :
+      ⊤-intro :
         {{_ : ok-U Γ}}
         →
         Γ ⊢ tt ⦂ ⊤U
-      fun-is-⟶ :
+      Σ-intro :
         {{_ : ok-U (A ∷ Γ)}}
+        {{_ : Γ ⊢ a ⦂ A}}
         {{_ : A ∷ Γ ⊢ b ⦂ B}}
         →
-        Γ ⊢ fun⟨ A ⟩ b ⦂ A ⟶U B
-      depfun-is-Π :
-        {{_ : Γ ⊢ B ⦂ A ⟶U U n}}
+        Γ ⊢ a , b ⦂ ΣU A B
+      Σ-elim-l :
+        {{_ : ok-U Γ}}
+        {{_ : Γ ⊢ a ⦂ ΣU A B}}
         →
-        Γ ⊢ f ⦂ depfun⟨ A ⟩⟨ B ⟩ b
+        Γ ⊢ πl a ⦂ A
+      Σ-elim-r :
+        {{_ : ok-U Γ}}
+        {{_ : Γ ⊢ a ⦂ ΣU A B}}
+        →
+        Γ ⊢ πr a ⦂ {!!}
+      fun-is-Π :
+        {{_ : ok-U (A ∷ Γ)}}
+        {{_ : A ∷ Γ ⊢ B ⦂ U n}}
+        {{_ : A ∷ Γ ⊢ b ⦂ B}}
+        →
+        Γ ⊢ fun⟨ A ⟩⟨ B ⟩ b ⦂ ΠU A B
 
   --   data _⊢_⦂_ where
   --     instance

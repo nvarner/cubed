@@ -18,6 +18,10 @@ module Dec where
   rec f g (yes a) = f a
   rec f g (no ¬a) = g ¬a
 
+  map : (A → B) → (¬ A → ¬ B) → Dec A → Dec B
+  map y n (yes a) = yes (y a)
+  map y n (no ¬a) = no (n ¬a)
+
   Lift-closed : Dec A → Dec (Lift {ℓ' = ℓ} A)
   Lift-closed (yes a) = yes (lift a)
   Lift-closed (no ¬a) = no (¬a ∘ lower)
@@ -40,8 +44,11 @@ module Dec where
     inst-×-closed : {{Dec A}} → {{Dec B}} → Dec (A Types.× B)
     inst-×-closed {{A-dec}} {{B-dec}} = ×-closed A-dec B-dec
 
+  _≟_ : (a b : A) → {{Dec (a ≡ b)}} → Dec (a ≡ b)
+  _≟_ a b {{dec}} = dec
+
 open Dec
-  using (Dec ; yes ; no)
+  using (Dec ; yes ; no ; _≟_)
   hiding (module Dec)
   public
 
