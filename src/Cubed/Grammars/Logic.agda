@@ -45,6 +45,7 @@ module _ (Σ₀ : Type ℓ) where
     ⊤U ⊥U : Term
     ΠU ΣU : Term → Term → Term
     _+U_ : Term → Term → Term
+    _×_ : Term → Term → Term
 
     -- Nonlinear values
     tt : Term
@@ -57,7 +58,7 @@ module _ (Σ₀ : Type ℓ) where
   sub : Term → Nat → Term → Term
   sub (U n) k x = U n
   sub (L A) k x = L (sub A k x)
-  sub (UVar n) k x = n ≟ k & Dec.rec ? ?
+  sub (UVar n) k x = n ≟ k & Dec.rec {!!} {!!}
   sub (LVar n) k x = {!!}
   sub ⊤U k x = {!!}
   sub ⊥U k x = {!!}

@@ -7,34 +7,34 @@ private
     ℓ ℓ' : Level
 
 
-record ⊤Notation (op : Level → Level) (A : (ℓ : Level) → Type (op ℓ)) : Typeω where
+record ⊤-notation (op : Level → Level) (A : (ℓ : Level) → Type (op ℓ)) : Typeω where
   field
     ⊤ : A ℓ
 
-open ⊤Notation {{...}} public
+open ⊤-notation {{...}} public
 
 
-record ⊥Notation (op : Level → Level) (A : (ℓ : Level) → Type (op ℓ)) : Typeω where
+record ⊥-notation (op : Level → Level) (A : (ℓ : Level) → Type (op ℓ)) : Typeω where
   field
     ⊥ : A ℓ
 
-open ⊥Notation {{...}} public
+open ⊥-notation {{...}} public
 
 
-record ×Notation (op : Level → Level) (A : (ℓ : Level) → Type (op ℓ)) : Typeω where
+record ×-notation (op : Level → Level) (A : (ℓ : Level) → Type (op ℓ)) : Typeω where
   field
     op2 : Level → Level → Level
     _×_ : A ℓ → A ℓ' → A (op2 ℓ ℓ')
   infixr 5 _×_
 
-open ×Notation {{...}} public hiding (op2)
+open ×-notation {{...}} public hiding (op2)
 
 
-record ⟦⟧-Notation (A : Type ℓ) : Typeω where
+record ⟦⟧-notation (A : Type ℓ) : Typeω where
   field
     ⟦⟧-ℓ : Level
     ⟦A⟧ : Type ⟦⟧-ℓ
     ⟦_⟧ : A → ⟦A⟧
 
-open ⟦⟧-Notation {{...}} public using (⟦_⟧)
+open ⟦⟧-notation {{...}} public using (⟦_⟧)
 

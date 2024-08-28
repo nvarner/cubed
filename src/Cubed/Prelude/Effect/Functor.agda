@@ -6,6 +6,8 @@ open import Cubed.Prelude.Cat.Instance.Types
 open import Cubed.Prelude.Cat.Ftor.Base
 open import Cubed.Prelude.Cat.Precat.Base
 
+open Notation
+
 private
   variable
     ℓ ℓ' : Level

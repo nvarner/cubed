@@ -9,6 +9,8 @@ open import Cubed.Prelude.Data.Dec.Base
 
 open import Cubed.Prelude.Effect.Functor
 
+open Notation
+
 private
   variable
     ℓ ℓ' : Level

@@ -41,21 +41,23 @@ private module _ where
   Decidable : (ℓ : Level) → Precat (lsuc ℓ) ℓ
   Decidable ℓ = ∫ (Decidableᴰ ℓ)
 
-  instance
-    inst-⊤-Prop : ⊤Notation lsuc (λ ℓ → Prop ℓ .ob)
-    inst-⊤-Prop .⊤Notation.⊤ = ⊤ , known!
+  open Notation
 
-    inst-×-Prop : ×Notation lsuc (λ ℓ → Prop ℓ .ob)
-    inst-×-Prop .×Notation.op2 = _⊔_
-    inst-×-Prop .×Notation._×_ p q = (p .fst × q .fst) , known!
+  instance
+    inst-⊤-Prop : ⊤-notation lsuc (λ ℓ → Prop ℓ .ob)
+    inst-⊤-Prop .⊤-notation.⊤ = ⊤ , known!
+
+    inst-×-Prop : ×-notation lsuc (λ ℓ → Prop ℓ .ob)
+    inst-×-Prop .×-notation.op2 = _⊔_
+    inst-×-Prop .×-notation._×_ p q = (p .fst × q .fst) , known!
       where instance _ = p .snd ; _ = q .snd
 
-    inst-⊤-Dec : ⊤Notation lsuc (λ ℓ → Decidable ℓ .ob)
-    inst-⊤-Dec .⊤Notation.⊤ = ⊤ , known!
+    inst-⊤-Dec : ⊤-notation lsuc (λ ℓ → Decidable ℓ .ob)
+    inst-⊤-Dec .⊤-notation.⊤ = ⊤ , known!
 
-    inst-×-Dec : ×Notation lsuc (λ ℓ → Decidable ℓ .ob)
-    inst-×-Dec .×Notation.op2 = _⊔_
-    inst-×-Dec .×Notation._×_ A B = (A .fst × B .fst) , known!
+    inst-×-Dec : ×-notation lsuc (λ ℓ → Decidable ℓ .ob)
+    inst-×-Dec .×-notation.op2 = _⊔_
+    inst-×-Dec .×-notation._×_ A B = (A .fst × B .fst) , known!
       where instance _ = A .snd ; _ = B .snd
 
   _→'_ : Prop ℓ .ob → Prop ℓ' .ob → Prop (ℓ ⊔ ℓ') .ob

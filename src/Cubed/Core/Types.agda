@@ -1,7 +1,8 @@
 module Cubed.Core.Types where
 
 open import Cubed.Core.Primitives
-open import Cubed.Core.Notation
+
+import Cubed.Core.Notation as Notation
 
 private
   variable
@@ -13,19 +14,14 @@ private
 
 module Types where
 
-  private module ⊤' where
-    open import Agda.Builtin.Unit
-      using (tt)
-      renaming (⊤ to ⊤')
-      public
-  open ⊤' renaming (⊤' to ⊤) public
+  open import Agda.Builtin.Unit
+    using (⊤ ; tt)
+    public
 
-  private module ⊥' where
-    data ⊥' : Type where
-  open ⊥' renaming (⊥' to ⊥) public
+  data ⊥ : Type lzero where
 
   ¬_ : Type ℓ → Type ℓ
-  ¬ A = A → ⊥'.⊥'
+  ¬ A = A → ⊥
 
   infix 3 ¬_
 
@@ -37,11 +33,9 @@ module Types where
 
   syntax Σ-syntax A (λ x → B) = Σ[ x ∈ A ] B
 
-  private module ×' where
-    _×'_ : Type ℓ → Type ℓ' → Type _
-    A ×' A' = Σ A (λ _ → A')
-    infixr 5 _×'_
-  open ×' renaming (_×'_ to _×_) public
+  _×_ : Type ℓ → Type ℓ' → Type _
+  A × A' = Σ A (λ _ → A')
+  infixr 5 _×_
 
   record Lift (A : Type ℓ) : Type (ℓ ⊔ ℓ') where
     constructor lift
@@ -88,15 +82,15 @@ module Types where
   {-# INLINE const #-}
 
   instance
-    inst-⊤ : ⊤Notation lsuc (λ ℓ → Type ℓ)
-    inst-⊤ .⊤Notation.⊤ = Lift ⊤'.⊤'
+    inst-⊤ : Notation.⊤-notation lsuc (λ ℓ → Type ℓ)
+    inst-⊤ .Notation.⊤-notation.⊤ = Lift ⊤
 
-    inst-⊥ : ⊥Notation lsuc (λ ℓ → Type ℓ)
-    inst-⊥ .⊥Notation.⊥ = Lift ⊥'.⊥'
+    inst-⊥ : Notation.⊥-notation lsuc (λ ℓ → Type ℓ)
+    inst-⊥ .Notation.⊥-notation.⊥ = Lift ⊥
 
-    inst-× : ×Notation lsuc (λ ℓ → Type ℓ)
-    inst-× .×Notation.op2 = _⊔_
-    inst-× .×Notation._×_ = ×'._×'_
+    inst-× : Notation.×-notation lsuc (λ ℓ → Type ℓ)
+    inst-× .Notation.×-notation.op2 = _⊔_
+    inst-× .Notation.×-notation._×_ = _×_
 
 open Types
   using (tt ; ¬_ ; Σ ; Σ-syntax ; _,_ ; fst ; snd ; Lift ; lift ; lower ; _∘_ ; _∘S_ ; _$_ ; _&_ ; idfun ; flip ; const)
