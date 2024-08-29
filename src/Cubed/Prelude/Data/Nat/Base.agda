@@ -10,6 +10,23 @@ module Nat where
     using (Nat ; zero ; suc ; _+_ ; _-_ ; _*_)
     public
 
+  private variable
+    m n : Nat
+
+  data _<_ : Nat → Nat → Type lzero where
+    z<s : zero < suc n
+    suc : m < n → suc m < suc n
+
+  instance
+    inst-z<s : zero < suc n
+    inst-z<s = z<s
+
+    inst-<-suc : {{m < n}} → suc m < suc n
+    inst-<-suc {{m<n}} = suc m<n
+
+  _>_ : Nat → Nat → Type lzero
+  m > n = n < m
+
   safe-pred : Nat → Nat
   safe-pred zero = zero
   safe-pred (suc n) = n
@@ -30,6 +47,12 @@ module Nat where
   instance
     inst-nat-≡-dec : {n m : Nat} → Dec (n ≡ m)
     inst-nat-≡-dec = nat-≡-dec _ _
+
+    inst-<-notation : Notation.<-notation Nat
+    inst-<-notation = Notation.strict-ord-from-<.< _ _<_
+
+    inst->-notation : Notation.>-notation Nat
+    inst->-notation = Notation.strict-ord-from-<.> _ _<_
 
 open Nat
   using (Nat ; zero ; suc)

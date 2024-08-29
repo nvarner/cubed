@@ -2,10 +2,17 @@ module Cubed.Grammars.Logic where
 
 open import Cubed.Prelude
 
+open Notation using (_<>_ ; _<_ ; _>_)
+
 private
   variable
     ℓ : Level
     n : Nat
+
+
+module test where
+
+  data TypeU : List TypeU → Type lzero where
 
 
 module _ (Σ₀ : Type ℓ) where
@@ -42,10 +49,9 @@ module _ (Σ₀ : Type ℓ) where
     UVar LVar : Nat → Term
 
     -- Nonlinear types
-    ⊤U ⊥U : Term
+    ⊤ ⊥ : Term
     ΠU ΣU : Term → Term → Term
-    _+U_ : Term → Term → Term
-    _×_ : Term → Term → Term
+    _+_ : Term → Term → Term
 
     -- Nonlinear values
     tt : Term
@@ -58,21 +64,24 @@ module _ (Σ₀ : Type ℓ) where
   sub : Term → Nat → Term → Term
   sub (U n) k x = U n
   sub (L A) k x = L (sub A k x)
-  sub (UVar n) k x = n ≟ k & Dec.rec {!!} {!!}
-  sub (LVar n) k x = {!!}
-  sub ⊤U k x = {!!}
-  sub ⊥U k x = {!!}
-  sub (ΠU A B) k x = {!!}
-  sub (ΣU A B) k x = {!!}
-  sub (A +U B) k x = {!!}
-  sub tt k x = {!!}
-  sub (a , b) k x = {!!}
-  sub (πl a) k x = {!!}
-  sub (πr a) k x = {!!}
-  sub (inl⟨·⟩⟨ B ⟩ a) k x = {!!}
-  sub (inr⟨ A ⟩⟨·⟩ b) k x = {!!}
-  sub (fun⟨ A ⟩⟨ B ⟩ f) k x = {!!}
-  sub (a ap b) k x = {!!}
+  sub (UVar n) k x with n <> k
+  ...                    | lt n<k = UVar n
+  ...                    | eq n≡k = x
+  sub (UVar (suc n)) k x | gt n>k = UVar n
+  sub (LVar n) k x = LVar n
+  sub ⊤ k x = ⊤
+  sub ⊥ k x = ⊥
+  sub (ΠU A B) k x = ΠU (sub A k x) (sub B (suc k) x)
+  sub (ΣU A B) k x = ΣU (sub A k x) (sub B (suc k) x)
+  sub (A + B) k x = (sub A k x) + (sub B k x)
+  sub tt k x = tt
+  sub (a , b) k x = (sub a k x) , (sub b k x)
+  sub (πl a) k x = πl (sub a k x)
+  sub (πr a) k x = πr (sub a k x)
+  sub (inl⟨·⟩⟨ B ⟩ a) k x = inl⟨·⟩⟨ sub B k x ⟩ sub a k x
+  sub (inr⟨ A ⟩⟨·⟩ b) k x = inr⟨ sub A k x ⟩⟨·⟩ sub b k x
+  sub (fun⟨ A ⟩⟨ B ⟩ f) k x = fun⟨ sub A k x ⟩⟨ sub B (suc k) x ⟩ sub f (suc k) x
+  sub (a ap b) k x = (sub a k x) ap (sub b k x)
 
   data ok-U where
     instance
@@ -125,11 +134,11 @@ module _ (Σ₀ : Type ℓ) where
       ⊤-is-U :
         {{_ : ok-U Γ}}
         →
-        Γ ⊢ ⊤U ⦂ U n
+        Γ ⊢ ⊤ ⦂ U n
       ⊥-is-U :
         {{_ : ok-U Γ}}
         →
-        Γ ⊢ ⊥U ⦂ U n
+        Γ ⊢ ⊥ ⦂ U n
       Π-is-U :
         {{_ : ok-U Γ}}
         {{_ : Γ ⊢ A ⦂ U n}}
@@ -147,7 +156,7 @@ module _ (Σ₀ : Type ℓ) where
         {{_ : Γ ⊢ A ⦂ U n}}
         {{_ : Γ ⊢ B ⦂ U n}}
         →
-        Γ ⊢ A +U B ⦂ U n
+        Γ ⊢ A + B ⦂ U n
 
       -- Nonlinear typing
       UVar-zero :
@@ -162,7 +171,7 @@ module _ (Σ₀ : Type ℓ) where
       ⊤-intro :
         {{_ : ok-U Γ}}
         →
-        Γ ⊢ tt ⦂ ⊤U
+        Γ ⊢ tt ⦂ ⊤
       Σ-intro :
         {{_ : ok-U (A ∷ Γ)}}
         {{_ : Γ ⊢ a ⦂ A}}
