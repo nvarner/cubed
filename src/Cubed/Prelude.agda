@@ -2,6 +2,11 @@ module Cubed.Prelude where
 
 open import Cubed.Core.Prelude public
 
+open import Cubed.Prelude.Effect public
+
+module Agda where
+  open import Cubed.Prelude.Reflection public
+
 open import Cubed.Prelude.Cat.Instance.Types public
 open import Cubed.Prelude.Cat.Precat.Base public
 
@@ -18,8 +23,6 @@ open Trichotomy public
   hiding (module Trichotomy)
 
 open import Cubed.Prelude.Data.Sum.Base public
-
-open import Cubed.Prelude.Effect public
 
 open import Cubed.Prelude.HLevel.Base public
 

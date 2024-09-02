@@ -10,9 +10,8 @@ private
 
 module List where
 
-  open import Agda.Builtin.List
-    using (List ; [] ; _∷_)
-    public
+  import Cubed.Core.Builtin as Builtin
+  open Builtin.List public
 
   rec : B → (A → B → B) → List A → B
   rec b f [] = b

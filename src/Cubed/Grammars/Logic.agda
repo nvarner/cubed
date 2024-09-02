@@ -10,15 +10,9 @@ private
     n : Nat
 
 
-module test where
-
-  data TypeU : List TypeU → Type lzero where
-
-
 module _ (Σ₀ : Type ℓ) where
 
   infix 1 _⊢_⦂_
-  infixl 4 _,,_
 
   data Term : Type ℓ
   Ctxt : Type ℓ
@@ -35,13 +29,6 @@ module _ (Σ₀ : Type ℓ) where
   private variable
     Γ Δ : Ctxt
     A B a b f : Term
-
-  -- data SortU where
-  --   U : SortU n
-  --   L : Term → SortU
-  --   ⊤U ⊥U : SortU
-  --   _⟶U_ _+U_ : SortU → SortU → SortU
-  --   ΠU ΣU : SortU → ? → SortU
 
   data Term where
     U : Nat → Term
@@ -175,7 +162,7 @@ module _ (Σ₀ : Type ℓ) where
       Σ-intro :
         {{_ : ok-U (A ∷ Γ)}}
         {{_ : Γ ⊢ a ⦂ A}}
-        {{_ : A ∷ Γ ⊢ b ⦂ B}}
+        {{_ : Γ ⊢ b ⦂ sub B zero a}}
         →
         Γ ⊢ a , b ⦂ ΣU A B
       Σ-elim-l :
@@ -187,13 +174,31 @@ module _ (Σ₀ : Type ℓ) where
         {{_ : ok-U Γ}}
         {{_ : Γ ⊢ a ⦂ ΣU A B}}
         →
-        Γ ⊢ πr a ⦂ {!!}
-      fun-is-Π :
+        Γ ⊢ πr a ⦂ sub B zero (πl a)
+      Π-intro :
         {{_ : ok-U (A ∷ Γ)}}
         {{_ : A ∷ Γ ⊢ B ⦂ U n}}
         {{_ : A ∷ Γ ⊢ b ⦂ B}}
         →
         Γ ⊢ fun⟨ A ⟩⟨ B ⟩ b ⦂ ΠU A B
+      Π-elim :
+        {{_ : ok-U Γ}}
+        {{_ : Γ ⊢ f ⦂ ΠU A B}}
+        {{_ : Γ ⊢ a ⦂ A}}
+        →
+        Γ ⊢ f ap a ⦂ sub a zero B
+      +-intro-l :
+        {{_ : ok-U Γ}}
+        {{_ : Γ ⊢ a ⦂ A}}
+        {{_ : Γ ⊢ B ⦂ U n}}
+        →
+        Γ ⊢ inl⟨·⟩⟨ B ⟩ a ⦂ A + B
+      +-intro-r :
+        {{_ : ok-U Γ}}
+        {{_ : Γ ⊢ b ⦂ B}}
+        {{_ : Γ ⊢ A ⦂ U n}}
+        →
+        Γ ⊢ inr⟨ A ⟩⟨·⟩ b ⦂ A + B
 
   --   data _⊢_⦂_ where
   --     instance

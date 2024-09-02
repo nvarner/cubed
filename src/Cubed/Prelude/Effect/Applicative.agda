@@ -66,10 +66,10 @@ record Applicative
   _<**>_ : F A → F (A → B) → F B
   _<**>_ = zip-with _&_
 
-  when : Dec A → F (A → ⊤) → F ⊤
+  when : Dec A → F (A → Lift ⊤) → F (Lift ⊤)
   when d f = d & Dec.rec (λ a → f <*> pure a) (const $ pure $ lift tt)
 
-  unless : Dec A → F (¬ A → ⊤) → F ⊤
+  unless : Dec A → F (¬ A → Lift ⊤) → F (Lift ⊤)
   unless d f = d & Dec.rec (const $ pure $ lift tt) (λ ¬a → f <*> pure ¬a)
 
 

@@ -43,30 +43,31 @@ private module _ where
 
   open Notation
 
+  DecPropᴰ : (ℓ : Level) → Displayed (Types ℓ) ℓ lzero
+  DecPropᴰ ℓ = PropertyOver _ (Dec × Wrap is-prop)
+
   instance
-    inst-⊤-Prop : ⊤-notation lsuc (λ ℓ → Prop ℓ .ob)
+    inst-⊤-Prop : ⊤-notation (Prop lzero .ob)
     inst-⊤-Prop .⊤-notation.⊤ = ⊤ , known!
 
-    inst-×-Prop : ×-notation lsuc (λ ℓ → Prop ℓ .ob)
-    inst-×-Prop .×-notation.op2 = _⊔_
+    inst-×-Prop : ×-notation (Prop ℓ .ob) (Prop ℓ' .ob) (Prop (ℓ ⊔ ℓ') .ob)
     inst-×-Prop .×-notation._×_ p q = (p .fst × q .fst) , known!
       where instance _ = p .snd ; _ = q .snd
 
-    inst-⊤-Dec : ⊤-notation lsuc (λ ℓ → Decidable ℓ .ob)
+    inst-⊤-Dec : ⊤-notation (Decidable lzero .ob)
     inst-⊤-Dec .⊤-notation.⊤ = ⊤ , known!
 
-    inst-×-Dec : ×-notation lsuc (λ ℓ → Decidable ℓ .ob)
-    inst-×-Dec .×-notation.op2 = _⊔_
+    inst-×-Dec : ×-notation (Decidable ℓ .ob) (Decidable ℓ' .ob) (Decidable (ℓ ⊔ ℓ') .ob)
     inst-×-Dec .×-notation._×_ A B = (A .fst × B .fst) , known!
       where instance _ = A .snd ; _ = B .snd
 
-  _→'_ : Prop ℓ .ob → Prop ℓ' .ob → Prop (ℓ ⊔ ℓ') .ob
-  p →' q = (p .fst → q .fst) , known!
-    where instance _ = p .snd ; _ = q .snd
+  -- _→'_ : Prop ℓ .ob → Prop ℓ' .ob → Prop (ℓ ⊔ ℓ') .ob
+  -- p →' q = (p .fst → q .fst) , known!
+  --   where instance _ = p .snd ; _ = q .snd
 
 
-  test : Prop lzero .ob
-  test = ⊤ × (⊤ →' ⊤)
+  -- test : Prop lzero .ob
+  -- test = ⊤ × (⊤ →' ⊤)
 
   test2 : Decidable lzero .ob
   test2 = ⊤ × (⊤ × ⊤)

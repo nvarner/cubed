@@ -6,9 +6,8 @@ open import Cubed.Prelude.Data.Dec.Base
 
 module Nat where
 
-  open import Agda.Builtin.Nat
-    using (Nat ; zero ; suc ; _+_ ; _-_ ; _*_)
-    public
+  import Cubed.Core.Builtin as Builtin
+  open Builtin.Nat public
 
   private variable
     m n : Nat
@@ -26,6 +25,11 @@ module Nat where
 
   _>_ : Nat → Nat → Type lzero
   m > n = n < m
+
+  max : Nat → Nat → Nat
+  max zero n = n
+  max m zero = m
+  max (suc m) (suc n) = suc (max m n)
 
   safe-pred : Nat → Nat
   safe-pred zero = zero

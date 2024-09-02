@@ -6,7 +6,7 @@ open import Cubed.Prelude.Cat.Precat.Base
 
 private
   variable
-    ℓob ℓhom ℓobᴰ ℓhomᴰ : Level
+    ℓob ℓhom ℓobᴰ ℓhomᴰ ℓobᴰ' ℓhomᴰ' : Level
 
 
 module _ (C : Precat ℓob ℓhom) where
@@ -45,6 +45,7 @@ module _ (C : Precat ℓob ℓhom) where
         (fᴰ : hom[ f ] aᴰ bᴰ) (gᴰ : hom[ g ] bᴰ cᴰ) (hᴰ : hom[ h ] cᴰ dᴰ) →
         seqᴰ (seqᴰ fᴰ gᴰ) hᴰ ≡[ seq-assoc f g h ] seqᴰ fᴰ (seqᴰ gᴰ hᴰ)
 
+
 module _ {C : Precat ℓob ℓhom} (Cᴰ : Displayed C ℓobᴰ ℓhomᴰ) where
   open Precat
   open Displayed Cᴰ
@@ -58,3 +59,20 @@ module _ {C : Precat ℓob ℓhom} (Cᴰ : Displayed C ℓobᴰ ℓhomᴰ) where
   ∫ .seq-id {f = (f , fᴰ)} i = (C .seq-id {f = f} i) , (seqᴰ-idᴰ {fᴰ = fᴰ} i)
   ∫ .seq-assoc (f , fᴰ) (g , gᴰ) (h , hᴰ) i = (C .seq-assoc f g h i) , (seqᴰ-assoc fᴰ gᴰ hᴰ i)
 
+
+module _
+  {C : Precat ℓob ℓhom}
+  (D : Displayed C ℓobᴰ ℓhomᴰ)
+  (D' : Displayed C ℓobᴰ' ℓhomᴰ')
+  where
+  open Notation
+  open Displayed
+
+  _×ᴰ_ : Displayed C (ℓobᴰ ⊔ ℓobᴰ') (ℓhomᴰ ⊔ ℓhomᴰ')
+  _×ᴰ_ .ob[_] = D .ob[_] × D' .ob[_]
+  _×ᴰ_ .hom[_] f (a , a') (b , b') = D .hom[_] f a b × D' .hom[_] f a' b'
+  _×ᴰ_ .idᴰ = D .idᴰ , D' .idᴰ
+  _×ᴰ_ .seqᴰ (f , f') (g , g') = D .seqᴰ f g , D' .seqᴰ f' g'
+  _×ᴰ_ .idᴰ-seqᴰ {fᴰ = (fᴰ , fᴰ')} i = (D .idᴰ-seqᴰ {fᴰ = fᴰ} i) , (D' .idᴰ-seqᴰ {fᴰ = fᴰ'} i)
+  _×ᴰ_ .seqᴰ-idᴰ {fᴰ = (fᴰ , fᴰ')} i = (D .seqᴰ-idᴰ {fᴰ = fᴰ} i) , (D' .seqᴰ-idᴰ {fᴰ = fᴰ'} i)
+  _×ᴰ_ .seqᴰ-assoc (f , f') (g , g') (h , h') i = (D .seqᴰ-assoc f g h i) , (D' .seqᴰ-assoc f' g' h' i)

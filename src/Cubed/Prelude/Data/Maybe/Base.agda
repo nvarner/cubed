@@ -10,9 +10,8 @@ private
 
 module Maybe where
 
-  open import Agda.Builtin.Maybe
-    using (Maybe ; just ; nothing)
-    public
+  import Cubed.Core.Builtin as Builtin
+  open Builtin.Maybe public
 
   elim : {B : Maybe A → Type ℓ} →
     B nothing →

@@ -33,7 +33,7 @@ module Types where
 
   syntax Σ-syntax A (λ x → B) = Σ[ x ∈ A ] B
 
-  _×_ : Type ℓ → Type ℓ' → Type _
+  _×_ : Type ℓ → Type ℓ' → Type (ℓ ⊔ ℓ')
   A × A' = Σ A (λ _ → A')
   infixr 5 _×_
 
@@ -82,15 +82,17 @@ module Types where
   {-# INLINE const #-}
 
   instance
-    inst-⊤ : Notation.⊤-notation lsuc (λ ℓ → Type ℓ)
-    inst-⊤ .Notation.⊤-notation.⊤ = Lift ⊤
+    inst-⊤ : Notation.⊤-notation (Type lzero)
+    inst-⊤ = Notation.mk ⊤
 
-    inst-⊥ : Notation.⊥-notation lsuc (λ ℓ → Type ℓ)
-    inst-⊥ .Notation.⊥-notation.⊥ = Lift ⊥
+    inst-⊥ : Notation.⊥-notation (Type lzero)
+    inst-⊥ = Notation.mk ⊥
 
-    inst-× : Notation.×-notation lsuc (λ ℓ → Type ℓ)
-    inst-× .Notation.×-notation.op2 = _⊔_
-    inst-× .Notation.×-notation._×_ = _×_
+    inst-Types-× : Notation.×-notation (Type ℓ) (Type ℓ') (Type (ℓ ⊔ ℓ'))
+    inst-Types-× = Notation.mk _×_
+
+    inst-fn-× : Notation.×-notation (A → Type ℓ) (A → Type ℓ') (A → Type (ℓ ⊔ ℓ'))
+    inst-fn-× = Notation.mk (λ f g a → f a × g a)
 
 open Types
   using (tt ; ¬_ ; Σ ; Σ-syntax ; _,_ ; fst ; snd ; Lift ; lift ; lower ; _∘_ ; _∘S_ ; _$_ ; _&_ ; idfun ; flip ; const)

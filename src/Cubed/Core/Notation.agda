@@ -7,32 +7,32 @@ private
     ℓ ℓ' : Level
 
 
-module _
-  (op : Level → Level)
-  (A : (ℓ : Level) → Type (op ℓ))
-  where
+record ⊤-notation (A : Type ℓ) : Type ℓ where
+  constructor mk
+  field
+    ⊤ : A
 
-  record ⊤-notation : Typeω where
-    field
-      ⊤ : A ℓ
-
-  open ⊤-notation {{...}} public
+open ⊤-notation {{...}} public
+{-# DISPLAY ⊤-notation A .⊤ = ⊤ #-}
 
 
-  record ⊥-notation : Typeω where
-    field
-      ⊥ : A ℓ
+record ⊥-notation (A : Type ℓ) : Type ℓ where
+  constructor mk
+  field
+    ⊥ : A
 
-  open ⊥-notation {{...}} public
+open ⊥-notation {{...}} public
+{-# DISPLAY ⊥-notation A .⊥ = ⊥ #-}
 
 
-  record ×-notation : Typeω where
-    field
-      op2 : Level → Level → Level
-      _×_ : A ℓ → A ℓ' → A (op2 ℓ ℓ')
-    infixr 5 _×_
+record ×-notation {ℓout} (A : Type ℓ) (B : Type ℓ') (Out : Type ℓout) : Type (ℓ ⊔ ℓ' ⊔ ℓout) where
+  constructor mk
+  field
+    _×_ : A → B → Out
+  infixr 5 _×_
 
-  open ×-notation {{...}} public hiding (op2)
+open ×-notation {{...}} public using (_×_)
+{-# DISPLAY ×-notation A B ._×_ a b = a × b #-}
 
 
 module _ (A : Type ℓ) where
