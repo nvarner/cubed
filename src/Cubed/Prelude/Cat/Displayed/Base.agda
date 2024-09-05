@@ -76,3 +76,4 @@ module _
   _×ᴰ_ .idᴰ-seqᴰ {fᴰ = (fᴰ , fᴰ')} i = (D .idᴰ-seqᴰ {fᴰ = fᴰ} i) , (D' .idᴰ-seqᴰ {fᴰ = fᴰ'} i)
   _×ᴰ_ .seqᴰ-idᴰ {fᴰ = (fᴰ , fᴰ')} i = (D .seqᴰ-idᴰ {fᴰ = fᴰ} i) , (D' .seqᴰ-idᴰ {fᴰ = fᴰ'} i)
   _×ᴰ_ .seqᴰ-assoc (f , f') (g , g') (h , h') i = (D .seqᴰ-assoc f g h i) , (D' .seqᴰ-assoc f' g' h' i)
+

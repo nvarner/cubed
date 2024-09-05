@@ -25,14 +25,44 @@ open ⊥-notation {{...}} public
 {-# DISPLAY ⊥-notation A .⊥ = ⊥ #-}
 
 
-record ×-notation {ℓout} (A : Type ℓ) (B : Type ℓ') (Out : Type ℓout) : Type (ℓ ⊔ ℓ' ⊔ ℓout) where
-  constructor mk
-  field
-    _×_ : A → B → Out
-  infixr 5 _×_
+module _
+  (A : Type ℓ)
+  (B : Type ℓ')
+  {ℓout : Level}
+  (Out : Type ℓout)
+  where
 
-open ×-notation {{...}} public using (_×_)
+
+  record ×-notation : Type (ℓ ⊔ ℓ' ⊔ ℓout) where
+    constructor mk
+    field
+      _×_ : A → B → Out
+    infixr 5 _×_
+
+  open ×-notation {{...}} public using (_×_)
+
+
+  record ·-notation : Type (ℓ ⊔ ℓ' ⊔ ℓout) where
+    constructor mk
+    field
+      _·_ : A → B → Out
+    infixr 5 _·_
+
+  open ·-notation {{...}} public using (_·_)
+
+
+  record +-notation : Type (ℓ ⊔ ℓ' ⊔ ℓout) where
+    constructor mk
+    field
+      _+_ : A → B → Out
+    infixr 5 _+_
+
+  open +-notation {{...}} public using (_+_)
+
+
 {-# DISPLAY ×-notation A B ._×_ a b = a × b #-}
+{-# DISPLAY ·-notation A B ._·_ a b = a · b #-}
+{-# DISPLAY +-notation A B ._+_ a b = a + b #-}
 
 
 module _ (A : Type ℓ) where

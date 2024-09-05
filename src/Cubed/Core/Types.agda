@@ -33,6 +33,7 @@ module Types where
 
   syntax Σ-syntax A (λ x → B) = Σ[ x ∈ A ] B
 
+
   _×_ : Type ℓ → Type ℓ' → Type (ℓ ⊔ ℓ')
   A × A' = Σ A (λ _ → A')
   infixr 5 _×_

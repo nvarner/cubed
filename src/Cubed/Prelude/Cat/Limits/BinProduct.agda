@@ -25,15 +25,16 @@ module _
     is-bin-product : Type (ℓob ⊔ ℓhom)
     is-bin-product =
       (a×'b : ob) (π₁' : hom a×'b a) (π₂' : hom a×'b b) →
-      is-contr (Σ[ f ∈ hom a×'b a×b ] (seq f π₁ ≡ π₁') × (seq f π₂ ≡ π₂'))
+      is-contr (Σ[ f ∈ hom a×'b a×b ] (seq f π₁ ≡ π₁') Types.× (seq f π₂ ≡ π₂'))
 
-  record BinProduct (a b : ob) : Type (ℓob ⊔ ℓhom) where
+  record Bin-product (a b : ob) : Type (ℓob ⊔ ℓhom) where
     field
       product : ob
       π₁ : hom product a
       π₂ : hom product b
       has-is-bin-product : is-bin-product a b product π₁ π₂
 
-  has-bin-products : Type (ℓob ⊔ ℓhom)
-  has-bin-products = (a b : ob) → BinProduct a b
+  record Has-bin-products : Type (ℓob ⊔ ℓhom) where
+    field
+      product : (a b : ob) → Bin-product a b
 

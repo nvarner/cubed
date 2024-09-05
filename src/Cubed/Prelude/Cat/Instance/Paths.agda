@@ -9,9 +9,10 @@ open Precat
 private
   variable
     ℓ : Level
+    A : Type ℓ
 
 
-Paths : Type ℓ → Precat {!!} {!!}
+Paths : Type ℓ → Precat ℓ ℓ
 Paths A .ob = A
 Paths A .hom x y = x ≡ y
 Paths A .id = refl
