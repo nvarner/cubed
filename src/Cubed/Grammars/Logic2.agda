@@ -13,17 +13,13 @@ module _ (Σ₀ : Type ℓ) where
     U-level = Nat
 
     data U-preterm : Type ℓ
-    data U-pretype : Type ℓ
 
     data U-ctxt : Type ℓ
 
-    data Is-U-type : U-ctxt → U-preterm → Type ℓ
-    Is-U-type→U-level : {Γ : U-ctxt} {A : U-preterm} → Is-U-type Γ A → U-level
+    data U-is-type : U-ctxt → U-preterm → Type ℓ
 
     U-type : U-ctxt → Type ℓ
-    U-type Γ = Σ U-preterm (Is-U-type Γ)
-    U-type→U-level : {Γ : U-ctxt} → U-type Γ → U-level
-    U-type→U-level (_ , is-type) = Is-U-type→U-level is-type
+    U-type Γ = Σ U-preterm (U-is-type Γ)
 
     data _⊢_⦂_ : (Γ : U-ctxt) → U-preterm → U-type Γ → Type ℓ
     infix 5 _⊢_⦂_
@@ -73,96 +69,74 @@ module _ (Σ₀ : Type ℓ) where
     U-infer-pretype (inl[ A ] B) = U-infer-pretype B + A
     U-infer-pretype (inr[ A ] B) = A + U-infer-pretype B
 
+    U-is-term : U-ctxt → U-preterm → Type ℓ
+    U-is-term Γ A = Σ[ A-has-type ∈ U-is-type Γ (U-infer-pretype A) ] Γ ⊢ A ⦂ (_ , A-has-type)
+
     data U-ctxt where
       · : U-ctxt
       _⨟_ : (Γ : U-ctxt) → U-type Γ → U-ctxt
 
-    data Is-U-type where
+    data U-is-type where
       U : {Γ : U-ctxt} {lev : U-level} →
-        Is-U-type Γ (U lev)
+        U-is-type Γ (U lev)
       ⦂U : {Γ : U-ctxt} (A : U-preterm) →
         Γ ⊢ A ⦂ (U (U-infer-prelevel A) , U) →
-        Is-U-type Γ A
-
-    Is-U-type→U-level (U {lev = lev}) = lev
-    Is-U-type→U-level (⦂U A pf) = U-infer-prelevel A
+        U-is-type Γ A
 
     U-ext-is-type : (Γ : U-ctxt) (Ext : U-type Γ) (A : U-preterm) →
-      Is-U-type Γ A → Is-U-type (Γ ⨟ Ext) A
+      U-is-type Γ A → U-is-type (Γ ⨟ Ext) A
 
-    U-ext-type : (A : U-type Γ) {B : U-type Γ} → U-type (Γ ⨟ B)
-    U-ext-type (A-preterm , A-is-type) = A-preterm , U-ext-is-type _ _ A-preterm A-is-type
+    U-ext : (A : U-type Γ) {B : U-type Γ} → U-type (Γ ⨟ B)
+    U-ext (Var A-preterm idx , ⦂U .(Var A-preterm idx) pf) = (Var A-preterm (suc idx)) , {!!}
+    U-ext (U x , A-is-type) = U x , U
+    U-ext (⊤ , A-is-type) = U zero , U
+    U-ext (⊥ , A-is-type) = U zero , U
+    U-ext ((A-preterm + A-preterm₁) , A-is-type) = U zero , U
+    U-ext (ΣU A-preterm A-preterm₁ , A-is-type) = U zero , U
+    U-ext (ΠU A-preterm A-preterm₁ , A-is-type) = U zero , U
+    U-ext (μ A-preterm , A-is-type) = U zero , U
+    U-ext (* , A-is-type) = U zero , U
+    U-ext (inl[ A-preterm ] A-preterm₁ , A-is-type) = U zero , U
+    U-ext (inr[ A-preterm ] A-preterm₁ , A-is-type) = U zero , U
 
     data _⊢_⦂_ where
       U : Γ ⊢ U n ⦂ (U (suc n) , U)
       Var-zero :
         {A : U-type Γ} →
-        Γ ⨟ A ⊢ Var (A .fst) zero ⦂ U-ext-type A
+        Γ ⨟ A ⊢ Var (A .fst) zero ⦂ (U zero , U)
       Var-suc :
         {A B : U-type Γ} →
         Γ ⊢ Var (A .fst) n ⦂ A →
-        Γ ⨟ B ⊢ Var (A .fst) n ⦂ U-ext-type A
+        Γ ⨟ B ⊢ Var (A .fst) (suc n) ⦂ (U n , U)
       ⊤ : Γ ⊢ ⊤ ⦂ (U zero , U)
       ⊥ : Γ ⊢ ⊥ ⦂ (U zero , U)
+      _+_ :
+        {Γ : U-ctxt} {A B : U-preterm} →
+        (A-is-type : U-is-type Γ A) →
+        (B-is-type : U-is-type Γ B) →
+        Γ ⊢ A + B ⦂ (U-infer-pretype (A + B) , U)
       ΣU :
         {Γ : U-ctxt} {A B : U-preterm} →
-        (A-is-type : Is-U-type Γ A) →
-        (B-is-type : Is-U-type (Γ ⨟ (A , A-is-type)) B) →
-        Γ ⊢ ΣU A B ⦂ (U (Nat.max (Is-U-type→U-level A-is-type) (Is-U-type→U-level B-is-type)) , U)
+        (A-is-type : U-is-type Γ A) →
+        (B-is-type : U-is-type (Γ ⨟ (A , A-is-type)) B) →
+        Γ ⊢ ΣU A B ⦂ (U-infer-pretype (ΣU A B) , U)
+      ΠU :
+        {Γ : U-ctxt} {A B : U-preterm} →
+        (A-is-type : U-is-type Γ A) →
+        (B-is-type : U-is-type (Γ ⨟ (A , A-is-type)) B) →
+        Γ ⊢ ΠU A B ⦂ (U-infer-pretype (ΠU A B) , U)
+      --μ : ?
+      * :
+        {Γ : U-ctxt} →
+        Γ ⊢ * ⦂ (⊤ , ⦂U ⊤ ⊤)
+      inl :
+        {Γ : U-ctxt} {A B : U-preterm} →
+        (A-is-type : U-is-type Γ A) →
+        (B-is-term : U-is-term Γ B) →
+        Γ ⊢ inl[ A ] B ⦂ (U-infer-pretype (inl[ A ] B) , ⦂U (U-infer-pretype (inl[ A ] B)) (B-is-term .fst + A-is-type))
+      inr :
+        {Γ : U-ctxt} {A B : U-preterm} →
+        (A-is-type : U-is-type Γ A) →
+        (B-is-term : U-is-term Γ B) →
+        Γ ⊢ inr[ A ] B ⦂ (U-infer-pretype (inr[ A ] B) , ⦂U (U-infer-pretype (inr[ A ] B)) (A-is-type + B-is-term .fst))
 
-    U-ext-is-type Γ Ext (U lev) is-type = U
-    U-ext-is-type Γ Ext (Var Typ idx) (⦂U .(Var Typ idx) pf) = ⦂U (Var Typ idx) {!Var-suc ?!}
-    U-ext-is-type Γ Ext ⊤ (⦂U .⊤ ⊤) = ⦂U ⊤ ⊤
-    U-ext-is-type Γ Ext ⊥ (⦂U .⊥ ⊥) = ⦂U ⊥ ⊥
-    U-ext-is-type Γ Ext (ΣU A B) (⦂U .(ΣU A B) pf) = {!!}
-    U-ext-is-type Γ Ext (ΠU A A₁) is-type = {!!}
-    U-ext-is-type Γ Ext (A + A₁) is-type = {!!}
-    U-ext-is-type Γ Ext (μ A) is-type = {!!}
-    U-ext-is-type Γ Ext (inl[ A ] B) is-type = {!!}
-    U-ext-is-type Γ Ext (inr[ A ] B) is-type = {!!}
-    U-ext-is-type Γ Ext * is-type = {!!}
-
-  -- data Ctxt : Type ℓ
-  -- -- `UTerm Γ lev` is a well-formed term in context `Γ` and has type with level `lev`
-  -- data UTerm : Ctxt → (lev : Nat) → Type ℓ
-  -- data Is-UType : (Γ : Ctxt) {lev : Nat} → UTerm Γ lev → Type ℓ
-  -- --Is-strictly-positive : ∀ {Γ} {lev} → UType Γ lev → Type ℓ
-
-  -- UType : Ctxt → (lev : Nat) → Type ℓ
-  -- UType Γ lev = Σ[ term ∈ UTerm Γ lev ] Is-UType term
-
-  -- data Ctxt where
-  --   · : Ctxt
-  --   _⨟_,_ : (pred : Ctxt) {lev : Nat} → UTerm pred lev → Is-UType → Ctxt
-
-  -- private variable
-  --   lev lev' : Nat
-  --   Γ : Ctxt
-
-
-
-
-
-
-  -- data Ctxt : Type ℓ
-  -- data UType : Ctxt → (lev : Nat) → Type ℓ
-  -- Is-strictly-positive : ∀ {Γ} {lev} → UType Γ lev → Type ℓ
-
-  -- data Ctxt where
-  --   · : Ctxt
-  --   _⨟_ : (pred : Ctxt) {lev : Nat} → UType pred lev → Ctxt
-
-  -- private variable
-  --   lev lev' : Nat
-  --   Γ : Ctxt
-
-  -- data UType where
-  --   ⊤ : UType Γ zero
-  --   ⊥ : UType Γ zero
-  --   U : (lev : Nat) → UType Γ (suc lev)
-  --   ΣU ΠU : (A : UType Γ lev) → UType (Γ ⨟ A) lev' → UType Γ (Nat.max lev lev')
-  --   _+_ : UType Γ lev → UType Γ lev' → UType Γ (Nat.max lev lev')
-  --   μ : (A : UType (Γ ⨟ U lev) lev) → Is-strictly-positive A → UType Γ lev
-
-  -- data UTerm : (Γ : Ctxt) → {lev : Nat} → UType Γ lev → Type ℓ where
-  --   * : UTerm Γ ⊤
