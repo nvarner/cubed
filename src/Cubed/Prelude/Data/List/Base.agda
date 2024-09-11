@@ -17,6 +17,7 @@ module List where
   rec b f [] = b
   rec b f (a ∷ as) = f a $ rec b f as
 
+  infixr 5 _++_
   _++_ : List A → List A → List A
   [] ++ ys = ys
   (x ∷ xs) ++ ys = x ∷ (xs ++ ys)
