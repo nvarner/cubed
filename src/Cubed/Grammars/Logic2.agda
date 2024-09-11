@@ -40,6 +40,29 @@ module _ (Σ₀ : Type ℓ) where
     zero : ∀ {Γ A} → U-lookup (A ∷ Γ) A
     suc : ∀ {Γ A B} → U-lookup Γ A → U-lookup (B ∷ Γ) A
 
+  U-ext' : (Nat → U-term) → Nat → U-term
+  U-ext' σ zero = Var zero
+  U-ext' σ (suc n) = σ n
+
+  U-sub' : U-term → (Nat → U-term) → U-term
+  U-sub' (Var idx) σ = σ idx
+  U-sub' (U lev) σ = U lev
+  U-sub' ⊤ σ = ⊤
+  U-sub' ⊥ σ = ⊥
+  U-sub' (Π' A B) σ = Π' (U-sub' A σ) (U-sub' B (U-ext' σ))
+  U-sub' (Σ' A B) σ = Σ' (U-sub' A σ) (U-sub' B (U-ext' σ))
+  U-sub' * σ = *
+  U-sub' (fun A B x) σ = fun (U-sub' A σ) (U-sub' B (U-ext' σ)) (U-sub' x (U-ext' σ))
+  U-sub' (ap f x) σ = ap (U-sub' f σ) (U-sub' x σ)
+  U-sub' (pair A B x y) σ = pair (U-sub' A σ) (U-sub' B σ) (U-sub' x σ) (U-sub' y σ)
+
+  U-sub-one : U-term → U-term → U-term
+  U-sub-one x y = U-sub' x σ
+    where
+    σ : Nat → U-term
+    σ zero = y
+    σ (suc n) = Var n
+
   U-lookup-index zero = zero
   U-lookup-index (suc lookup) = suc (U-lookup-index lookup)
 
@@ -60,7 +83,7 @@ module _ (Σ₀ : Type ℓ) where
   U-exts :
     ∀ {Γ Δ B} →
     (∀ {A} → U-lookup Γ A → Σ[ x ∈ U-term ] U-typing Δ x A) →
-    (∀ {A} → U-lookup (B ∷ Γ) A → Σ[ x ∈ U-term ] U-typing (B ∷ Δ) x {!U-rename suc A!})
+    (∀ {A} → U-lookup (B ∷ Γ) A → Σ[ x ∈ U-term ] U-typing (B ∷ Δ) x A)
   U-subst :
     ∀ {Γ Δ} →
     (∀ {A} → U-lookup Γ A → Σ[ x ∈ U-term ] U-typing Δ x A) →
@@ -107,7 +130,7 @@ module _ (Σ₀ : Type ℓ) where
       U-typing Γ f (Π' A B) →
       {n : Nat} (B-typing : U-typing (A ∷ Γ) B (U n)) →
       (x-typing : U-typing Γ x A) →
-      U-typing Γ (ap f x) (U-subst-one B B-typing x x-typing)
+      U-typing Γ (ap f x) (U-sub-one B x)
     pair : ∀ {Γ A B x y} →
       U-typing Γ x A →
       U-typing (A ∷ Γ) y B → -- or subst?
@@ -133,16 +156,17 @@ module _ (Σ₀ : Type ℓ) where
   U-rename-pres-typing ρ x x-typing Typ-typing = {!!}
 
   U-exts σ zero = (Var zero) , (Var zero)
-  U-exts σ (suc idx) =
-    let (A , typing) = σ idx in
-    (U-rename suc A typing) , {!U-rename-pres-typing suc A typing ?!}
+  U-exts {Γ} {Δ} {B} σ {A} (suc idx) =
+    let (x , x-has-type-A) = σ idx in
+    (U-rename suc x x-has-type-A) , {!U-rename-pres-typing suc x x-has-type-A ?!}
 
   U-subst σ (Var .(U-lookup-index lookup)) (Var lookup) = σ lookup .fst
   U-subst σ (U x) typing = {!!}
   U-subst σ ⊤ typing = ⊤
   U-subst σ ⊥ typing = ⊥
   U-subst σ (Π' A B) (Π' m n A-typing B-typing) =
-    Π' (U-subst σ A A-typing) (U-subst (U-exts σ) B B-typing)
+    --Π' (U-subst σ A A-typing) (U-subst (U-exts σ) B B-typing)
+    Π' (U-subst σ A A-typing) (U-subst (λ {A} idx → {!!}) B B-typing)
   U-subst σ (Σ' A B) (Σ' m n A-typing B-typing) =
     Σ' (U-subst σ A A-typing) (U-subst (U-exts σ) B B-typing)
   U-subst σ * typing = *
