@@ -1,10 +1,21 @@
 module Cubed.Data.Fin.Base where
 
-open import Cubed.Prelude
+open import Cubed.Core.Prelude
+
+open import Cubed.Data.Nat.Base
+  using (Nat ; zero ; suc)
+
+private variable
+  n : Nat
+
 
 data Fin : Nat → Type where
-  zero : {n : Nat} → Fin (suc n)
-  suc : {n : Nat} → Fin n → Fin (suc n)
+  zero : Fin (suc n)
+  suc : Fin n → Fin (suc n)
+
+weaken : Fin n → Fin (suc n)
+weaken zero = zero
+weaken (suc k) = suc (weaken k)
 
 →Nat : ∀ {n} → Fin n → Nat
 →Nat zero = zero

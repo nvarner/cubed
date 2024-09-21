@@ -1,6 +1,6 @@
 module Cubed.Algebra.OpProp where
 
-open import Cubed.Prelude
+open import Cubed.Core.Prelude
 
 open import Cubed.Cat.Displayed
 

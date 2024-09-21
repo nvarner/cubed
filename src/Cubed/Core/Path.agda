@@ -153,13 +153,15 @@ module subst (B : A → Type ℓ) {x y : A} (p : x ≡ y) where
 
 open subst using (subst) public
 
+
 funext : {B : A → I → Type ℓ'}
   {f : (a : A) → B a i0} {g : (a : A) → B a i1} →
   ((a : A) → PathP (B a) (f a) (g a)) →
   PathP (λ i → (a : A) → B a i) f g
 funext p i a = p a i
 
-module J
+
+module _
   (P : ∀ y → x ≡ y → Type ℓ')
   (d : P x refl)
   where
@@ -167,7 +169,6 @@ module J
   J : (p : x ≡ y) → P y p
   J p = transport (λ i → P (p i) (λ j → p (i ∧ j))) d
 
-open J using (J) public
 
 module _ {B : I → Type ℓ} {b0 : B i0} {b1 : B i1} where
   opaque

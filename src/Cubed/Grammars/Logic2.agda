@@ -19,17 +19,22 @@ module _ (Σ₀ : Type ℓ) (Σ₀-discrete : {a b : Σ₀} → Dec (a ≡ b)) w
   data U-term : Type ℓ
 
   data U-lookup : U-ctxt → U-term → Type ℓ
-  data U-ok : U-ctxt → Type ℓ
+  data U-ctxt-valid : U-ctxt → Type ℓ
+  data U-type-valid : U-ctxt → U-term → U-level → Type ℓ
   data U-is-type : U-ctxt → U-term → Type ℓ
   data U-typing : U-ctxt → U-term → U-term → Type ℓ
 
   L-ctxt : Type ℓ
   data L-term : Type ℓ
 
+  data L-strictly-positive : L-term → Type ℓ
   data L-ctxt-valid : U-ctxt → L-ctxt → Type ℓ
-  data L-is-type : U-ctxt → L-term → Type ℓ
   data L-type-valid : U-ctxt → L-term → U-term → Type ℓ
+  data L-is-type : U-ctxt → L-term → Type ℓ
   data L-typing : U-ctxt → L-ctxt → L-term → L-term → Type ℓ
+
+  data _⊢L-is-type_ : U-ctxt → L-term → Type ℓ where
+    pf : (Γ : U-ctxt) (A : L-term) (x : U-term) → U-ctxt-valid Γ → U-is-type Γ x → L-type-valid Γ A x → Γ ⊢L-is-type A
 
   U-sub' : (Nat → U-term) → (Nat → L-term) → U-term → U-term
   L-sub' : (Nat → U-term) → (Nat → L-term) → L-term → L-term
@@ -45,6 +50,7 @@ module _ (Σ₀ : Type ℓ) (Σ₀-discrete : {a b : Σ₀} → Dec (a ≡ b)) w
     U : U-level → U-term
     L : U-term → U-term
     G : L-term → U-term
+    [_]L : L-term → U-term
     ⊤ ⊥ Char : U-term
     Π' Σ' _+_ : U-term → U-term → U-term
     * : U-term
@@ -64,12 +70,17 @@ module _ (Σ₀ : Type ℓ) (Σ₀-discrete : {a b : Σ₀} → Dec (a ≡ b)) w
     Var : (idx : Nat) → L-term
     Lit : Σ₀ → L-term
     _⊗_ _&'_ _⊕_ : L-term → L-term → L-term
+    μ : L-term → L-term
     -- `let⊗= x in y` expects `x` to be some `A ⊗ B`, and creates two bindings in `y`
     let⊗=_in'_ : L-term → L-term → L-term
     -- `inl A x` is the left injection into `(type of x) ⊕ A`
     -- `inr A x` is the right injection into `A ⊕ (type of x)`
     inl inr : L-term → L-term → L-term
     π₁ π₂ : L-term → L-term
+    -- `cons A x` has type `μ A`
+    cons : L-term → L-term → L-term
+    -- `fold B x y`
+    fold : L-term → L-term → L-term → L-term
 
   data U-lookup where
     zero : ∀ {Γ A} → U-lookup (A ∷ Γ) A
@@ -83,6 +94,7 @@ module _ (Σ₀ : Type ℓ) (Σ₀-discrete : {a b : Σ₀} → Dec (a ≡ b)) w
   U-sub' σ ρ (U lev) = U lev
   U-sub' σ ρ (L u) = L (U-sub' σ ρ u)
   U-sub' σ ρ (G l) = G (L-sub' σ ρ l)
+  U-sub' σ ρ ([ l ]L) = [ L-sub' σ ρ l ]L
   U-sub' σ ρ ⊤ = ⊤
   U-sub' σ ρ ⊥ = ⊥
   U-sub' σ ρ Char = Char
@@ -113,6 +125,9 @@ module _ (Σ₀ : Type ℓ) (Σ₀-discrete : {a b : Σ₀} → Dec (a ≡ b)) w
   L-sub' σ ρ (inr A x) = inr (L-sub' σ ρ A) (L-sub' σ ρ x)
   L-sub' σ ρ (π₁ x) = π₁ (L-sub' σ ρ x)
   L-sub' σ ρ (π₂ x) = π₂ (L-sub' σ ρ x)
+  L-sub' σ ρ (μ A) = μ (L-sub' σ (L-ext ρ) A)
+  L-sub' σ ρ (cons A x) = cons (L-sub' σ (L-ext ρ) A) (L-sub' σ ρ x)
+  L-sub' σ ρ (fold B x y) = fold (L-sub' σ ρ B) (L-sub' σ ρ x) (L-sub' σ (L-ext ρ) y)
 
   U-sub : U-term → U-term → U-term
   U-sub x y = U-sub' σ ρ x
@@ -122,6 +137,24 @@ module _ (Σ₀ : Type ℓ) (Σ₀-discrete : {a b : Σ₀} → Dec (a ≡ b)) w
     σ (suc n) = Var n
     ρ : Nat → L-term
     ρ n = Var n
+
+  L-sub : L-term → L-term → L-term
+  L-sub x y = L-sub' σ ρ x
+    where
+    σ : Nat → U-term
+    σ n = Var n
+    ρ : Nat → L-term
+    ρ zero = y
+    ρ (suc n) = Var n
+
+  L-sub-fix : L-term → L-term → L-term
+  L-sub-fix x y = L-sub' σ ρ x
+    where
+    σ : Nat → U-term
+    σ n = Var n
+    ρ : Nat → L-term
+    ρ zero = y
+    ρ (suc n) = Var (suc n)
 
   -- "Push" a term past a binding
   -- i.e. increments the index of each variable
@@ -136,36 +169,51 @@ module _ (Σ₀ : Type ℓ) (Σ₀-discrete : {a b : Σ₀} → Dec (a ≡ b)) w
   U-lookup-index zero = zero
   U-lookup-index (suc lookup) = suc (U-lookup-index lookup)
 
-  data U-ok where
-    ok-[] : U-ok []
-    ok-∷ : ∀ {Γ A} → U-ok Γ → U-is-type Γ A → U-ok (A ∷ Γ)
+  data U-ctxt-valid where
+    []-valid : U-ctxt-valid []
+    ∷-valid : ∀ {Γ A} → U-ctxt-valid Γ → U-is-type Γ A → U-ctxt-valid (A ∷ Γ)
+
+  data U-type-valid where
+    typing→type-valid : ∀ {Γ A lev} →
+      U-typing Γ A (U lev) →
+      U-type-valid Γ A lev
+    U-valid : ∀ {Γ lev} →
+      U-type-valid Γ (U lev) (suc lev)
+    L-valid : ∀ {Γ A lev} →
+      U-type-valid Γ A lev →
+      U-type-valid Γ (L A) lev
+    ⊤-valid : ∀ {Γ} →
+      U-type-valid Γ ⊤ zero
+    ⊥-valid : ∀ {Γ} →
+      U-type-valid Γ ⊥ zero
+    Π-valid : ∀ {Γ A B} lev lev' →
+      U-type-valid Γ A lev →
+      U-type-valid (A ∷ Γ) B lev' →
+      U-type-valid Γ (Π' A B) (Nat.max lev lev')
+    Σ-valid : ∀ {Γ A B} lev lev' →
+      U-type-valid Γ A lev →
+      U-type-valid (A ∷ Γ) B lev' →
+      U-type-valid Γ (Σ' A B) (Nat.max lev lev')
+    +-valid : ∀ {Γ A B} lev lev' →
+      U-type-valid Γ A lev →
+      U-type-valid Γ B lev' →
+      U-type-valid Γ (A + B) (Nat.max lev lev')
 
   data U-is-type where
-    typing-U : ∀ {Γ A} (n : Nat) → U-typing Γ A (U n) → U-is-type Γ A
+    is-valid-at : ∀ {Γ A} (lev : Nat) → U-type-valid Γ A lev → U-is-type Γ A
 
   data U-typing where
+    U-type-valid→typing : ∀ {Γ A lev} →
+      U-type-valid Γ A lev →
+      U-typing Γ A (U lev)
+    L-type-valid→typing : ∀ {Γ A x} lev →
+      U-type-valid Γ x lev →
+      L-type-valid Γ A x →
+      U-typing Γ [ A ]L (L x)
     Var : ∀ {Γ A} →
       (lookup : U-lookup Γ A) →
       U-typing Γ (Var (U-lookup-index lookup)) A
-    U : ∀ {Γ n} →
-      U-typing Γ (U n) (U (suc n))
-    ⊤ : ∀ {Γ} →
-      U-typing Γ ⊤ (U zero)
-    ⊥ : ∀ {Γ} →
-      U-typing Γ ⊥ (U zero)
-    Π' : ∀ {Γ A B} m n →
-      U-typing Γ A (U m) →
-      U-typing (A ∷ Γ) B (U n) →
-      U-typing Γ (Π' A B) (U (Nat.max m n))
-    Σ' : ∀ {Γ A B} m n →
-      U-typing Γ A (U m) →
-      U-typing (A ∷ Γ) B (U n) →
-      U-typing Γ (Σ' A B) (U (Nat.max m n))
-    +-valid : ∀ {Γ A B} m n →
-      U-typing Γ A (U m) →
-      U-typing Γ B (U n) →
-      U-typing Γ (A + B) (U (Nat.max m n))
-    * : ∀ {Γ} →
+    ⊤-intro : ∀ {Γ} →
       U-typing Γ * ⊤
     Π-intro : ∀ {Γ A B x} →
       U-is-type Γ A →
@@ -186,17 +234,21 @@ module _ (Σ₀ : Type ℓ) (Σ₀-discrete : {a b : Σ₀} → Dec (a ≡ b)) w
     Σ-elim-r : ∀ {Γ A B x} →
       U-typing Γ x (Σ' A B) →
       U-typing Γ (π₂ x) (U-sub B (π₁ x))
-    +-elim : ∀ {Γ A B C a x y} →
-      U-typing Γ a (A + B) →
-      U-typing (A ∷ Γ) x C →
-      U-typing (B ∷ Γ) y C →
-      U-typing Γ (case a x y) C
     +-intro-l : ∀ {Γ A B x} →
       U-typing Γ x B →
       U-typing Γ (inl A x) (A + B)
     +-intro-r : ∀ {Γ A B x} →
       U-typing Γ x B →
       U-typing Γ (inr A x) (B + A)
+    +-elim : ∀ {Γ A B C a x y} →
+      U-typing Γ a (A + B) →
+      U-typing (A ∷ Γ) x C →
+      U-typing (B ∷ Γ) y C →
+      U-typing Γ (case a x y) C
+
+  -- todo
+  data L-strictly-positive where
+    is-pos : ∀ {A} → L-strictly-positive A
 
   data L-ctxt-valid where
     []-valid : ∀ {Γ} →
@@ -206,10 +258,10 @@ module _ (Σ₀ : Type ℓ) (Σ₀-discrete : {a b : Σ₀} → Dec (a ≡ b)) w
       L-ctxt-valid Γ Δ →
       L-ctxt-valid Γ (A ∷ Δ)
 
-  data L-is-type where
-    typing-L : ∀ {Γ A} (x : U-term) → L-type-valid Γ A x → L-is-type Γ A
-
   data L-type-valid where
+    U-typing→type-valid : ∀ Γ A x →
+      U-typing Γ [ A ]L (L x) →
+      L-type-valid Γ A x
     Lit-valid : ∀ Γ c →
       L-type-valid Γ (Lit c) Char
     ⊗-valid : ∀ Γ A B x y →
@@ -224,6 +276,13 @@ module _ (Σ₀ : Type ℓ) (Σ₀-discrete : {a b : Σ₀} → Dec (a ≡ b)) w
       L-type-valid Γ A x →
       L-type-valid Γ B y →
       L-type-valid Γ (A ⊕ B) (x + y)
+    μ-valid : ∀ Γ A x →
+      L-type-valid (L x ∷ Γ) A x →
+      L-strictly-positive A →
+      L-type-valid Γ (μ A) x
+
+  data L-is-type where
+    typing-L : ∀ {Γ A} (x : U-term) → L-type-valid Γ A x → L-is-type Γ A
 
   data L-typing where
     Var : ∀ {Γ A} →
@@ -252,6 +311,13 @@ module _ (Σ₀ : Type ℓ) (Σ₀-discrete : {a b : Σ₀} → Dec (a ≡ b)) w
     &-elim-r : ∀ {Γ Δ A B x} →
       L-typing Γ Δ x (A &' B) →
       L-typing Γ Δ (π₂ x) B
+    μ-intro : ∀ {Γ Δ A x} →
+      L-typing Γ Δ x (L-sub-fix A (μ A)) →
+      L-typing Γ Δ (cons A x) (μ A)
+    μ-elim : ∀ {Γ Δ A B x y} →
+      L-typing Γ Δ x (μ A) →
+      L-typing Γ (L-sub A B ∷ []) y B →
+      L-typing Γ Δ (fold B x y) B
 
   module Semantics where
 
@@ -284,22 +350,54 @@ module _ (Σ₀ : Type ℓ) (Σ₀-discrete : {a b : Σ₀} → Dec (a ≡ b)) w
       concat-grammar g g' w = Σ[ split ∈ Split w ] g (split .l) Types.× g' (split .r)
         where open Split
 
-      ⟦_⟧-U-ctxt : U-ctxt → Type ℓ
-      ⟦_⟧-L-ctxt : ∀ {Γ Δ} → L-ctxt-valid Γ Δ → ⟦ Γ ⟧-U-ctxt → Grammar
-      ⟦_⟧-L-type : ∀ {Γ A} → L-is-type Γ A → ⟦ Γ ⟧-U-ctxt → Grammar
+      ⟦_⟧-U-ctxt : U-ctxt →
+        Type ℓ
+      ⟦_⟧-L-ctxt : ∀ {Γ Δ} → U-ctxt-valid Γ Types.× L-ctxt-valid Γ Δ →
+        ⟦ Γ ⟧-U-ctxt → Grammar
+      ⟦_⟧-L-type : ∀ {Γ A} →
+        Γ ⊢L-is-type A →
+        ⟦ Γ ⟧-U-ctxt → Grammar
+      -- ⟦_⟧-L-term : ∀ {Γ Δ a A} →
+      --   ((Γ-valid , Δ-valid , A-is-type , typing) : U-ctxt-valid Γ Types.× L-ctxt-valid Γ Δ Types.× L-is-type Γ A Types.× L-typing Γ Δ a A) →
+      --   (γ : ⟦ Γ ⟧-U-ctxt) (w : String) → ⟦ Γ-valid , Δ-valid ⟧-L-ctxt γ w → ⟦ pf Γ A x Γ-valid x-is-type A-is-type ⟧-L-type γ w
 
-      ⟦ []-valid ⟧-L-ctxt x = ε-grammar
-      ⟦ ∷-valid type-valid ctxt-valid ⟧-L-ctxt x =
-        concat-grammar (⟦ type-valid ⟧-L-type x) (⟦ ctxt-valid ⟧-L-ctxt x)
+      ⟦ _ ⟧-U-ctxt = Lift Types.⊤
 
-      ⟦ typing ⟧-L-type x = {!!}
+      ⟦ Γ-valid , []-valid ⟧-L-ctxt x = ε-grammar
+      ⟦ Γ-valid , ∷-valid (typing-L x type-valid) ctxt-valid ⟧-L-ctxt γ =
+        concat-grammar (⟦ pf _ _ x Γ-valid {!!} type-valid ⟧-L-type γ) (⟦ Γ-valid , ctxt-valid ⟧-L-ctxt γ)
 
-  private module _ where
+      ⟦ pf Γ (Var idx) x Γ-valid x-is-U-type valid-L-type ⟧-L-type γ = {!!}
+      ⟦ pf Γ (Lit x₁) x Γ-valid x-is-U-type valid-L-type ⟧-L-type γ = {!!}
+      ⟦ pf Γ (A ⊗ B) x Γ-valid x-is-U-type (U-typing→type-valid .Γ .(A ⊗ B) .x x₁) ⟧-L-type γ = {!!}
+      ⟦ pf Γ (A ⊗ B) .(Σ' x (U-push y)) Γ-valid (is-valid-at lev (typing→type-valid x₁)) (⊗-valid .Γ .A .B x y A-valid-L-type B-valid-L-type) ⟧-L-type γ = {!!}
+      ⟦ pf Γ (A ⊗ B) .(Σ' x (U-push y)) Γ-valid (is-valid-at .(Nat.max lev lev') (Σ-valid lev lev' x-valid y-valid)) (⊗-valid .Γ .A .B x y A-valid-L-type B-valid-L-type) ⟧-L-type γ =
+        concat-grammar (⟦ pf Γ A x Γ-valid (is-valid-at lev x-valid) A-valid-L-type ⟧-L-type γ) {!!}
+      ⟦ pf Γ (A &' A₁) x Γ-valid x-is-U-type valid-L-type ⟧-L-type γ = {!!}
+      ⟦ pf Γ (A ⊕ A₁) x Γ-valid x-is-U-type valid-L-type ⟧-L-type γ = {!!}
+      ⟦ pf Γ (μ A) x Γ-valid x-is-U-type valid-L-type ⟧-L-type γ = {!!}
+      ⟦ pf Γ (let⊗= A in' A₁) x Γ-valid x-is-U-type valid-L-type ⟧-L-type γ = {!!}
+      ⟦ pf Γ (inl A A₁) x Γ-valid x-is-U-type valid-L-type ⟧-L-type γ = {!!}
+      ⟦ pf Γ (inr A A₁) x Γ-valid x-is-U-type valid-L-type ⟧-L-type γ = {!!}
+      ⟦ pf Γ (π₁ A) x Γ-valid x-is-U-type valid-L-type ⟧-L-type γ = {!!}
+      ⟦ pf Γ (π₂ A) x Γ-valid x-is-U-type valid-L-type ⟧-L-type γ = {!!}
+      ⟦ pf Γ (cons A A₁) x Γ-valid x-is-U-type valid-L-type ⟧-L-type γ = {!!}
+      ⟦ pf Γ (fold A A₁ A₂) x Γ-valid x-is-U-type valid-L-type ⟧-L-type γ = {!!}
+
+  private module _ (c : Σ₀) where
 
     term typ : U-term
     term = pair (U zero) (Var zero) ⊤ *
     typ = Σ' (U zero) (Var zero)
 
     term-typ : U-typing [] term typ
-    term-typ = Σ-intro ⊤ *
+    term-typ = Σ-intro (U-type-valid→typing ⊤-valid) ⊤-intro
+
+    repeat-ftor repeat-term repeat-type : L-term
+    repeat-ftor = Lit c ⊕ (Lit c ⊗ Var zero)
+    repeat-term = cons repeat-ftor {!Var 1 ⊕ !}
+    repeat-type = μ repeat-ftor
+
+    repeat-typing : L-typing [] (Lit c ∷ []) repeat-term repeat-type
+    repeat-typing = μ-intro {!!}
 

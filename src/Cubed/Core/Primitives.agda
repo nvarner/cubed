@@ -59,7 +59,7 @@ _[_≡_] = PathP
 -- Non dependent path types
 
 Path : ∀ {ℓ} (A : Type ℓ) → A → A → Type ℓ
-Path A a b = PathP (λ _ → A) a b
+Path A a b = (λ _ → A) [ a ≡ b ]
 
 {-# BUILTIN REWRITE _≡_ #-}
 

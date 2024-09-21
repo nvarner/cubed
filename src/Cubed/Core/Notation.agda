@@ -7,6 +7,15 @@ private
     ℓ ℓ' : Level
 
 
+open import Agda.Builtin.FromNat public
+  using (fromNat)
+  renaming (Number to Has-from-nat)
+
+open import Agda.Builtin.FromNeg public
+  using (fromNeg)
+  renaming (Negative to Has-from-neg)
+
+
 record ⊤-notation (A : Type ℓ) : Type ℓ where
   constructor mk
   field
@@ -27,7 +36,7 @@ open ⊥-notation {{...}} public
 
 module _
   (A : Type ℓ)
-  (B : Type ℓ')
+  (B : {a : A} → Type ℓ')
   {ℓout : Level}
   (Out : Type ℓout)
   where
@@ -36,7 +45,7 @@ module _
   record ×-notation : Type (ℓ ⊔ ℓ' ⊔ ℓout) where
     constructor mk
     field
-      _×_ : A → B → Out
+      _×_ : (a : A) → B {a} → Out
     infixr 5 _×_
 
   open ×-notation {{...}} public using (_×_)
@@ -45,24 +54,69 @@ module _
   record ·-notation : Type (ℓ ⊔ ℓ' ⊔ ℓout) where
     constructor mk
     field
-      _·_ : A → B → Out
+      _·_ : (a : A) → B {a} → Out
     infixr 5 _·_
 
   open ·-notation {{...}} public using (_·_)
 
 
+  record /-notation : Type (ℓ ⊔ ℓ' ⊔ ℓout) where
+    constructor mk
+    field
+      _/_ : (a : A) → B {a} → Out
+    infixr 5 _/_
+
+  open /-notation {{...}} public using (_/_)
+
+
   record +-notation : Type (ℓ ⊔ ℓ' ⊔ ℓout) where
     constructor mk
     field
-      _+_ : A → B → Out
+      _+_ : (a : A) → B {a} → Out
     infixr 5 _+_
 
   open +-notation {{...}} public using (_+_)
 
 
+  record minus-notation : Type (ℓ ⊔ ℓ' ⊔ ℓout) where
+    constructor mk
+    field
+      _-_ : (a : A) → B {a} → Out
+    infixr 5 _-_
+
+  open minus-notation {{...}} public using (_-_)
+
+
 {-# DISPLAY ×-notation A B ._×_ a b = a × b #-}
+{-# DISPLAY ×-notation._×_ X a b = a × b #-}
 {-# DISPLAY ·-notation A B ._·_ a b = a · b #-}
+{-# DISPLAY ·-notation._·_ X a b = a · b #-}
+{-# DISPLAY /-notation A B ._/_ a b = a / b #-}
+{-# DISPLAY /-notation._/_ X a b = a / b #-}
 {-# DISPLAY +-notation A B ._+_ a b = a + b #-}
+{-# DISPLAY +-notation._+_ X a b = a + b #-}
+{-# DISPLAY minus-notation A B ._-_ a b = a - b #-}
+{-# DISPLAY minus-notation._-_ X a b = a - b #-}
+
+
+record neg-notation (A : Type ℓ) {ℓout} (Out : Type ℓout) : Typeω where
+  constructor mk
+  field
+    -_ : A → Out
+
+open neg-notation {{...}} public using (-_)
+
+
+record ⁻¹-notation (A : Type ℓ) {ℓout} (Out : Type ℓout) : Typeω where
+  constructor mk
+  field
+    _⁻¹ : A → Out
+
+open ⁻¹-notation {{...}} public using (_⁻¹)
+
+
+{-# DISPLAY neg-notation A B .-_ a = - a #-}
+{-# DISPLAY ⁻¹-notation A B ._⁻¹ a = a ⁻¹ #-}
 
 
 module _ (A : Type ℓ) where

@@ -11,8 +11,10 @@ private
     B : A → Type ℓ
     C : (a : A) → B a → Type ℓ
 
-
 module Types where
+
+  level : Type ℓ → Level
+  level {ℓ} A = ℓ
 
   open import Agda.Builtin.Unit
     using (⊤ ; tt)
@@ -26,13 +28,12 @@ module Types where
   infix 3 ¬_
 
   open import Agda.Builtin.Sigma public
-  infix 2 Σ-syntax
 
+  infix 2 Σ-syntax
   Σ-syntax : ∀ {ℓ ℓ'} (A : Type ℓ) (B : A → Type ℓ') → Type (ℓ ⊔ ℓ')
   Σ-syntax = Σ
 
   syntax Σ-syntax A (λ x → B) = Σ[ x ∈ A ] B
-
 
   _×_ : Type ℓ → Type ℓ' → Type (ℓ ⊔ ℓ')
   A × A' = Σ A (λ _ → A')
@@ -96,6 +97,6 @@ module Types where
     inst-fn-× = Notation.mk (λ f g a → f a × g a)
 
 open Types
-  using (tt ; ¬_ ; Σ ; Σ-syntax ; _,_ ; fst ; snd ; Lift ; lift ; lower ; _∘_ ; _∘S_ ; _$_ ; _&_ ; idfun ; flip ; const)
+  using (level ; tt ; ¬_ ; Σ ; Σ-syntax ; _,_ ; fst ; snd ; Lift ; lift ; lower ; _∘_ ; _∘S_ ; _$_ ; _&_ ; idfun ; flip ; const)
   public
 

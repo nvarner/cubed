@@ -15,7 +15,8 @@ module Maybe where
 
 module Nat where
   open import Agda.Builtin.Nat public
-    using (Nat ; zero ; suc ; _+_ ; _-_ ; _*_)
+    using (Nat ; zero ; suc ; _+_ ; _-_)
+    renaming (_*_ to _·_)
 
   open import Agda.Builtin.String public
     renaming (primShowNat to show)
