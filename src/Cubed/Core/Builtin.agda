@@ -1,6 +1,22 @@
+open import Cubed.Core.Primitives
+
 module Cubed.Core.Builtin where
 
-open import Cubed.Core.Primitives
+
+module Unit where
+  open import Agda.Builtin.Unit public
+    using (tt)
+    renaming (⊤ to Unit)
+
+
+module Sigma where
+  open import Agda.Builtin.Sigma public
+    using (Σ ; _,_ ; fst ; snd)
+
+  infix 2 Σ-syntax
+  Σ-syntax : ∀ {ℓ ℓ'} (A : Type ℓ) (B : A → Type ℓ') → Type (ℓ ⊔ ℓ')
+  Σ-syntax = Σ
+  syntax Σ-syntax A (λ x → B) = Σ[ x ∈ A ] B
 
 
 module Bool where

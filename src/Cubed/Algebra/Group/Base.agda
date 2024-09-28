@@ -97,8 +97,8 @@ private module example where
   +-monoid = ⟨ +-group ⟩
 
   g-elt : ⟨ +-group ⟩
-  g-elt = ?
+  g-elt = {!!}
 
   m-elt : ⟨ +-monoid ⟩
-  m-elt = ?
+  m-elt = {!!}
 

@@ -1,9 +1,9 @@
-module Cubed.Data.Fin.Base where
-
 open import Cubed.Core.Prelude
 
 open import Cubed.Data.Nat.Base
   using (Nat ; zero ; suc)
+
+module Cubed.Data.Fin.Base where
 
 private variable
   n : Nat

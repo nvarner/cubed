@@ -1,43 +1,51 @@
-module Cubed.Core.Types where
-
 open import Cubed.Core.Primitives
-
+open import Cubed.Core.Path
+import Cubed.Core.Builtin as Builtin
 import Cubed.Core.Notation as Notation
+
+module Cubed.Core.Types where
 
 private
   variable
     ℓ ℓ' : Level
     A A' A'' : Type ℓ
-    B : A → Type ℓ
+    B B' : A → Type ℓ
     C : (a : A) → B a → Type ℓ
 
 module Types where
 
-  level : Type ℓ → Level
-  level {ℓ} A = ℓ
+  open Builtin.Unit public using (Unit ; tt)
+  ⊤ : Type lzero
+  ⊤ = Unit
 
-  open import Agda.Builtin.Unit
-    using (⊤ ; tt)
-    public
+  data Empty : Type lzero where
+  ⊥ : Type lzero
+  ⊥ = Empty
 
-  data ⊥ : Type lzero where
-
+  infix 3 ¬_
   ¬_ : Type ℓ → Type ℓ
   ¬ A = A → ⊥
 
-  infix 3 ¬_
+  open Builtin.Sigma public
 
-  open import Agda.Builtin.Sigma public
+  module _
+    {A : I → Type ℓ}
+    {B : (i : I) → A i → Type ℓ'}
+    {x : Σ (A i0) (B i0)} {y : Σ (A i1) (B i1)}
+    where
 
-  infix 2 Σ-syntax
-  Σ-syntax : ∀ {ℓ ℓ'} (A : Type ℓ) (B : A → Type ℓ') → Type (ℓ ⊔ ℓ')
-  Σ-syntax = Σ
+    Σ≡ :
+      (p : A [ fst x ≡ fst y ]) →
+      (λ i → B i (p i)) [ snd x ≡ snd y ] →
+      (λ i → Σ (A i) (B i)) [ x ≡ y ]
+    Σ≡ p q i = p i , q i
 
-  syntax Σ-syntax A (λ x → B) = Σ[ x ∈ A ] B
-
+  infixr 5 _×_
   _×_ : Type ℓ → Type ℓ' → Type (ℓ ⊔ ℓ')
   A × A' = Σ A (λ _ → A')
-  infixr 5 _×_
+
+  ×≡ : {x : A × A'} {y : A × A'} → fst x ≡ fst y → snd x ≡ snd y → x ≡ y
+  ×≡ = Σ≡
 
   record Lift (A : Type ℓ) : Type (ℓ ⊔ ℓ') where
     constructor lift
@@ -46,43 +54,6 @@ module Types where
 
   open Lift public
 
-  _∘_ : ({a : A} → (b : B a) → C a b) → (f : (a : A) → B a) → (a : A) → C a (f a)
-  (g ∘ f) a = g (f a)
-  {-# INLINE _∘_ #-}
-
-  _∘S_ : (A' → A'') → (A → A') → A → A''
-  (g ∘S f) a = g (f a)
-  {-# INLINE _∘S_ #-}
-
-  infixr 9 _∘_
-
-  _$_ : ((a : A) → B a) → (a : A) → B a
-  f $ a = f a
-  {-# INLINE _$_ #-}
-
-  infixr -2 _$_
-
-  _&_ : (a : A) → ((a : A) → B a) → B a
-  a & f = f a
-  {-# INLINE _&_ #-}
-
-  infixl -1 _&_
-
-  idfun : A → A
-  idfun a = a
-  {-# INLINE idfun #-}
-
-  flip :
-    {B : Type ℓ} {C : (a : A) (b : B) → Type ℓ'} →
-    ((a : A) (b : B) → C a b) →
-    ((b : B) (a : A) → C a b)
-  flip f b a = f a b
-  {-# INLINE flip #-}
-
-  const : {B : Type ℓ} → A → B → A
-  const a b = a
-  {-# INLINE const #-}
-
   instance
     inst-⊤ : Notation.⊤-notation (Type lzero)
     inst-⊤ = Notation.mk ⊤
@@ -90,13 +61,9 @@ module Types where
     inst-⊥ : Notation.⊥-notation (Type lzero)
     inst-⊥ = Notation.mk ⊥
 
-    inst-Types-× : Notation.×-notation (Type ℓ) (Type ℓ') (Type (ℓ ⊔ ℓ'))
-    inst-Types-× = Notation.mk _×_
+    inst-× : Notation.×-notation (Type ℓ) (Type ℓ') (Type (ℓ ⊔ ℓ'))
+    inst-× = Notation.mk _×_
 
-    inst-fn-× : Notation.×-notation (A → Type ℓ) (A → Type ℓ') (A → Type (ℓ ⊔ ℓ'))
-    inst-fn-× = Notation.mk (λ f g a → f a × g a)
-
-open Types
-  using (level ; tt ; ¬_ ; Σ ; Σ-syntax ; _,_ ; fst ; snd ; Lift ; lift ; lower ; _∘_ ; _∘S_ ; _$_ ; _&_ ; idfun ; flip ; const)
-  public
+open Types public
+  using (Unit ; tt ; Empty ; ¬_ ; Σ ; Σ-syntax ; _,_ ; fst ; snd ; Σ≡ ; ×≡ ; Lift ; lift ; lower)
 

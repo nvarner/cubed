@@ -23,7 +23,7 @@ opaque
   unfolding Is-finite
 
   _×_ : Finite ℓ → Finite ℓ' → Finite (ℓ ⊔ ℓ')
-  (A , m , A-equiv-m) × (B , n , B-equiv-n) = A Types.× B , m · n , ?
+  (A , m , A-equiv-m) × (B , n , B-equiv-n) = A Types.× B , m · n , {!!}
 
 opaque
   ℙ : Finite ℓ → (ℓP : Level) → Type (ℓ ⊔ lsuc ℓP)
