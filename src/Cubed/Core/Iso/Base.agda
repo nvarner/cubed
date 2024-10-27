@@ -1,7 +1,9 @@
 open import Cubed.Core.Primitives
-open import Cubed.Core.Types
-open import Cubed.Core.Functions
+open import Cubed.Core.Types.Base
+open import Cubed.Core.Fun.Base as Fun
 open import Cubed.Core.Path
+import Cubed.Core.Square as Square
+open import Cubed.Core.Equiv.Base as Equiv using (_≃_; Is-equiv; equiv-proof)
 open import Cubed.Core.HLevel.Base
 
 open import Cubed.Core.Canonical
@@ -11,6 +13,7 @@ module Cubed.Core.Iso.Base where
 private variable
   ℓ ℓ' : Level
   A B C : Type _
+  f : A → B
 
 
 record Is-iso (f : A → B) : Type (level A ⊔ level B) where
@@ -26,6 +29,31 @@ _≅_ : Type ℓ → Type ℓ' → Type (ℓ ⊔ ℓ')
 A ≅ B = Σ (A → B) Is-iso
 
 
+module _ where
+  open Is-iso
+
+  inv-is-iso : (f-is-iso : Is-iso f) → Is-iso (inv f-is-iso)
+  inv-is-iso {f = f} f-is-iso .inv = f
+  inv-is-iso f-is-iso .inv-r = f-is-iso .inv-l
+  inv-is-iso f-is-iso .inv-l = f-is-iso .inv-r
+
+  module _ {g : B → C} {f : A → B} where
+    _∘-is-iso_ : Is-iso g → Is-iso f → Is-iso (g ∘ f)
+    (f-iso ∘-is-iso g-iso) .inv = g-iso .inv ∘ f-iso .inv
+    (f-iso ∘-is-iso g-iso) .inv-r c = cong g (g-iso .inv-r (f-iso .inv c)) ∙ f-iso .inv-r c
+    (f-iso ∘-is-iso g-iso) .inv-l a = cong (g-iso .inv) (f-iso .inv-l (f a)) ∙ g-iso .inv-l a
+
+
+  sym-iso : (f : A ≅ B) → B ≅ A
+  sym-iso f = f .snd .inv , inv-is-iso (f .snd)
+
+  _∘-iso_ : (g : B ≅ C) (f : A ≅ B) → A ≅ C
+  g ∘-iso f = (g .fst ∘ f .fst) , (g .snd ∘-is-iso f .snd)
+
+  _∙-iso_ : (f : A ≅ B) (g : B ≅ C) → A ≅ C
+  _∙-iso_ = Fun.flip _∘-iso_
+
+
 module _
   {f : A → B}
   (f-is-iso : Is-iso f)
@@ -34,35 +62,79 @@ module _
   open Is-iso f-is-iso
 
   private module _ (y : B) (x0 x1 : A) (p0 : f x0 ≡ y) (p1 : f x1 ≡ y) where
-    q0 : inv y ≡ x0
-    q0 = cong inv (sym p0) ∙ inv-l x0
+    opaque
+      unfolding cong
 
-    q0-fill : Square (cong inv (sym p0)) q0 refl (inv-l x0)
-    q0-fill = ∙.filler (cong inv (sym p0)) (inv-l x0)
+      q0 : inv y ≡ x0
+      q0 = cong inv (sym p0) ∙ inv-l x0
 
-    q1 : inv y ≡ x1
-    q1 = cong inv (sym p1) ∙ inv-l x1
+      fill0 : Square refl (inv-l x0) (cong inv (sym p0)) q0
+      fill0 = Square.flip (∙.filler (cong inv (sym p0)) (inv-l x0))
 
-    q1-fill : Square (cong inv (sym p1)) q1 refl (inv-l x1)
-    q1-fill = ∙.filler (cong inv (sym p1)) (inv-l x1)
+      q1 : inv y ≡ x1
+      q1 = cong inv (sym p1) ∙ inv-l x1
 
-    q : x0 ≡ x1
-    q = sym q0 ∙ q1
+      fill1 : Square refl (inv-l x1) (cong inv (sym p1)) q1
+      fill1 = Square.flip (∙.filler (cong inv (sym p1)) (inv-l x1))
 
-    q-fill : Square q1 q q0 refl
-    q-fill = ∙.filler' (sym q0) q1
+      q : x0 ≡ x1
+      q i = hcomp
+        (λ k → λ where
+          (i = i0) → q0 k
+          (i = i1) → q1 k)
+        (inv y)
 
-    goal : Square p0 p1 (cong f q) refl
-    goal = {!!}
+      fill2 : Square q0 q1 refl q
+      fill2 i j = hfill
+        (λ k → λ where
+          (i = i0) → q0 k
+          (i = i1) → q1 k)
+        (inS (inv y))
+        j
 
-    lem : (x0 , p0) ≡ (x1 , p1)
-    lem = Σ≡ q ?
+      sq : Square (cong inv (sym p0)) (cong inv (sym p1)) refl (cong (inv ∘ f) q)
+      sq i j = hcomp
+        (λ k → λ where
+          (i = i0) → fill0 j (~ k)
+          (i = i1) → fill1 j (~ k)
+          (j = i0) → inv y
+          (j = i1) → cong inv-l q i (~ k))
+        (fill2 i j)
+
+      sq1 : Square (sym p0) (sym p1) refl (cong f q)
+      sq1 i j = hcomp
+        (λ k → λ where
+          (i = i0) → cong inv-r (sym p0) j k
+          (i = i1) → cong inv-r (sym p1) j k
+          (j = i0) → inv-r y k
+          (j = i1) → cong (inv-r ∘ f) q i k)
+        (Square.cong f sq i j)
+
+      lemma : (x0 , p0) ≡ (x1 , p1)
+      lemma = Σ≡ q (Square.flip-v sq1)
+
+  Is-iso→Is-equiv : Is-equiv f
+  Is-iso→Is-equiv .equiv-proof y .Is-contr.center = (inv y) , (inv-r y)
+  Is-iso→Is-equiv .equiv-proof y .Is-contr.≡center (x , x∈fiber) = lemma y x (inv y) x∈fiber (inv-r y)
+
+instance
+  inst-Is-iso→Is-equiv : {f : A → B} {{f-is-iso : Is-iso f}} → Is-equiv f
+  inst-Is-iso→Is-equiv {{f-is-iso}} = Is-iso→Is-equiv f-is-iso
+
+≅→≃ : (f : A ≅ B) → A ≃ B
+≅→≃ f = (f .fst) , Is-iso→Is-equiv (f .snd)
 
 open Is-iso
 
-module _ {f : A → B} {g : B → C} where
-  _∘-is-iso_ : Is-iso g → Is-iso f → Is-iso (g ∘ f)
-  (f-iso ∘-is-iso g-iso) .inv = g-iso .inv ∘ f-iso .inv
-  (f-iso ∘-is-iso g-iso) .inv-r c = cong g (g-iso .inv-r (f-iso .inv c)) ∙ f-iso .inv-r c
-  (f-iso ∘-is-iso g-iso) .inv-l a = cong (g-iso .inv) (f-iso .inv-l (f a)) ∙ g-iso .inv-l a
+Is-equiv→Is-iso : (f-is-equiv : Is-equiv f) → Is-iso f
+Is-equiv→Is-iso f-is-equiv .inv = Equiv.inv (_ , f-is-equiv)
+Is-equiv→Is-iso f-is-equiv .inv-r = Equiv.inv-r (_ , f-is-equiv)
+Is-equiv→Is-iso f-is-equiv .inv-l = Equiv.inv-l (_ , f-is-equiv)
+
+instance
+  inst-Is-equiv→Is-iso : {{f-is-equiv : Is-equiv f}} → Is-iso f
+  inst-Is-equiv→Is-iso {{f-is-equiv}} = Is-equiv→Is-iso f-is-equiv
+
+≃→≅ : (f : A ≃ B) → A ≅ B
+≃→≅ f = (f .fst) , Is-equiv→Is-iso (f .snd)
 

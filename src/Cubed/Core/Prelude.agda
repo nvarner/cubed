@@ -6,6 +6,12 @@ open import Cubed.Core.Types public
 open import Cubed.Core.Functions public
 open import Cubed.Core.Glue public
 
+open import Cubed.Core.Types public
+  using (Unit ; tt ; Empty ; ¬_ ; Σ ; Σ-syntax ; _,_ ; fst ; snd ; Σ≡ ; ×≡ ; Lift ; lift ; lower)
+
+module Types where
+  open import Cubed.Core.Types public
+
 open import Cubed.Core.HLevel.Base public
   hiding (upward-closed)
 

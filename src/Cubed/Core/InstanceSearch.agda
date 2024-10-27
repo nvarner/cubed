@@ -2,15 +2,14 @@ module Cubed.Core.InstanceSearch where
 
 open import Cubed.Core.Primitives
 
-private
-  variable
-    ℓ ℓ' : Level
+private variable
+  ℓ : Level
 
 
-record Wrap (P : Type ℓ → Type ℓ') (A : Type ℓ) : Type (ℓ ⊔ ℓ') where
+record Wrap (A : Type ℓ) : Type ℓ where
   constructor wrap
   field
-    unwrap : P A
+    unwrap : A
 
 open Wrap public
 

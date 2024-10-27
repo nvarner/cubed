@@ -8,4 +8,5 @@ flags:
   --import-sorts
   --postfix-projections
   --rewriting
+  --no-require-unique-meta-solutions
   -WnoUnsupportedIndexedMatch

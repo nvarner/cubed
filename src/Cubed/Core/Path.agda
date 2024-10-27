@@ -56,18 +56,79 @@ module ∙ where
         (p (~ i ∨ j))
 
   opaque
-    id-l : (p : x ≡ y) → refl ∙ p ≡ p
-    id-l p = sym (filler' refl p)
+    id-l : {p : x ≡ y} → refl ∙ p ≡ p
+    id-l {p = p} = sym (filler' refl p)
 
-    id-r : (p : x ≡ y) → p ∙ refl ≡ p
-    id-r p = sym (filler p refl)
+    id-r : {p : x ≡ y} → p ∙ refl ≡ p
+    id-r {p = p} = sym (filler p refl)
 
     assoc :
       (p : x ≡ y) (q : y ≡ z) (r : z ≡ w) →
       (p ∙ q) ∙ r ≡ p ∙ q ∙ r
     assoc p q r i = filler p q (~ i) ∙ filler' q r i
 
+  opaque
+    unfolding _∙_
+
+    inv-r : (p : x ≡ y) → Square (p ∙ sym p) refl refl refl
+    inv-r {x = x} p i j = hfill
+      (λ k → λ where
+        (i = i1) → x
+        (j = i0) → x
+        (j = i1) → p (~ k ∧ ~ i))
+      (inS (p (~ i ∧ j)))
+      i1
+
+    inv-l : (p : x ≡ y) → Square (sym p ∙ p) refl refl refl
+    inv-l p = inv-r (sym p)
+
 open ∙ using (_∙_) public
+{-# REWRITE ∙.id-l #-}
+{-# REWRITE ∙.id-r #-}
+
+
+module cong where
+  opaque
+    cong :
+      (f : (a : A) → B a) (p : x ≡ y) →
+      (λ i → B (p i)) [ f x ≡ f y ]
+    cong f p i = f (p i)
+
+    def :
+      {B : Type ℓ} (f : A → B) (p : x ≡ y) →
+      Square (λ i → f (p i)) (cong f p) refl refl
+    def f p = refl
+
+    along-refl :
+      {f : (a : A) → B a} {a : A} →
+      Square (cong f (refl {x = a})) refl refl refl
+    along-refl = refl
+
+    opaque
+      unfolding _∙_
+
+      along-∙ :
+        {B : Type ℓ} (f : A → B)
+        {p : x ≡ y} {q : y ≡ z} →
+        Square (cong f (p ∙ q)) (cong f p ∙ cong f q) refl refl
+      along-∙ {x = x} f {p} {q} i j =
+        hfill (λ k → λ { (j = i0) → f x
+                       ; (j = i1) → cong f q k
+                       ; (i = i0) → cong f (∙.filler p q k) j
+                       })
+        (inS (cong f p j)) i1
+
+    by-id : {p : x ≡ y} → Square (cong (λ a → a) p) p refl refl
+    by-id = refl
+
+    by-∘ : {B : Type ℓ} {C : Type ℓ'}
+      (g : B → C) (f : A → B) {p : x ≡ y} →
+      Square (cong (λ a → g (f a)) p) (cong g (cong f p)) refl refl
+    by-∘ g f = refl
+
+open cong using (cong) public
+{-# REWRITE cong.along-refl #-}
+{-# REWRITE cong.by-id #-}
 
 
 module congP where
@@ -91,46 +152,6 @@ module congP where
 open congP using (congP) public
 {-# REWRITE congP.along-refl #-}
 {-# REWRITE congP.by-id #-}
-
-
-module cong where
-  opaque
-    cong : (f : (a : A) → B a) (p : x ≡ y) →
-          (λ i → B (p i)) [ f x ≡ f y ]
-    cong f = congP (λ _ → f)
-
-    along-refl : {f : (a : A) → B a} {a : A} → cong f (refl {x = a}) ≡ refl
-    along-refl {f = f} {a} = congP.along-refl {f = f} {a}
-
-    opaque
-      unfolding congP
-      unfolding _∙_
-
-      along-∙ :
-        {B : Type ℓ} (f : A → B)
-        {p : x ≡ y} {q : y ≡ z} →
-        cong f (p ∙ q) ≡ cong f p ∙ cong f q
-      along-∙ {x = x} f {p} {q} i j =
-        hfill (λ k → λ { (j = i0) → f x
-                       ; (j = i1) → cong f q k
-                       ; (i = i0) → cong f (∙.filler p q k) j
-                       })
-        (inS (cong f p j)) i1
-
-    by-id : {p : x ≡ y} → cong (λ a → a) p ≡ p
-    by-id = refl
-
-    opaque
-      unfolding congP
-
-      by-∘ : {B : Type ℓ} {C : Type ℓ'}
-        (g : B → C) (f : A → B) {p : x ≡ y} →
-        cong (λ a → g (f a)) p ≡ cong g (cong f p)
-      by-∘ g f = refl
-
-open cong using (cong) public
-{-# REWRITE cong.along-refl #-}
-{-# REWRITE cong.by-id #-}
 
 
 module transport where

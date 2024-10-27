@@ -1,9 +1,11 @@
+{-# OPTIONS --lossy-unification #-}
+
 open import Cubed.Core.Primitives
-open import Cubed.Core.Types
-open import Cubed.Core.Functions
+open import Cubed.Core.Types.Base
+open import Cubed.Core.Fun.Base
 open import Cubed.Core.Path
+open import Cubed.Core.Square as Square using (_∙h_)
 open import Cubed.Core.HLevel.Base
-open import Cubed.Core.HLevel.Properties
 open import Cubed.Core.Equiv.Base
 open import Cubed.Core.Equiv.Glue
 open import Cubed.Core.Iso.Base
@@ -18,34 +20,37 @@ private variable
   A B C : Type _
   f g : A → B
 
-Is-iso→Is-equiv : Is-iso f → Is-equiv f
-Is-iso→Is-equiv f-is-iso .equiv-proof y .Is-contr.center =
-  f-is-iso .Is-iso.inv y , f-is-iso .Is-iso.inv-r y
-Is-iso→Is-equiv f-is-iso .equiv-proof y .Is-contr.≡center = {!!}
+inv-is-equiv : (f-is-equiv : Is-equiv f) → Is-equiv (inv (f , f-is-equiv))
+inv-is-equiv f-is-equiv = Is-iso→Is-equiv (inv-is-iso (Is-equiv→Is-iso f-is-equiv))
 
-instance
-  inst-Is-iso→Is-equiv : {{Is-iso f}} → Is-equiv f
-  inst-Is-iso→Is-equiv {{f-is-iso}} = Is-iso→Is-equiv f-is-iso
-
-≅→≃ : A ≅ B → A ≃ B
-≅→≃ (f , f-is-iso) = f , Is-iso→Is-equiv f-is-iso
-
-module _
-  {A : Type ℓ} {B : Type ℓ'} {C : Type ℓ''}
-  (g : B ≃ C) (f : A ≃ B)
+cong-by-fun : (e : A ≃ B) {x y : A} → (x ≡ y) ≃ (fun e x ≡ fun e y)
+cong-by-fun e {x} {y} = ≅→≃ (cong (fun e) , cong-is-iso)
   where opaque
-    private
-      ∘-fiber : (y : C) → Fiber (⟨ g ⟩ ∘ ⟨ f ⟩) y
-      ∘-fiber y .fst = inv f (inv g y)
-      ∘-fiber y .snd = {!!} ∙ {!!}
+  unfolding cong
+  cong-is-iso : Is-iso (cong {x = x} {y = y} (fun e))
+  cong-is-iso .Is-iso.inv p i = {!p i!}
+  cong-is-iso .Is-iso.inv-r = {!!}
+  cong-is-iso .Is-iso.inv-l = {!!}
+  -- cong-is-iso .Is-iso.inv p = sym (inv-r e x) ∙ cong (fun e) p ∙ inv-r e y
+  -- cong-is-iso .Is-iso.inv-r p = cong.along-∙ (inv e) ∙h {!!}
+  -- cong-is-iso .Is-iso.inv-l = {!!}
 
-      ∘-is-equiv : Is-equiv (⟨ g ⟩ ∘ ⟨ f ⟩)
-      ∘-is-equiv .equiv-proof y = mk-is-contr (∘-fiber y) {!!}
+-- module _
+--   {A : Type ℓ} {B : Type ℓ'} {C : Type ℓ''}
+--   (g : B ≃ C) (f : A ≃ B)
+--   where opaque
+--     private
+--       ∘-fiber : (y : C) → Fiber (⟨ g ⟩ ∘ ⟨ f ⟩) y
+--       ∘-fiber y .fst = inv f (inv g y)
+--       ∘-fiber y .snd = {!!} ∙ {!!}
 
-    _∘≃_ : A ≃ C
-    _∘≃_ .fst = ⟨ g ⟩ ∘ ⟨ f ⟩
-    _∘≃_ .snd = ∘-is-equiv
+--       ∘-is-equiv : Is-equiv (⟨ g ⟩ ∘ ⟨ f ⟩)
+--       ∘-is-equiv .equiv-proof y = mk-is-contr (∘-fiber y) {!!}
 
-_∙≃_ : A ≃ B → B ≃ C → A ≃ C
-f ∙≃ g = g ∘≃ f
+--     _∘≃_ : A ≃ C
+--     _∘≃_ .fst = ⟨ g ⟩ ∘ ⟨ f ⟩
+--     _∘≃_ .snd = ∘-is-equiv
+
+-- _∙≃_ : A ≃ B → B ≃ C → A ≃ C
+-- f ∙≃ g = g ∘≃ f
 

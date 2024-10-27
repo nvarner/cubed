@@ -1,9 +1,7 @@
 open import Cubed.Core.Primitives
-open import Cubed.Core.Types
+open import Cubed.Core.Types.Base
 open import Cubed.Core.Equiv.Base
-open import Cubed.Core.Glue using (primGlue ; prim^unglue)
-
-open import Cubed.Core.Canonical
+open import Cubed.Core.Glue
 
 module Cubed.Core.Equiv.Glue where
 

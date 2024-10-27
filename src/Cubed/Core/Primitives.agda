@@ -21,7 +21,7 @@ private variable
   A : Type _
 
 open CubePrim public
-  using (I; i0; i1; Partial)
+  using (I; i0; i1; Partial; PartialP)
   renaming
     ( primIMin to _∧_
     ; primIMax to _∨_

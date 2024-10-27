@@ -1,14 +1,12 @@
 open import Cubed.Core.Primitives
-open import Cubed.Core.Types
 open import Cubed.Core.Path
 
 import Cubed.Core.Builtin as Builtin
 import Cubed.Core.Notation as Notation
 
+module Cubed.Core.Fun.Base where
+
 open Builtin.Sigma
-
-module Cubed.Core.Functions where
-
 
 module _ where
   private variable
@@ -37,7 +35,7 @@ module _ where
 
 private variable
   ℓ ℓ' : Level
-  A A' A'' B C : Type _
+  A B C : Type _
 
 infixr 9 _∘S_
 _∘S_ : (g : B → C) (f : A → B) → A → C

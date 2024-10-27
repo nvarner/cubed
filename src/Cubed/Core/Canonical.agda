@@ -1,8 +1,8 @@
 module Cubed.Core.Canonical where
 
 open import Cubed.Core.Primitives
-open import Cubed.Core.Types
-open import Cubed.Core.Functions
+open import Cubed.Core.Types.Base
+import Cubed.Core.Fun.Base as Fun
 open import Cubed.Core.Path
 
 private variable
@@ -21,7 +21,7 @@ open Map {{...}} public
 
 instance
   id-map : Map A A
-  id-map = mk id
+  id-map = mk Fun.id
 
   Σ-map : Map (Σ A P) A
   Σ-map = mk fst
