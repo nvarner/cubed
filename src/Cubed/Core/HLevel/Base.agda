@@ -1,7 +1,7 @@
 open import Cubed.Core.Primitives
 open import Cubed.Core.Types.Base
 open import Cubed.Core.Path
-open import Cubed.Core.Cube
+--open import Cubed.Core.Cube
 
 open import Cubed.Core.Builtin using (module Nat)
 open Nat
@@ -13,6 +13,11 @@ private variable
   A : Type _
   n : Nat
 
+
+Globe : (A : Type ℓ) (n : Nat) → Type ℓ
+Globe A zero = Σ[ center ∈ A ] ((a : A) → a ≡ center)
+Globe A (suc zero) = (x y : A) → x ≡ y
+Globe A (suc (suc n)) = (x y : A) → Globe (x ≡ y) (suc n)
 
 opaque
   Is-hlevel : (n : Nat) (A : Type ℓ) → Type ℓ
@@ -55,7 +60,7 @@ module Is-contr (is-contr : Is-contr A) where
     ≡center : (a : A) → a ≡ center
     ≡center = is-contr .snd
 
-  path : Path-filler A
+  path : {x y : A} → x ≡ y
   path = ≡center _ ∙ sym (≡center _)
 
   is-prop : Is-prop A
@@ -66,7 +71,11 @@ module Is-set (is-set : Is-set A) where
   opaque
     unfolding Is-hlevel
 
-    square : Square-filler A
+    square :
+      {a00 a01 a10 a11 : A}
+      {left : a00 ≡ a01} {right : a10 ≡ a11}
+      {bottom : a00 ≡ a10} {top : a01 ≡ a11} →
+      Square left right bottom top
     square = ≡→[≡] (is-set _ _ _ _)
 
 
@@ -83,7 +92,7 @@ module Is-prop (is-prop : Is-prop A) where
         (j = i1) → is-prop x (q i) k)
       x
 
-    path : Path-filler A
+    path : {x y : A} → x ≡ y
     path = is-prop _ _
 
   Path-is-contr : (x y : A) → Is-contr (x ≡ y)
@@ -111,27 +120,4 @@ opaque
     (x y : A) → Is-hlevel n (x ≡ y)
   Path-is-hlevel {n = zero} = Is-prop.Path-is-contr
   Path-is-hlevel {n = suc n} is-hlevel x y = is-hlevel x y
-
-opaque
-  unfolding Is-hlevel
-
-  private
-    Path-cube-filler : (n : Nat) (A : Type ℓ) → Type ℓ
-    Path-cube-filler n A = (x y : A) → Cube-filler n (x ≡ y)
-
-    Path-cube-filler≡Cube-filler-suc : Path-cube-filler n A ≡ Cube-filler (suc n) A
-    Path-cube-filler≡Cube-filler-suc {n = zero} = {!!}
-    Path-cube-filler≡Cube-filler-suc {n = suc n} = {!!}
-
-    Path-cube-filler→Cube-filler-suc : Path-cube-filler n A → Cube-filler (suc n) A
-    Path-cube-filler→Cube-filler-suc {n = zero} path-cube-filler boundary = path-cube-filler _ _ _
-    Path-cube-filler→Cube-filler-suc {n = suc zero} path-cube-filler boundary = ≡→[≡] {!!}
-      where open ∂Cube+
-    Path-cube-filler→Cube-filler-suc {n = suc (suc n)} path-cube-filler boundary = {!!}
-      where open ∂Cube+
-
-  Is-hlevel→Cube-filler : Is-hlevel n A → Cube-filler n A
-  Is-hlevel→Cube-filler {n = zero} is-contr boundary = Is-contr.center is-contr
-  Is-hlevel→Cube-filler {n = suc n} is-hlevel = Path-cube-filler→Cube-filler-suc (λ x y →
-    Is-hlevel→Cube-filler (Path-is-hlevel is-hlevel x y))
 

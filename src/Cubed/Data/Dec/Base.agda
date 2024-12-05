@@ -1,6 +1,13 @@
-module Cubed.Data.Dec.Base where
+open import Cubed.Level
 
-open import Cubed.Core.Prelude
+open import Cubed.Data.Prod.Base using (Σ)
+
+open import Cubed.Path.Base using (_≡_)
+
+open import Cubed.Relation.Nullary.Neg.Base using (¬_)
+
+
+module Cubed.Data.Dec.Base where
 
 private variable
   ℓ : Level
@@ -27,6 +34,6 @@ map : (A → B) → (¬ A → ¬ B) → Dec A → Dec B
 map y n (yes a) = yes (y a)
 map y n (no ¬a) = no (n ¬a)
 
-_≟_ : (a b : A) → {{_ : Is-discrete A}} → Dec (a ≡ b)
+_≟_ : (a b : A) → {{Is-discrete A}} → Dec (a ≡ b)
 _≟_ a b {{dec}} = dec
 

@@ -2,7 +2,7 @@ open import Cubed.Core.Primitives
 open import Cubed.Core.Path
 open import Cubed.Core.Types.Base
 open import Cubed.Core.Fun.Base as Fun using (_∘_)
-open import Cubed.Core.Cube.Base as Cube using (const)
+open import Cubed.Core.Cube.Base as Cube using (int; ∂ᵇ₀; ∂ᵇ₁; ∂ᵇ₀₁; const)
 
 open import Cubed.Core.Builtin using (module Nat)
 open Nat
@@ -12,77 +12,68 @@ module Cubed.Core.Cube.Subtypes where
 private variable
   ℓ : Level
   A : Type _
+  n : Nat
 
 
 -- Cubes with a pair of specified constant opposite faces
-module Opp-const where
-  Boundary₀₁ : (n : Nat) (A : Type ℓ) (a₀ a₁ : A) → Type ℓ
-  Boundary₀₁ n A a₀ a₁ = Cube.Boundary₀₁ n A (const _ a₀) (const _ a₁)
+-- These are essentially n-globes, so we call them "globular cubes"
+module Glob where
+  Bound₀₁ : (A : Type ℓ) (n : Nat) (a₀ a₁ : A) → Type ℓ
+  Bound₀₁ A n a₀ a₁ = Cube.Bound₀₁ A n (const a₀) (const a₁)
 
-  Boundary : (n : Nat) (A : Type ℓ) → Type ℓ
-  Boundary n A = Σ[ a₀ ∈ A ] Σ[ a₁ ∈ A ] Boundary₀₁ n A a₀ a₁
+  Int : (A : Type ℓ) (n : Nat) {a₀ a₁ : A} (∂₀₁ : Bound₀₁ A n a₀ a₁) → Type ℓ
+  Int A n {a₀} {a₁} ∂₀₁ = Cube.Int A (suc n) (Cube.Bound-suc (const a₀) (const a₁) ∂₀₁)
 
-  Int : (n : Nat) (A : Type ℓ) (∂ : Boundary n A) → Type ℓ
-  Int n A (_ , _ , ∂₀₁) = Cube.Int (suc n) A (Cube.Boundary₀₁→Boundary ∂₀₁)
-
-  Cube : (n : Nat) (A : Type ℓ) → Type ℓ
-  Cube n A = Σ[ ∂ ∈ Boundary n A ] Int n A ∂
-
-
-  -- The equivalence of cubes with fixed constant opposite faces and cubes in the path type
-
-  Boundary₀₁→Cube-Boundary :
-    {n : Nat} {a₀ a₁ : A} →
-    Boundary₀₁ n A a₀ a₁ → Cube.Boundary n (a₀ ≡ a₁)
-
-  Int→Cube-Int :
-    {n : Nat} {∂@(a₀ , a₁ , ∂₀₁) : Boundary n A} →
-    Int n A ∂ → Cube.Int n (a₀ ≡ a₁) (Boundary₀₁→Cube-Boundary ∂₀₁)
-
-  Boundary₀₁→Cube-Boundary {n = zero} ∂₀₁ = lift tt
-  Boundary₀₁→Cube-Boundary {n = suc zero} ∂₀₁ = cong fst ∂₀₁ , cong snd ∂₀₁
-  Boundary₀₁→Cube-Boundary {n = suc (suc n)} ∂₀₁ =
-    Cube.make-boundary {!!} (Int→Cube-Int (cong {!!} ∂₀₁)) {!!}
-
-  -- ∂Opp-const-cube₀₁→∂Cube {n = 0} _ = lift tt
-  -- ∂Opp-const-cube₀₁→∂Cube {n = 1} p = cong fst p , cong snd p
-  -- ∂Opp-const-cube₀₁→∂Cube {n = suc (suc n)} {A} {a₀} {a₁} ∂₀₁ =
-  --   (_ , (CubeRelConst₀₁→Path (cong (snd ∘ fst) ∂₀₁))) ,
-  --   (_ , (CubeRelConst₀₁→Path (cong (snd ∘ fst ∘ snd) ∂₀₁))) ,
-  --   cong ∂CubeConst₀₁→Path {!λ j → ∂₀₁ j .snd .snd!}
-  --   --λ i → ∂CubeConst₀₁→Path (λ j → ∂₀₁ j .snd .snd i)
-
-  -- -- CubeRelConst₀₁→Path {n = 0} p = p
-  -- -- CubeRelConst₀₁→Path {n = 1} a₋ i j = a₋ j i
-  -- -- CubeRelConst₀₁→Path {n = suc (suc n)} {A} {a₀} {a₁} a₋ i =
-  -- --   CubeRelConst₀₁→Path (λ j → a₋ j i)
-
-  -- CubeRelConst₀₁→Path {n = 0} p = p
-  -- CubeRelConst₀₁→Path {n = 1} a₋ = {!!}
-  -- CubeRelConst₀₁→Path {n = suc (suc n)} {A} {a₀} {a₁} a₋ = {!!}
+  record Glob (A : Type ℓ) (n : Nat) : Type ℓ where
+    field
+      ₀ ₁ : A
+      ∂₀₁ : Bound₀₁ A n ₀ ₁
+      int : Int A n ∂₀₁
 
 
--- interleaved mutual
+  -- These are equivalent to cubes of paths
 
---   ∂CubePath→Const₀₁ :
---     {n : ℕ}{A : Type ℓ}{a₀ a₁ : A}
---     → ∂Cube n (a₀ ≡ a₁) → ∂CubeConst₀₁ n A a₀ a₁
+  module _ {A : Type ℓ} {a₀ a₁ : A} where
 
---   CubeRelPath→Const₀₁ :
---     {n : ℕ}{A : Type ℓ}{a₀ a₁ : A}{∂ : ∂Cube n (a₀ ≡ a₁)}
---     → CubeRel n (a₀ ≡ a₁) ∂ → CubeRelConst₀₁ n A (∂CubePath→Const₀₁ ∂)
+    Bound₀₁→Cube-Bound : (∂₀₁ : Bound₀₁ A n a₀ a₁) → Cube.Bound (a₀ ≡ a₁) n
+    Int→Cube-Int :
+      {∂₀₁ : Bound₀₁ A n a₀ a₁} (int : Int A n ∂₀₁) →
+      Cube.Int (a₀ ≡ a₁) n (Bound₀₁→Cube-Bound ∂₀₁)
 
---   ∂CubePath→Const₀₁ {n = 0} _ = tt*
---   ∂CubePath→Const₀₁ {n = 1} (p , q) i = p i , q i
---   ∂CubePath→Const₀₁ {n = suc (suc n)} (a₀ , a₁ , ∂₋) i =
---     (_ , CubeRelPath→Const₀₁ (a₀ .snd) i) ,
---     (_ , CubeRelPath→Const₀₁ (a₁ .snd) i) ,
---     λ j → ∂CubePath→Const₀₁ (∂₋ j) i
+    Bound₀₁→Cube-Bound {n = zero} ∂₀₁ = Cube.Bound-zero
+    Bound₀₁→Cube-Bound {n = suc n} ∂₀₁ = Cube.Bound-suc
+      (Cube.Int→Cube (Int→Cube-Int (λ i → (int ∘ ∂ᵇ₀) (∂₀₁ i))))
+      (Cube.Int→Cube (Int→Cube-Int (λ i → (int ∘ ∂ᵇ₁) (∂₀₁ i))))
+      (λ i → Bound₀₁→Cube-Bound (λ j → ∂ᵇ₀₁ (∂₀₁ j) i))
 
---   CubeRelPath→Const₀₁ {n = 0} p = p
---   CubeRelPath→Const₀₁ {n = 1} a₋ i j = a₋ j i
---   CubeRelPath→Const₀₁ {n = suc (suc n)} a₋ i j = CubeRelPath→Const₀₁ (a₋ j) i
+    Int→Cube-Int {n = zero} int = int
+    Int→Cube-Int {n = suc n} int i = Int→Cube-Int (λ j → int j i)
 
+
+    Cube-Bound→Bound₀₁ : (∂ : Cube.Bound (a₀ ≡ a₁) n) → Bound₀₁ A n a₀ a₁
+    Cube-Int→Int :
+      {∂ : Cube.Bound (a₀ ≡ a₁) n} (int : Cube.Int (a₀ ≡ a₁) n ∂) →
+      Int A n (Cube-Bound→Bound₀₁ ∂)
+
+    Cube-Bound→Bound₀₁ {n = zero} ∂ = refl
+    Cube-Bound→Bound₀₁ {n = suc n} ∂ i = Cube.Bound-suc
+      (Cube.Int→Cube (Cube-Int→Int (int (∂ᵇ₀ ∂)) i))
+      (Cube.Int→Cube (Cube-Int→Int (int (∂ᵇ₁ ∂)) i))
+      (λ j → Cube-Bound→Bound₀₁ (∂ᵇ₀₁ ∂ j) i)
+
+    Cube-Int→Int {n = zero} int = int
+    Cube-Int→Int {n = suc n} int i j = Cube-Int→Int (int j) i
+
+
+    Bound₀₁→Cube-Bound→Bound₀₁ :
+      (∂₀₁ : Bound₀₁ A n a₀ a₁) →
+      (Cube-Bound→Bound₀₁ ∘ Bound₀₁→Cube-Bound) ∂₀₁ ≡ ∂₀₁
+    Int→Cube-Int→Int :
+      {∂₀₁ : Bound₀₁ A n a₀ a₁} (int : Int A n ∂₀₁) →
+      (λ i → Int A n (Bound₀₁→Cube-Bound→Bound₀₁ ∂₀₁ i)) [ (Cube-Int→Int ∘ Int→Cube-Int) int ≡ int ]
+
+    Bound₀₁→Cube-Bound→Bound₀₁ {n = zero} = J (λ {zero p → _}) refl
+    Bound₀₁→Cube-Bound→Bound₀₁ {n = suc n} = J (λ x ∂₀₁ → {!!} ≡ ∂₀₁) {!!}
 
 -- interleaved mutual
 
