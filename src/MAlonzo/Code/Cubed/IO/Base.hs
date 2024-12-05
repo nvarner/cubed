@@ -5,6 +5,7 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE PatternSynonyms #-}
+{-# LANGUAGE QualifiedDo #-}
 {-# LANGUAGE RankNTypes #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
@@ -18,11 +19,14 @@ import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
 import qualified MAlonzo.RTE
 import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.IO
+import qualified MAlonzo.Code.Agda.Builtin.List
 import qualified MAlonzo.Code.Agda.Builtin.String
 import qualified MAlonzo.Code.Agda.Builtin.Unit
 import qualified MAlonzo.Code.Agda.Primitive
 
-import qualified Data.Text.IO as Text
+import qualified Data.Text as T
+import qualified Data.Text.IO as TextIO
+import qualified System.Environment as SE
 -- Cubed.IO.Base.pure
 d_pure_10 ::
   forall xA'46'1.
@@ -49,9 +53,16 @@ d_put'45'str'45'ln_14 ::
   MAlonzo.Code.Agda.Builtin.String.T_String_6 ->
   MAlonzo.Code.Agda.Builtin.IO.T_IO_8
     () MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6
-d_put'45'str'45'ln_14 = Text.putStrLn
+d_put'45'str'45'ln_14 = TextIO.putStrLn
 -- Cubed.IO.Base.get-line
 d_get'45'line_16 ::
   MAlonzo.Code.Agda.Builtin.IO.T_IO_8
     () MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_get'45'line_16 = Text.getLine
+d_get'45'line_16 = TextIO.getLine
+-- Cubed.IO.Base.get-args
+d_get'45'args_18 ::
+  MAlonzo.Code.Agda.Builtin.IO.T_IO_8
+    ()
+    (MAlonzo.Code.Agda.Builtin.List.T_List_10
+       () MAlonzo.Code.Agda.Builtin.String.T_String_6)
+d_get'45'args_18 = fmap (fmap T.pack) SE.getArgs

@@ -5,6 +5,7 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE PatternSynonyms #-}
+{-# LANGUAGE QualifiedDo #-}
 {-# LANGUAGE RankNTypes #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
@@ -36,12 +37,12 @@ d_snoc_30 ::
   MAlonzo.Code.Cubed.Data.QQueue.Base.T_IQueue_24 ->
   MAlonzo.Code.Cubed.Effect.Monad.State.Trans.Base.T_Raw'45'monad'45'state_30 ->
   AgdaAny -> AgdaAny
-d_snoc_30 ~v0 ~v1 ~v2 ~v3 ~v4 v5 v6 v7 = du_snoc_30 v5 v6 v7
+d_snoc_30 ~v0 ~v1 ~v2 ~v3 ~v4 !v5 !v6 !v7 = du_snoc_30 v5 v6 v7
 du_snoc_30 ::
   MAlonzo.Code.Cubed.Data.QQueue.Base.T_IQueue_24 ->
   MAlonzo.Code.Cubed.Effect.Monad.State.Trans.Base.T_Raw'45'monad'45'state_30 ->
   AgdaAny -> AgdaAny
-du_snoc_30 v0 v1 v2
+du_snoc_30 !v0 !v1 !v2
   = coe
       MAlonzo.Code.Cubed.Effect.Monad.State.Trans.Base.d_modify_42 v1
       (coe MAlonzo.Code.Cubed.Data.QQueue.Base.d_snoc_46 v0 v2)
@@ -55,18 +56,18 @@ d_pop_34 ::
   MAlonzo.Code.Cubed.Data.QQueue.Base.T_IQueue_24 ->
   MAlonzo.Code.Cubed.Effect.Monad.State.Trans.Base.T_Raw'45'monad'45'state_30 ->
   MAlonzo.Code.Cubed.Effect.Monad.T_Raw'45'monad_24 -> AgdaAny
-d_pop_34 ~v0 ~v1 ~v2 ~v3 ~v4 v5 v6 v7 = du_pop_34 v5 v6 v7
+d_pop_34 ~v0 ~v1 ~v2 ~v3 ~v4 !v5 !v6 !v7 = du_pop_34 v5 v6 v7
 du_pop_34 ::
   MAlonzo.Code.Cubed.Data.QQueue.Base.T_IQueue_24 ->
   MAlonzo.Code.Cubed.Effect.Monad.State.Trans.Base.T_Raw'45'monad'45'state_30 ->
   MAlonzo.Code.Cubed.Effect.Monad.T_Raw'45'monad_24 -> AgdaAny
-du_pop_34 v0 v1 v2
+du_pop_34 !v0 !v1 !v2
   = coe
       MAlonzo.Code.Cubed.Effect.Monad.du__'62''62''61'__36 v2
       (coe
          MAlonzo.Code.Cubed.Effect.Monad.State.Trans.Base.du_get_44
          (coe v1))
-      (\ v3 ->
+      (\ !v3 ->
          coe
            MAlonzo.Code.Cubed.Data.Maybe.Base.du_rec_12
            (coe
@@ -74,7 +75,7 @@ du_pop_34 v0 v1 v2
               (MAlonzo.Code.Cubed.Effect.Monad.d_applicative_32 (coe v2)) erased
               (coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
            (coe
-              (\ v4 ->
+              (\ !v4 ->
                  coe
                    MAlonzo.Code.Cubed.Effect.Monad.du__'62''62'__38 (coe v2)
                    (coe

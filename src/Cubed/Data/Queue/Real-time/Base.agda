@@ -29,8 +29,8 @@ open Queue
 
 private
   rotate : Stream A → List A → Stream A → Stream A
-  rotate = Stream.foldl
-    (λ ih x → λ where
+  rotate = Stream.foldr
+    (λ x ih → λ where
       [] acc → Stream.cons x (ih [] acc)
       (y ∷ back') acc → Stream.cons x (ih back' (Stream.cons y acc)))
     (λ back acc → Stream.from-list (List.reverse back) Stream.++ acc)

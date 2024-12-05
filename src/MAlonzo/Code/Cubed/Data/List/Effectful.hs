@@ -5,6 +5,7 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE PatternSynonyms #-}
+{-# LANGUAGE QualifiedDo #-}
 {-# LANGUAGE RankNTypes #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
@@ -61,7 +62,7 @@ du_functor_16
   = coe
       MAlonzo.Code.Cubed.Effect.Functor.C_Raw'45'functor'46'constructor_209
       (coe
-         (\ v0 v1 v2 v3 ->
+         (\ !v0 !v1 !v2 !v3 ->
             coe MAlonzo.Code.Cubed.Data.List.Base.du_map_40 v2 v3))
 -- Cubed.Data.List.Effectful.applicative
 d_applicative_18 ::
@@ -75,12 +76,12 @@ du_applicative_18
       MAlonzo.Code.Cubed.Effect.Applicative.C_Raw'45'applicative'46'constructor_453
       (coe du_functor_16)
       (coe
-         (\ v0 v1 ->
+         (\ !v0 !v1 ->
             coe
               MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe v1)
               (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
       (coe
-         (\ v0 v1 v2 v3 ->
+         (\ !v0 !v1 !v2 !v3 ->
             coe MAlonzo.Code.Cubed.Data.List.Base.du_seq_130 v2 v3))
 -- Cubed.Data.List.Effectful.monad
 d_monad_20 ::
@@ -93,7 +94,7 @@ du_monad_20
       MAlonzo.Code.Cubed.Effect.Monad.C_Raw'45'monad'46'constructor_311
       (coe du_applicative_18)
       (coe
-         (\ v0 v1 v2 v3 ->
+         (\ !v0 !v1 !v2 !v3 ->
             coe MAlonzo.Code.Cubed.Data.List.Base.du_bind_128 v2 v3))
 -- Cubed.Data.List.Effectful.foldable
 d_foldable_22 ::
@@ -105,10 +106,10 @@ du_foldable_22 ::
 du_foldable_22
   = coe
       MAlonzo.Code.Cubed.Effect.Foldable.C_Raw'45'foldable'46'constructor_447
-      (\ v0 v1 v2 v3 v4 v5 ->
+      (\ !v0 !v1 !v2 !v3 !v4 !v5 ->
          coe MAlonzo.Code.Cubed.Data.List.Base.du_foldr_108 v3 v4 v5)
       (coe
-         (\ v0 v1 v2 v3 v4 v5 ->
+         (\ !v0 !v1 !v2 !v3 !v4 !v5 ->
             coe MAlonzo.Code.Cubed.Data.List.Base.du_foldl_94 v3 v4 v5))
 -- Cubed.Data.List.Effectful.traversable
 d_traversable_24 ::
@@ -122,11 +123,11 @@ du_traversable_24
       MAlonzo.Code.Cubed.Effect.Traversable.C_Raw'45'traversable'46'constructor_493
       (coe du_functor_16) (coe du_foldable_22)
       (coe
-         (\ v0 v1 v2 v3 v4 v5 ->
+         (\ !v0 !v1 !v2 !v3 !v4 !v5 ->
             coe
               MAlonzo.Code.Cubed.Data.List.Base.du_foldr_108
               (coe
-                 (\ v6 ->
+                 (\ !v6 ->
                     coe
                       MAlonzo.Code.Cubed.Effect.Applicative.du__'60''42''62'__38 v4
                       (coe
