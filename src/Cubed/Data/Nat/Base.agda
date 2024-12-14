@@ -3,15 +3,21 @@ open import Cubed.Level
 open import Cubed.Data.Bool.Base using (Bool; true; false; T)
 open import Cubed.Data.Dec.Base as Dec using (Dec; yes; no)
 open import Cubed.Data.Empty.Base using (Empty)
+open import Cubed.Data.Prod.Base using (_×_; _,_; fst; snd)
 open import Cubed.Data.Unit.Base using (Unit; tt)
 
-open import Cubed.Fun.Base using (it; _∘₂_; _|>_)
+open import Cubed.Fun.Base using (flip; it; _∘₂_; _|>_)
 
 
 module Cubed.Data.Nat.Base where
 
-open import Agda.Builtin.Nat public
-  using (Nat; zero; suc; _+_; _-_; _*_)
+import Agda.Builtin.Nat as Prim-nat
+
+open import Cubed.Data.Nat.Def public
+  using (Nat; zero; suc)
+
+open Prim-nat public
+  using (_+_; _-_; _*_)
   renaming (_==_ to _≡ᵇ_; _<_ to _<ᵇ_)
 
 private variable
@@ -75,10 +81,12 @@ opaque
   refl' {n = suc n} = s≡'s refl'
   {-# OVERLAPS refl' #-}
 
+infix 4 _≤ᵇ_
 _≤ᵇ_ : Nat → Nat → Bool
 zero ≤ᵇ y = true
 suc x ≤ᵇ y = x <ᵇ y
 
+infix 4 _≤_
 data _≤_ : Nat → Nat → Type lzero where
   z≤ : zero ≤ n
   s≤s : m ≤ n → suc m ≤ suc n
@@ -86,6 +94,7 @@ data _≤_ : Nat → Nat → Type lzero where
 s≤s⁻¹ : suc m ≤ suc n → m ≤ n
 s≤s⁻¹ (s≤s m≤n) = m≤n
 
+infix 4 _≤?_
 _≤?_ : (x y : Nat) → Dec (x ≤ y)
 zero ≤? y = yes z≤
 suc x ≤? zero = no λ ()
@@ -93,19 +102,15 @@ suc x ≤? suc y =
   x ≤? y
   |> Dec.map s≤s (λ ¬x≤y sx≤sy → ¬x≤y (s≤s⁻¹ sx≤sy))
 
-data _<_ : Nat → Nat → Type lzero where
-  z<s : zero < suc n
-  suc : m < n → suc m < suc n
+infix 4 _<_
+_<_ : Nat → Nat → Type lzero
+m < n = suc m ≤ n
 
-instance
-  inst-z<s : zero < suc n
-  inst-z<s = z<s
-
-  inst-<-suc : {{m < n}} → suc m < suc n
-  inst-<-suc {{m<n}} = suc m<n
+z<s : zero < suc n
+z<s = s≤s z≤
 
 _>_ : Nat → Nat → Type lzero
-m > n = n < m
+_>_ = flip _<_
 
 -- instance
 --   inst-<-notation : Notation.<-notation Nat
@@ -125,4 +130,26 @@ safe-pred (suc n) = n
 
 data Is-zero : Nat → Type lzero where
   zero : Is-zero zero
+
+data Is-nonzero : Nat → Type lzero where
+  suc : Is-nonzero (suc n)
+
+int-div : Nat → Nat → Nat
+int-div a zero = zero
+int-div a (suc b) = Prim-nat.div-helper 0 a b a
+
+infixl 8 _//_
+_//_ : Nat → Nat → Nat
+_//_ = int-div
+
+mod : Nat → Nat → Nat
+mod a zero = zero
+mod a (suc b) = Prim-nat.mod-helper 0 a b a
+
+infixl 8 _%_
+_%_ : Nat → Nat → Nat
+_%_ = mod
+
+div : Nat → Nat → Nat × Nat
+div a b = a // b , a % b
 

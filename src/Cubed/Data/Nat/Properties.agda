@@ -1,12 +1,15 @@
 {-# OPTIONS --lossy-unification #-}
 
-open import Cubed.Data.Nat.Base as Nat using (Nat; zero; suc; elim; _+_)
+open import Cubed.Level
+
+open import Cubed.Data.Nat.Base as Nat using (Nat; zero; suc; elim; _+_; _//_; _%_; _<_; s≤s; z<s; Is-nonzero)
+open import Cubed.Data.Sum.Base using (_⊎_; inl; inr)
 
 open import Cubed.Id.Base using (Id-sys; _≡ₛ_; reflₛ; congₛ; _∙ₛ_; ≡ₛ→≡; ≡→≡ₛ)
 
 open import Cubed.Fun.Base using (id; _∘'_; it)
 
-open import Cubed.Path.Base using (PathP; _≡_; refl; _∙_; cong)
+open import Cubed.Path.Base using (PathP; _≡_; refl; _∙_; sym; cong; subst)
 --open import Cubed.Path.HLevel.Base using (Is-set; hlevelₛ)
 
 open import Cubed.Relation.Nullary.Neg.Base using (¬_)
@@ -73,4 +76,16 @@ znots {n} = znotsₛ {n} ∘' ≡→≡ₛ
 
 +-comm : (m n : Nat) → m + n ≡ n + m
 +-comm m = elim (+-id-r _) (λ y ih → +-suc _ _ ∙ cong suc ih)
+
+mod-zero : (m : Nat) → 0 % m ≡ 0
+mod-zero zero = refl
+mod-zero (suc zero) = refl
+mod-zero (suc (suc m)) = mod-zero (suc m)
+
+-- mod-suc : (a m : Nat) → suc a % m ≡ 0 ⊎ suc a % m ≡ suc (a % m)
+-- mod-suc a m = {!!}
+
+-- mod<modulus : (a m : Nat) → Is-nonzero m → a % m < m
+-- mod<modulus zero (suc m) m-nonzero = subst (_< suc m) (sym (mod-zero _)) z<s
+-- mod<modulus (suc a) (suc m) m-nonzero = s≤s {!!}
 

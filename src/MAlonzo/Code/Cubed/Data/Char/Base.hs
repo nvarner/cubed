@@ -19,6 +19,7 @@ import qualified MAlonzo.RTE
 import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Char
 import qualified MAlonzo.Code.Agda.Builtin.Maybe
+import qualified MAlonzo.Code.Agda.Primitive.Cubical
 
 -- Cubed.Data.Char.Base._≡ᵇ_
 d__'8801''7495'__8 ::
@@ -64,3 +65,20 @@ d_parse'45'digit_10 v0
            -> coe
                 MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 (coe (9 :: Integer))
          _ -> coe v1)
+-- Cubed.Data.Char.Base.≡ᵇ→≡
+d_'8801''7495''8594''8801'_16 ::
+  MAlonzo.Code.Agda.Builtin.Char.T_Char_6 ->
+  MAlonzo.Code.Agda.Builtin.Char.T_Char_6 ->
+  AgdaAny ->
+  MAlonzo.Code.Agda.Primitive.Cubical.T_I_8 ->
+  MAlonzo.Code.Agda.Builtin.Char.T_Char_6
+d_'8801''7495''8594''8801'_16 v0 ~v1 ~v2 ~v3
+  = du_'8801''7495''8594''8801'_16 v0
+du_'8801''7495''8594''8801'_16 ::
+  MAlonzo.Code.Agda.Builtin.Char.T_Char_6 ->
+  MAlonzo.Code.Agda.Builtin.Char.T_Char_6
+du_'8801''7495''8594''8801'_16 v0 = coe v0
+-- Cubed.Data.Char.Base.¬≡ᵇ→¬≡
+d_'172''8801''7495''8594''172''8801'_24
+  = error
+      "MAlonzo Runtime Error: postulate evaluated: Cubed.Data.Char.Base.\172\8801\7495\8594\172\8801"

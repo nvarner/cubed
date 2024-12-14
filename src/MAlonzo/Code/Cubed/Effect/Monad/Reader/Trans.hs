@@ -127,12 +127,12 @@ du_applicative_84 v0
          (\ v1 v2 ->
             coe
               C_mk_74
-              (let v3
-                     = coe
-                         MAlonzo.Code.Cubed.Effect.Applicative.d_pure_34
-                         (MAlonzo.Code.Cubed.Effect.Monad.d_applicative_32 (coe v0)) erased
-                         v2 in
-               coe (coe (\ v4 -> v3)))))
+              (coe
+                 (\ v3 ->
+                    coe
+                      MAlonzo.Code.Cubed.Effect.Applicative.d_pure_34
+                      (MAlonzo.Code.Cubed.Effect.Monad.d_applicative_32 (coe v0)) erased
+                      v2))))
       (coe
          (\ v1 v2 v3 v4 ->
             coe
@@ -182,7 +182,7 @@ du_monadT_102 ::
   MAlonzo.Code.Cubed.Effect.Monad.T_Raw'45'monadTd_94
 du_monadT_102 v0
   = coe
-      MAlonzo.Code.Cubed.Effect.Monad.C_Raw'45'monadTd'46'constructor_5079
+      MAlonzo.Code.Cubed.Effect.Monad.C_Raw'45'monadTd'46'constructor_5081
       (coe v0) (coe (\ v1 v2 -> coe C_mk_74 (coe (\ v3 -> v2))))
 -- Cubed.Effect.Monad.Reader.Trans.monad-reader
 d_monad'45'reader_104 ::

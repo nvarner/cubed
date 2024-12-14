@@ -48,7 +48,7 @@ d_mconcat_24 ~v0 ~v1 v2 = du_mconcat_24 v2
 du_mconcat_24 :: T_Raw'45'monoid_12 -> [AgdaAny] -> AgdaAny
 du_mconcat_24 v0
   = coe
-      MAlonzo.Code.Cubed.Data.List.Base.du_foldr_108
+      MAlonzo.Code.Cubed.Data.List.Base.du_foldr_154
       (coe
          MAlonzo.Code.Cubed.Effect.Semigroup.d__'60''62'__18
          (coe d_semigroup_20 (coe v0)))

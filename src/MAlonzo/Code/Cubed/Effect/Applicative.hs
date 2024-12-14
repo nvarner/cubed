@@ -164,13 +164,13 @@ du_when_64 v0 v1 v2
       (coe
          (\ v3 ->
             coe du__'60''42''62'__38 v0 v2 (coe d_pure_34 v0 erased v3)))
-      (let v3
-             = coe
-                 d_pure_34 v0 erased
-                 (coe
-                    MAlonzo.Code.Cubed.Level.C_liftℓ_32
-                    (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)) in
-       coe (coe (\ v4 -> v3)))
+      (coe
+         (\ v3 ->
+            coe
+              d_pure_34 v0 erased
+              (coe
+                 MAlonzo.Code.Cubed.Level.C_liftℓ_32
+                 (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))))
       (coe v1)
 -- Cubed.Effect.Applicative.Raw-applicative.unless
 d_unless_72 ::
@@ -187,13 +187,13 @@ du_unless_72 ::
 du_unless_72 v0 v1 v2
   = coe
       MAlonzo.Code.Cubed.Data.Dec.Base.du_rec_46
-      (let v3
-             = coe
-                 d_pure_34 v0 erased
-                 (coe
-                    MAlonzo.Code.Cubed.Level.C_liftℓ_32
-                    (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)) in
-       coe (coe (\ v4 -> v3)))
+      (coe
+         (\ v3 ->
+            coe
+              d_pure_34 v0 erased
+              (coe
+                 MAlonzo.Code.Cubed.Level.C_liftℓ_32
+                 (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))))
       (coe
          (\ v3 ->
             coe du__'60''42''62'__38 v0 v2 (coe d_pure_34 v0 erased v3)))

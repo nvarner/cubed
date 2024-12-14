@@ -1,6 +1,15 @@
-open import Cubed.Data.Bool.Base using (Bool)
+open import Cubed.Level
+
+open import Cubed.Data.Bool.Base using (Bool; true; false)
+open import Cubed.Data.Dec.Base as Dec using (Dec; yes; no; Is-discrete)
+open import Cubed.Data.Eq.Base using (from-path; to-path)
+open import Cubed.Data.Eq.Unsafe as Eq-unsafe
 open import Cubed.Data.Maybe.Base as Maybe using (Maybe; just; nothing)
 open import Cubed.Data.Nat.Base as Nat using (Nat)
+
+open import Cubed.Path.Base as Path using (_≡_)
+
+open import Cubed.Relation.Nullary.Neg.Base using (¬_)
 
 
 module Cubed.Data.Char.Base where
@@ -31,3 +40,8 @@ parse-digit '8' = just 8
 parse-digit '9' = just 9
 parse-digit _ = nothing
 
+opaque
+  ≡ᵇ→≡ : {c c' : Char} → (c ≡ᵇ c') ≡ true → c ≡ c'
+  ≡ᵇ→≡ p = to-path Eq-unsafe.prim-trust-me
+
+postulate ¬≡ᵇ→¬≡ : {c c' : Char} → (c ≡ᵇ c') ≡ false → ¬ c ≡ c'

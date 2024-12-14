@@ -80,3 +80,21 @@ d__'8799'__78 ~v0 ~v1 v2 v3 v4 = du__'8799'__78 v2 v3 v4
 du__'8799'__78 ::
   AgdaAny -> AgdaAny -> (AgdaAny -> AgdaAny -> T_Dec_18) -> T_Dec_18
 du__'8799'__78 v0 v1 v2 = coe v2 v0 v1
+-- Cubed.Data.Dec.Base.dec!
+d_dec'33'_88 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () -> T_Dec_18 -> T_Dec_18
+d_dec'33'_88 ~v0 ~v1 v2 = du_dec'33'_88 v2
+du_dec'33'_88 :: T_Dec_18 -> T_Dec_18
+du_dec'33'_88 v0 = coe v0
+-- Cubed.Data.Dec.Base.¬-dec
+d_'172''45'dec_94 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () -> T_Dec_18 -> T_Dec_18
+d_'172''45'dec_94 ~v0 ~v1 v2 = du_'172''45'dec_94 v2
+du_'172''45'dec_94 :: T_Dec_18 -> T_Dec_18
+du_'172''45'dec_94 v0
+  = case coe v0 of
+      C_yes_22 v1 -> coe C_no_24
+      C_no_24 -> coe C_yes_22 erased
+      _ -> MAlonzo.RTE.mazUnreachableError

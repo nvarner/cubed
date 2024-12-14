@@ -10,3 +10,5 @@ flags:
   --rewriting
   --no-require-unique-meta-solutions
   -WnoUnsupportedIndexedMatch
+  -WnoWithoutKFlagPrimEraseEquality
+

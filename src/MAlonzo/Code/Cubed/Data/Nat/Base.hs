@@ -18,6 +18,7 @@ import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
 import qualified MAlonzo.RTE
 import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Bool
+import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Cubed.Data.Dec.Base
 
@@ -133,23 +134,20 @@ d__'8804''63'__98 v0 v1
                           (coe C_s'8804's_88 (coe v2) (coe v3))
                           (coe d__'8804''63'__98 (coe v2) (coe v3))))
 -- Cubed.Data.Nat.Base._<_
-d__'60'__112 a0 a1 = ()
-data T__'60'__112
-  = C_z'60's_114 Integer | C_suc_116 Integer Integer T__'60'__112
--- Cubed.Data.Nat.Base.inst-z<s
-d_inst'45'z'60's_118 :: Integer -> T__'60'__112
-d_inst'45'z'60's_118 v0 = coe C_z'60's_114 (coe v0)
--- Cubed.Data.Nat.Base.inst-<-suc
-d_inst'45''60''45'suc_120 ::
-  Integer -> Integer -> T__'60'__112 -> T__'60'__112
-d_inst'45''60''45'suc_120 v0 v1 v2
-  = coe C_suc_116 (coe v0) (coe v1) (coe v2)
+d__'60'__112 :: Integer -> Integer -> ()
+d__'60'__112 = erased
+-- Cubed.Data.Nat.Base.z<s
+d_z'60's_118 :: Integer -> T__'8804'__84
+d_z'60's_118 v0
+  = coe
+      C_s'8804's_88 (coe (0 :: Integer)) (coe v0)
+      (coe C_z'8804'_86 (coe v0))
 -- Cubed.Data.Nat.Base._>_
-d__'62'__124 :: Integer -> Integer -> ()
-d__'62'__124 = erased
+d__'62'__120 :: Integer -> Integer -> ()
+d__'62'__120 = erased
 -- Cubed.Data.Nat.Base.max
-d_max_130 :: Integer -> Integer -> Integer
-d_max_130 v0 v1
+d_max_122 :: Integer -> Integer -> Integer
+d_max_122 v0 v1
   = case coe v0 of
       0 -> coe v1
       _ -> let v2 = subInt (coe v0) (coe (1 :: Integer)) in
@@ -159,13 +157,45 @@ d_max_130 v0 v1
                 _ -> let v3 = subInt (coe v1) (coe (1 :: Integer)) in
                      coe
                        (coe
-                          addInt (coe (1 :: Integer)) (coe d_max_130 (coe v2) (coe v3))))
+                          addInt (coe (1 :: Integer)) (coe d_max_122 (coe v2) (coe v3))))
 -- Cubed.Data.Nat.Base.safe-pred
-d_safe'45'pred_140 :: Integer -> Integer
-d_safe'45'pred_140 v0
+d_safe'45'pred_132 :: Integer -> Integer
+d_safe'45'pred_132 v0
   = case coe v0 of
       0 -> coe (0 :: Integer)
       _ -> coe subInt (coe v0) (coe (1 :: Integer))
 -- Cubed.Data.Nat.Base.Is-zero
-d_Is'45'zero_144 a0 = ()
-data T_Is'45'zero_144 = C_zero_146
+d_Is'45'zero_136 a0 = ()
+data T_Is'45'zero_136 = C_zero_138
+-- Cubed.Data.Nat.Base.Is-nonzero
+d_Is'45'nonzero_140 a0 = ()
+newtype T_Is'45'nonzero_140 = C_suc_142 Integer
+-- Cubed.Data.Nat.Base.int-div
+d_int'45'div_144 :: Integer -> Integer -> Integer
+d_int'45'div_144 v0 v1
+  = case coe v1 of
+      0 -> coe (0 :: Integer)
+      _ -> let v2 = subInt (coe v1) (coe (1 :: Integer)) in
+           coe
+             (coe quotInt (coe v2) (coe addInt (coe (1 :: Integer)) (coe v0)))
+-- Cubed.Data.Nat.Base._//_
+d__'47''47'__152 :: Integer -> Integer -> Integer
+d__'47''47'__152 = coe d_int'45'div_144
+-- Cubed.Data.Nat.Base.mod
+d_mod_154 :: Integer -> Integer -> Integer
+d_mod_154 v0 v1
+  = case coe v1 of
+      0 -> coe (0 :: Integer)
+      _ -> let v2 = subInt (coe v1) (coe (1 :: Integer)) in
+           coe
+             (coe remInt (coe v2) (coe addInt (coe (1 :: Integer)) (coe v0)))
+-- Cubed.Data.Nat.Base._%_
+d__'37'__162 :: Integer -> Integer -> Integer
+d__'37'__162 = coe d_mod_154
+-- Cubed.Data.Nat.Base.div
+d_div_164 ::
+  Integer -> Integer -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_div_164 v0 v1
+  = coe
+      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+      (coe d__'47''47'__152 v0 v1) (coe d__'37'__162 v0 v1)

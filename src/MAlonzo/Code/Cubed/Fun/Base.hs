@@ -177,3 +177,19 @@ d_it_180 ::
 d_it_180 ~v0 ~v1 v2 = du_it_180 v2
 du_it_180 :: AgdaAny -> AgdaAny
 du_it_180 v0 = coe v0
+-- Cubed.Fun.Base.repeat
+d_repeat_184 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () -> Integer -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
+d_repeat_184 ~v0 ~v1 v2 v3 = du_repeat_184 v2 v3
+du_repeat_184 ::
+  Integer -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
+du_repeat_184 v0 v1
+  = let v2 = subInt (coe v0) (coe (1 :: Integer)) in
+    coe
+      (let v3 = \ v3 -> coe v1 (coe du_repeat_184 v2 v1 v3) in
+       coe
+         (case coe v0 of
+            0 -> coe (\ v4 -> v4)
+            1 -> coe v1
+            _ -> coe v3))

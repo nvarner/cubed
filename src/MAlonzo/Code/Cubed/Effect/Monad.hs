@@ -207,19 +207,19 @@ du_join_80 v0 v1 = coe du__'62''62''61'__36 v0 v1 (\ v2 -> v2)
 -- Cubed.Effect.Monad.Raw-monadTd
 d_Raw'45'monadTd_94 a0 a1 a2 a3 a4 = ()
 data T_Raw'45'monadTd_94
-  = C_Raw'45'monadTd'46'constructor_5079 T_Raw'45'monad_24
+  = C_Raw'45'monadTd'46'constructor_5081 T_Raw'45'monad_24
                                          (() -> AgdaAny -> AgdaAny)
 -- Cubed.Effect.Monad.Raw-monadTd.monad
 d_monad_104 :: T_Raw'45'monadTd_94 -> T_Raw'45'monad_24
 d_monad_104 v0
   = case coe v0 of
-      C_Raw'45'monadTd'46'constructor_5079 v1 v2 -> coe v1
+      C_Raw'45'monadTd'46'constructor_5081 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Cubed.Effect.Monad.Raw-monadTd.liftM
 d_liftM_106 :: T_Raw'45'monadTd_94 -> () -> AgdaAny -> AgdaAny
 d_liftM_106 v0
   = case coe v0 of
-      C_Raw'45'monadTd'46'constructor_5079 v1 v2 -> coe v2
+      C_Raw'45'monadTd'46'constructor_5081 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Cubed.Effect.Monad._.liftM
 d_liftM_110 :: T_Raw'45'monadTd_94 -> () -> AgdaAny -> AgdaAny

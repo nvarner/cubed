@@ -24,20 +24,15 @@ import qualified MAlonzo.Code.Cubed.Path.Base
 -- Cubed.Path.Id.id-sys
 d_id'45'sys_8 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> MAlonzo.Code.Cubed.Id.Base.T_Id'45'sys_86
+  () -> MAlonzo.Code.Cubed.Id.Base.T_Id'45'sys_18
 d_id'45'sys_8 v0 ~v1 = du_id'45'sys_8 v0
 du_id'45'sys_8 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Cubed.Id.Base.T_Id'45'sys_86
+  MAlonzo.Code.Cubed.Id.Base.T_Id'45'sys_18
 du_id'45'sys_8 v0
   = coe
-      MAlonzo.Code.Cubed.Id.Base.C_Id'45'sys'46'constructor_1485
-      (\ v1 v2 -> v1)
-      (coe
-         MAlonzo.Code.Cubed.Id.Base.C_Is'45'id'45'sys'46'constructor_457
-         (coe (\ v1 v2 v3 -> v3))
-         (coe
-            (\ v1 v2 v3 ->
-               coe
-                 MAlonzo.Code.Cubed.Path.Base.du_J_256 (coe v0)
-                 (let v4 = \ v4 -> v1 in coe (coe (\ v5 -> v4))))))
+      MAlonzo.Code.Cubed.Id.Base.C_Id'45'sys'46'constructor_487
+      (\ v1 v2 -> v1) (\ v1 v2 v3 -> v3)
+      (\ v1 v2 ->
+         coe
+           MAlonzo.Code.Cubed.Path.Base.du_path'45'to'45'refl_272 (coe v0) v1)

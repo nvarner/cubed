@@ -1,5 +1,6 @@
 open import Cubed.Level
 
+open import Cubed.Data.Nat.Def using (Nat; zero; suc)
 open import Cubed.Data.Prod.Base using (_×_; _,_)
 
 
@@ -14,9 +15,11 @@ private variable
 
 id : A → A
 id a = a
+{-# INLINE id #-}
 
 const : A → B → A
 const a b = a
+{-# INLINE const #-}
 
 flip :
   {C : A → B → Type ℓ}
@@ -73,4 +76,9 @@ f $- = f _
 
 it : {{A}} → A
 it {{A}} = A
+
+repeat : Nat → (A → A) → (A → A)
+repeat zero f = id
+repeat (suc zero) f = f
+repeat (suc n) f = f ∘ repeat n f
 

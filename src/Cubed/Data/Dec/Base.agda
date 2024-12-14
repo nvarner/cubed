@@ -37,3 +37,10 @@ map y n (no ¬a) = no (n ¬a)
 _≟_ : (a b : A) → {{Is-discrete A}} → Dec (a ≡ b)
 _≟_ a b {{dec}} = dec
 
+dec! : (A : Type ℓ) → {{Dec A}} → Dec A
+dec! A {{dec}} = dec
+
+instance ¬-dec : {{Dec A}} → Dec (¬ A)
+¬-dec {{yes a}} = no (λ ¬a → ¬a a)
+¬-dec {{no ¬a}} = yes ¬a
+

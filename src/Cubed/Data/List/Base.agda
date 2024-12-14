@@ -9,7 +9,7 @@ open import Cubed.Data.Unit.Base using (Unit; tt)
 
 open import Cubed.Fun.Base using (id; const; flip; uncurry'; _∘_; _∘₂_; _|>_)
 
-open import Cubed.Id.Base using (Id-sys; _≡ₛ_; reflₛ)
+open import Cubed.Path.Base as Path using ()
 
 
 module Cubed.Data.List.Base where
@@ -38,15 +38,23 @@ length [] = zero
 length (a ∷ as) = suc (length as)
 
 infix 4 _≡_
-_≡_ : {{Id-sys A}} → List A → List A → Type (level A)
+_≡_ : List A → List A → Type (level A)
 [] ≡ [] = Lift Unit
 [] ≡ y ∷ ys = Lift Empty
 x ∷ xs ≡ [] = Lift Empty
-x ∷ xs ≡ y ∷ ys = (x ≡ₛ y) × (xs ≡ ys)
+x ∷ xs ≡ y ∷ ys = (x Path.≡ y) × (xs ≡ ys)
 
-refl : {{_ : Id-sys A}} {as : List A} → as ≡ as
-refl {as = []} = liftℓ tt
-refl {as = x ∷ as} = reflₛ , refl
+refl : (as : List A) → as ≡ as
+refl [] = liftℓ tt
+refl (x ∷ as) = Path.refl , refl as
+
+≡→Path : {xs ys : List A} → xs ≡ ys → xs Path.≡ ys
+≡→Path {xs = []} {ys = []} eq = Path.refl
+≡→Path {xs = x ∷ xs} {ys = y ∷ ys} (x≡y , eq) i = x≡y i ∷ ≡→Path eq i
+
+path-to-refl : {xs ys : List A} (eq : xs ≡ ys) → Path.PathP (λ i → ≡→Path eq i ≡ ys) eq (refl _)
+path-to-refl {xs = []} {ys = []} eq = Path.refl
+path-to-refl {xs = x ∷ xs} {ys = y ∷ ys} (x≡y , eq) i = Path.path-to-refl x≡y i , path-to-refl eq i
 
 infixr 5 _++_
 _++_ : List A → List A → List A
@@ -137,4 +145,8 @@ split-byᵇ = uncurry' _∷_ ∘₂ go
       then ([] , next ∷ chunks)
       else (a ∷ next , chunks))
     ([] , [])
+
+data Elt {A : Type ℓ} : List A → A → Type ℓ where
+  here : {x : A} {xs : List A} → Elt (x ∷ xs) x
+  there : {x y : A} {xs : List A} → Elt xs y → Elt (x ∷ xs) y
 
