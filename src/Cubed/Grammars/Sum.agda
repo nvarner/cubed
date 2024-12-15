@@ -6,16 +6,23 @@ module Cubed.Grammars.Sum {ℓ} (Alph : Type ℓ) where
 open import Cubed.Grammars.Base Alph hiding (rec; map)
 
 private variable
+  A : Type ℓ
   G H K L : Lin
 
 data Tag : Type ℓ where
   `inl `inr : Tag
 
-infixr 5 _⊕_
+infixr 4 _⊕_
 _⊕_ : Lin → Lin → Lin
 G ⊕ H = ⊕ᴰ Tag (λ where
   `inl → G
   `inr → H)
+
+infixr 4 _⊕F_
+_⊕F_ : Functor A → Functor A → Functor A
+F ⊕F F' = ⊕ᴰF Tag (λ where
+  `inl → F
+  `inr → F')
 
 pattern inl = ⊕ᴰ-in `inl
 pattern inr = ⊕ᴰ-in `inr

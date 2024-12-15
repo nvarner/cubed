@@ -79,7 +79,7 @@ internalize w@(c ∷ w') = roll w (`cons , (split-++ [ c ] w' , (c , refl) , int
 {-# TERMINATING #-}
 t⟦_⟧ : {G H : Lin} → G ⊢ H → Parser G⟦ G ⟧ G⟦ H ⟧
 t⟦ id ⟧ w = Fun.id
-t⟦ t ⋆ t' ⟧ w = t⟦ t' ⟧ w ∘ t⟦ t ⟧ w
+t⟦ t ⋆ t' ⟧ w p = t⟦ t' ⟧ _ (t⟦ t ⟧ w p)
 t⟦ ⊤-in ⟧ w p = liftℓ tt
 t⟦ ⊥-elim ⟧ w ()
 t⟦ &ᴰ-in f ⟧ w p a = t⟦ f a ⟧ w p

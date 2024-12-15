@@ -555,39 +555,39 @@ du_t'10214'_'10215'_488 v0 v1 v2
         -> coe (\ v3 -> coe du_internalize_476 (coe v2))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Cubed.Grammars.Semantics.run-parser
-d_run'45'parser_736 ::
+d_run'45'parser_738 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Cubed.Grammars.Base.T_Lin_10 ->
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130 ->
   [AgdaAny] -> AgdaAny
-d_run'45'parser_736 v0 ~v1 ~v2 v3 v4
-  = du_run'45'parser_736 v0 v3 v4
-du_run'45'parser_736 ::
+d_run'45'parser_738 v0 ~v1 ~v2 v3 v4
+  = du_run'45'parser_738 v0 v3 v4
+du_run'45'parser_738 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130 ->
   [AgdaAny] -> AgdaAny
-du_run'45'parser_736 v0 v1 v2
+du_run'45'parser_738 v0 v1 v2
   = coe
       du_t'10214'_'10215'_488 v0 v1 v2 (coe du_internalize_476 (coe v2))
 -- Cubed.Grammars.Semantics.run-weak-parser
-d_run'45'weak'45'parser_744 ::
+d_run'45'weak'45'parser_746 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Cubed.Grammars.Base.T_Lin_10 ->
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130 ->
   [AgdaAny] -> Maybe AgdaAny
-d_run'45'weak'45'parser_744 v0 ~v1 v2 v3 v4
-  = du_run'45'weak'45'parser_744 v0 v2 v3 v4
-du_run'45'weak'45'parser_744 ::
+d_run'45'weak'45'parser_746 v0 ~v1 v2 v3 v4
+  = du_run'45'weak'45'parser_746 v0 v2 v3 v4
+du_run'45'weak'45'parser_746 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Cubed.Grammars.Base.T_Lin_10 ->
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130 ->
   [AgdaAny] -> Maybe AgdaAny
-du_run'45'weak'45'parser_744 v0 v1 v2 v3
+du_run'45'weak'45'parser_746 v0 v1 v2 v3
   = let v4
           = coe
-              du_run'45'parser_736 (coe v0)
+              du_run'45'parser_738 (coe v0)
               (coe
                  MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_finish_310
                  (coe v1) (coe v2))
@@ -603,20 +603,20 @@ du_run'45'weak'45'parser_744 v0 v1 v2 v3
                 _ -> MAlonzo.RTE.mazUnreachableError
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Cubed.Grammars.Semantics.run-weak-parser-partial
-d_run'45'weak'45'parser'45'partial_756 ::
+d_run'45'weak'45'parser'45'partial_758 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Cubed.Grammars.Base.T_Lin_10 ->
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130 ->
   [AgdaAny] -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_run'45'weak'45'parser'45'partial_756 v0 ~v1 ~v2 v3 v4
-  = du_run'45'weak'45'parser'45'partial_756 v0 v3 v4
-du_run'45'weak'45'parser'45'partial_756 ::
+d_run'45'weak'45'parser'45'partial_758 v0 ~v1 ~v2 v3 v4
+  = du_run'45'weak'45'parser'45'partial_758 v0 v3 v4
+du_run'45'weak'45'parser'45'partial_758 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130 ->
   [AgdaAny] -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_run'45'weak'45'parser'45'partial_756 v0 v1 v2
-  = let v3 = coe du_run'45'parser_736 (coe v0) (coe v1) (coe v2) in
+du_run'45'weak'45'parser'45'partial_758 v0 v1 v2
+  = let v3 = coe du_run'45'parser_738 (coe v0) (coe v1) (coe v2) in
     coe
       (case coe v3 of
          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v4 v5
@@ -643,40 +643,40 @@ du_run'45'weak'45'parser'45'partial_756 v0 v1 v2
                 _ -> MAlonzo.RTE.mazUnreachableError
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Cubed.Grammars.Semantics.run-weak-parser-Δ
-d_run'45'weak'45'parser'45'Δ_772 ::
+d_run'45'weak'45'parser'45'Δ_774 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   () ->
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130 ->
   [AgdaAny] -> Maybe AgdaAny
-d_run'45'weak'45'parser'45'Δ_772 v0 ~v1 ~v2 v3 v4
-  = du_run'45'weak'45'parser'45'Δ_772 v0 v3 v4
-du_run'45'weak'45'parser'45'Δ_772 ::
+d_run'45'weak'45'parser'45'Δ_774 v0 ~v1 ~v2 v3 v4
+  = du_run'45'weak'45'parser'45'Δ_774 v0 v3 v4
+du_run'45'weak'45'parser'45'Δ_774 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130 ->
   [AgdaAny] -> Maybe AgdaAny
-du_run'45'weak'45'parser'45'Δ_772 v0 v1 v2
+du_run'45'weak'45'parser'45'Δ_774 v0 v1 v2
   = coe
       MAlonzo.Code.Cubed.Data.Maybe.Base.du_map_24
       (coe (\ v3 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v3)))
       (coe
-         du_run'45'weak'45'parser_744 (coe v0)
+         du_run'45'weak'45'parser_746 (coe v0)
          (coe MAlonzo.Code.Cubed.Grammars.SemZ45Zact.du_Δ_302) (coe v1)
          (coe v2))
 -- Cubed.Grammars.Semantics.run-weak-parser-Δ-partial
-d_run'45'weak'45'parser'45'Δ'45'partial_778 ::
+d_run'45'weak'45'parser'45'Δ'45'partial_780 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   () ->
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130 ->
   [AgdaAny] -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_run'45'weak'45'parser'45'Δ'45'partial_778 v0 ~v1 ~v2 v3 v4
-  = du_run'45'weak'45'parser'45'Δ'45'partial_778 v0 v3 v4
-du_run'45'weak'45'parser'45'Δ'45'partial_778 ::
+d_run'45'weak'45'parser'45'Δ'45'partial_780 v0 ~v1 ~v2 v3 v4
+  = du_run'45'weak'45'parser'45'Δ'45'partial_780 v0 v3 v4
+du_run'45'weak'45'parser'45'Δ'45'partial_780 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130 ->
   [AgdaAny] -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_run'45'weak'45'parser'45'Δ'45'partial_778 v0 v1 v2
+du_run'45'weak'45'parser'45'Δ'45'partial_780 v0 v1 v2
   = coe
       MAlonzo.Code.Cubed.Data.Prod.Base.du_map'45'fst_36
       (coe
@@ -686,4 +686,4 @@ du_run'45'weak'45'parser'45'Δ'45'partial_778 v0 v1 v2
                MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                  (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)))))
       (coe
-         du_run'45'weak'45'parser'45'partial_756 (coe v0) (coe v1) (coe v2))
+         du_run'45'weak'45'parser'45'partial_758 (coe v0) (coe v1) (coe v2))

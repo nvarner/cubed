@@ -23,20 +23,20 @@ just = ⊕ᴰ-in `just
 nothing : H ⊢ Maybe G
 nothing = ⊤-in ⋆ ⊕ᴰ-in `nothing
 
-rec : G ⊢ H → ⊤ ⊢ H → Maybe G ⊢ H
-rec j n = ⊕ᴰ-elim (λ where
+elim : G ⊢ H → ⊤ ⊢ H → Maybe G ⊢ H
+elim j n = ⊕ᴰ-elim (λ where
   `just → j
   `nothing → n)
 
 map : G ⊢ H → Maybe G ⊢ Maybe H
-map f = rec (f ⋆ just) nothing
+map f = elim (f ⋆ just) nothing
 
 bind : G ⊢ Maybe H → Maybe G ⊢ Maybe H
-bind f = rec f nothing
+bind f = elim f nothing
 
 ⊗l : Maybe G ⊗ H ⊢ Maybe (G ⊗ H)
-⊗l = ⟜-in⁻ (rec (⟜-in just) (⟜-in nothing))
+⊗l = ⟜-in⁻ (elim (⟜-in just) (⟜-in nothing))
 
 ⊗r : G ⊗ Maybe H ⊢ Maybe (G ⊗ H)
-⊗r = ⊸-in⁻ (rec (⊸-in just) (⊸-in nothing))
+⊗r = ⊸-in⁻ (elim (⊸-in just) (⊸-in nothing))
 

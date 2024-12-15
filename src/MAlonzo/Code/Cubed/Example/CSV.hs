@@ -627,7 +627,7 @@ d_run'45'parser_364 ::
   [MAlonzo.Code.Agda.Builtin.Char.T_Char_6] -> AgdaAny
 d_run'45'parser_364 v0 v1 v2
   = coe
-      MAlonzo.Code.Cubed.Grammars.Semantics.du_run'45'parser_736 (coe ())
+      MAlonzo.Code.Cubed.Grammars.Semantics.du_run'45'parser_738 (coe ())
       v1 v2
 -- _.run-weak-parser
 d_run'45'weak'45'parser_366 ::
@@ -636,7 +636,7 @@ d_run'45'weak'45'parser_366 ::
   [MAlonzo.Code.Agda.Builtin.Char.T_Char_6] -> Maybe AgdaAny
 d_run'45'weak'45'parser_366
   = coe
-      MAlonzo.Code.Cubed.Grammars.Semantics.du_run'45'weak'45'parser_744
+      MAlonzo.Code.Cubed.Grammars.Semantics.du_run'45'weak'45'parser_746
       (coe ())
 -- _.run-weak-parser-partial
 d_run'45'weak'45'parser'45'partial_368 ::
@@ -646,7 +646,7 @@ d_run'45'weak'45'parser'45'partial_368 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_run'45'weak'45'parser'45'partial_368 v0 v1 v2
   = coe
-      MAlonzo.Code.Cubed.Grammars.Semantics.du_run'45'weak'45'parser'45'partial_756
+      MAlonzo.Code.Cubed.Grammars.Semantics.du_run'45'weak'45'parser'45'partial_758
       (coe ()) v1 v2
 -- _.run-weak-parser-Δ
 d_run'45'weak'45'parser'45'Δ_370 ::
@@ -655,7 +655,7 @@ d_run'45'weak'45'parser'45'Δ_370 ::
   [MAlonzo.Code.Agda.Builtin.Char.T_Char_6] -> Maybe AgdaAny
 d_run'45'weak'45'parser'45'Δ_370 v0 v1 v2
   = coe
-      MAlonzo.Code.Cubed.Grammars.Semantics.du_run'45'weak'45'parser'45'Δ_772
+      MAlonzo.Code.Cubed.Grammars.Semantics.du_run'45'weak'45'parser'45'Δ_774
       (coe ()) v1 v2
 -- _.run-weak-parser-Δ-partial
 d_run'45'weak'45'parser'45'Δ'45'partial_372 ::
@@ -665,7 +665,7 @@ d_run'45'weak'45'parser'45'Δ'45'partial_372 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_run'45'weak'45'parser'45'Δ'45'partial_372 v0 v1 v2
   = coe
-      MAlonzo.Code.Cubed.Grammars.Semantics.du_run'45'weak'45'parser'45'Δ'45'partial_778
+      MAlonzo.Code.Cubed.Grammars.Semantics.du_run'45'weak'45'parser'45'Δ'45'partial_780
       (coe ()) v1 v2
 -- _.split-++
 d_split'45''43''43'_374 ::
@@ -719,10 +719,21 @@ d_right_390 ::
   [MAlonzo.Code.Agda.Builtin.Char.T_Char_6]
 d_right_390 v0
   = coe MAlonzo.Code.Cubed.Grammars.Semantics.d_right_350 (coe v0)
+-- Cubed.Example.CSV.Concrete.Quoted-lit
+d_Quoted'45'lit_398 :: MAlonzo.Code.Cubed.Grammars.Base.T_Lin_10
+d_Quoted'45'lit_398
+  = coe
+      MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
+      (coe
+         MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
+      (coe
+         MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
+         (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
+         (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))
 -- Cubed.Example.CSV.Concrete.quoted-lit
-d_quoted'45'lit_398 ::
+d_quoted'45'lit_400 ::
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
-d_quoted'45'lit_398
+d_quoted'45'lit_400
   = coe
       MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du__'60''8853''62'__346
       (coe
@@ -777,10 +788,22 @@ d_quoted'45'lit_398
                        (coe
                           MAlonzo.Code.Cubed.Data.Bool.Properties.d_is'45'discrete_12))))
             (coe '"')))
+-- Cubed.Example.CSV.Concrete.Quoted-field
+d_Quoted'45'field_402 :: MAlonzo.Code.Cubed.Grammars.Base.T_Lin_10
+d_Quoted'45'field_402
+  = coe
+      MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
+      (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
+      (coe
+         MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
+         (coe
+            MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
+            (coe d_Quoted'45'lit_398))
+         (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))
 -- Cubed.Example.CSV.Concrete.quoted-field
-d_quoted'45'field_400 ::
+d_quoted'45'field_404 ::
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
-d_quoted'45'field_400
+d_quoted'45'field_404
   = coe
       MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du__'60''8855''62'__336
       (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
@@ -788,14 +811,7 @@ d_quoted'45'field_400
          MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
          (coe
             MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                  (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                  (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
+            (coe d_Quoted'45'lit_398))
          (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))
       (coe
          MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_char_390
@@ -814,26 +830,11 @@ d_quoted'45'field_400
          MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du__'60''8855''62'__336
          (coe
             MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                  (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                  (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
+            (coe d_Quoted'45'lit_398))
          (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
          (coe
             MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_many_352
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                  (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                  (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))))
-            (coe d_quoted'45'lit_398))
+            (coe d_Quoted'45'lit_398) (coe d_quoted'45'lit_400))
          (coe
             MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_char_390
             (coe
@@ -847,10 +848,15 @@ d_quoted'45'field_400
                        (coe
                           MAlonzo.Code.Cubed.Data.Bool.Properties.d_is'45'discrete_12))))
             (coe '"')))
+-- Cubed.Example.CSV.Concrete.Unquoted-lit
+d_Unquoted'45'lit_406 :: MAlonzo.Code.Cubed.Grammars.Base.T_Lin_10
+d_Unquoted'45'lit_406
+  = coe
+      MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418
 -- Cubed.Example.CSV.Concrete.unquoted-lit
-d_unquoted'45'lit_402 ::
+d_unquoted'45'lit_408 ::
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
-d_unquoted'45'lit_402
+d_unquoted'45'lit_408
   = coe
       MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_none'45'of_428
       (coe ())
@@ -871,149 +877,68 @@ d_unquoted'45'lit_402
             (coe
                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe ',')
                (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
+-- Cubed.Example.CSV.Concrete.Unquoted-field
+d_Unquoted'45'field_410 ::
+  MAlonzo.Code.Cubed.Grammars.Base.T_Lin_10
+d_Unquoted'45'field_410
+  = coe
+      MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
+      (coe d_Unquoted'45'lit_406)
 -- Cubed.Example.CSV.Concrete.unquoted-field
-d_unquoted'45'field_404 ::
+d_unquoted'45'field_412 ::
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
-d_unquoted'45'field_404
+d_unquoted'45'field_412
   = coe
       MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_many_352
-      (coe
-         MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-      (coe d_unquoted'45'lit_402)
+      (coe d_Unquoted'45'lit_406) (coe d_unquoted'45'lit_408)
+-- Cubed.Example.CSV.Concrete.Field
+d_Field_414 :: MAlonzo.Code.Cubed.Grammars.Base.T_Lin_10
+d_Field_414
+  = coe
+      MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
+      (coe d_Quoted'45'field_402) (coe d_Unquoted'45'field_410)
 -- Cubed.Example.CSV.Concrete.field'
-d_field''_406 :: MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
-d_field''_406
+d_field''_416 :: MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
+d_field''_416
   = coe
       MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du__'60''8853''62'__346
-      (coe
-         MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-         (coe
-            MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-      (coe
-         MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-         (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-         (coe
-            MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                     (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                     (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-            (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))))
-      (coe d_unquoted'45'field_404) (coe d_quoted'45'field_400)
--- Cubed.Example.CSV.Concrete.nonempty-line
-d_nonempty'45'line_408 ::
-  MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
-d_nonempty'45'line_408
+      (coe d_Quoted'45'field_402) (coe d_Unquoted'45'field_410)
+      (coe d_quoted'45'field_404) (coe d_unquoted'45'field_412)
+-- Cubed.Example.CSV.Concrete.Nonempty-line
+d_Nonempty'45'line_418 :: MAlonzo.Code.Cubed.Grammars.Base.T_Lin_10
+d_Nonempty'45'line_418
   = coe
-      MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du__'60''8855''62'__336
-      (coe
-         MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-         (coe
-            MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-            (coe
-               MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-         (coe
-            MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-            (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                        (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                        (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-               (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
+      MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32 (coe d_Field_414)
       (coe
          MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
          (coe
             MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
             (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe ','))
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                  (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                              (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                              (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                     (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))))
-      d_field''_406
+            (coe d_Field_414)))
+-- Cubed.Example.CSV.Concrete.nonempty-line
+d_nonempty'45'line_420 ::
+  MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
+d_nonempty'45'line_420
+  = coe
+      MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du__'60''8855''62'__336
+      d_Field_414
+      (coe
+         MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
+         (coe
+            MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
+            (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe ','))
+            (coe d_Field_414)))
+      d_field''_416
       (coe
          MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_many_352
          (coe
             MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
             (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe ','))
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                  (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                              (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                              (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                     (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))))))
+            (coe d_Field_414))
          (coe
             MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du__'60''8855''62'__336
             (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe ','))
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                  (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                              (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                              (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                     (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
+            d_Field_414
             (coe
                MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_char_390
                (coe
@@ -1027,122 +952,32 @@ d_nonempty'45'line_408
                           (coe
                              MAlonzo.Code.Cubed.Data.Bool.Properties.d_is'45'discrete_12))))
                (coe ','))
-            d_field''_406))
+            d_field''_416))
+-- Cubed.Example.CSV.Concrete.Line
+d_Line_422 :: MAlonzo.Code.Cubed.Grammars.Base.T_Lin_10
+d_Line_422
+  = coe
+      MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
+      (coe
+         MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
+         (coe d_Nonempty'45'line_418)
+         (coe MAlonzo.Code.Cubed.Grammars.Base.C_ε_16))
+      (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '\n'))
 -- Cubed.Example.CSV.Concrete.line
-d_line_410 :: MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
-d_line_410
+d_line_424 :: MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
+d_line_424
   = coe
       MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du__'60''8855''62'__336
       (coe
          MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-         (coe
-            MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                  (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                              (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                              (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                     (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                  (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe ','))
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                        (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                              (coe
-                                 MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                                 (coe
-                                    MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                                 (coe
-                                    MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                                    (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                                    (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                           (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))))))))
+         (coe d_Nonempty'45'line_418)
          (coe MAlonzo.Code.Cubed.Grammars.Base.C_ε_16))
       (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '\n'))
       (coe
          MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du__'60''8853''62'__346
-         (coe
-            MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                  (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                              (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                              (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                     (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                  (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe ','))
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                        (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                              (coe
-                                 MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                                 (coe
-                                    MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                                 (coe
-                                    MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                                    (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                                    (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                           (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))))))))
+         (coe d_Nonempty'45'line_418)
          (coe MAlonzo.Code.Cubed.Grammars.Base.C_ε_16)
-         (coe d_nonempty'45'line_408)
+         (coe d_nonempty'45'line_420)
          (coe MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_pure_316))
       (coe
          MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_char_390
@@ -1157,82 +992,30 @@ d_line_410
                     (coe
                        MAlonzo.Code.Cubed.Data.Bool.Properties.d_is'45'discrete_12))))
          (coe '\n'))
+-- Cubed.Example.CSV.Concrete.Cst
+d_Cst_426 :: MAlonzo.Code.Cubed.Grammars.Base.T_Lin_10
+d_Cst_426
+  = coe
+      MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122 (coe d_Line_422)
 -- Cubed.Example.CSV.Concrete.cst
-d_cst_412 :: MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
-d_cst_412
+d_cst_428 :: MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
+d_cst_428
   = coe
       MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_many_352
-      (coe
-         MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-         (coe
-            MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                     (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                              (coe
-                                 MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                              (coe
-                                 MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                                 (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                                 (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                        (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                     (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe ','))
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                           (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                              (coe
-                                 MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                                 (coe
-                                    MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                                    (coe
-                                       MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                                    (coe
-                                       MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                                       (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                                       (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                              (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))))))))
-            (coe MAlonzo.Code.Cubed.Grammars.Base.C_ε_16))
-         (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '\n')))
-      (coe d_line_410)
+      (coe d_Line_422) (coe d_line_424)
 -- Cubed.Example.CSV.Abstract.Field
-d_Field_416 :: ()
-d_Field_416 = erased
+d_Field_432 :: ()
+d_Field_432 = erased
 -- Cubed.Example.CSV.Abstract.Line
-d_Line_418 :: ()
-d_Line_418 = erased
--- Cubed.Example.CSV.Abstract.AST
-d_AST_420 :: ()
-d_AST_420 = erased
+d_Line_434 :: ()
+d_Line_434 = erased
+-- Cubed.Example.CSV.Abstract.Ast
+d_Ast_436 :: ()
+d_Ast_436 = erased
 -- Cubed.Example.CSV.Concrete→Abstract.quoted-lit
-d_quoted'45'lit_424 ::
+d_quoted'45'lit_440 ::
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
-d_quoted'45'lit_424
+d_quoted'45'lit_440
   = coe
       MAlonzo.Code.Cubed.Grammars.SemZ45Zact.du_semact'45''8853'_390
       (coe
@@ -1268,127 +1051,47 @@ d_quoted'45'lit_424
             (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))
          (coe '"'))
 -- Cubed.Example.CSV.Concrete→Abstract.quoted-field
-d_quoted'45'field_428 ::
+d_quoted'45'field_444 ::
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
-d_quoted'45'field_428
+d_quoted'45'field_444
   = coe
       MAlonzo.Code.Cubed.Grammars.SemZ45Zact.du_semact'45'surround_422
       (coe
          MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-         (coe
-            MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-            (coe
-               MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-               (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-               (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
+         (coe d_Quoted'45'lit_398))
       (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
       (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
       (coe
          MAlonzo.Code.Cubed.Grammars.SemZ45Zact.du_semact'45''42'_410
-         (coe
-            MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-            (coe
-               MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-               (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-               (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))))
-         (coe d_quoted'45'lit_424))
+         (coe d_Quoted'45'lit_398) (coe d_quoted'45'lit_440))
 -- Cubed.Example.CSV.Concrete→Abstract.unquoted-field
-d_unquoted'45'field_430 ::
+d_unquoted'45'field_446 ::
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
-d_unquoted'45'field_430
+d_unquoted'45'field_446
   = coe
       MAlonzo.Code.Cubed.Grammars.SemZ45Zact.du_semact'45'underlying_420
-      (coe
-         MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-         (coe
-            MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
+      (coe d_Unquoted'45'field_410)
 -- Cubed.Example.CSV.Concrete→Abstract.field'
-d_field''_432 :: MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
-d_field''_432
+d_field''_448 :: MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
+d_field''_448
   = coe
       MAlonzo.Code.Cubed.Grammars.SemZ45Zact.du_semact'45''8853'_390
-      (coe
-         MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-         (coe
-            MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-      (coe
-         MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-         (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-         (coe
-            MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                     (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                     (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-            (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))))
-      d_unquoted'45'field_430 d_quoted'45'field_428
+      d_Quoted'45'field_402 d_Unquoted'45'field_410 d_quoted'45'field_444
+      d_unquoted'45'field_446
 -- Cubed.Example.CSV.Concrete→Abstract.nonempty-line
-d_nonempty'45'line_434 ::
+d_nonempty'45'line_450 ::
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
-d_nonempty'45'line_434
+d_nonempty'45'line_450
   = coe
       MAlonzo.Code.Cubed.Grammars.SemZ45Zact.du_map_336
       (coe
-         MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-         (coe
-            MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-               (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                           (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                           (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                  (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
+         MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32 (coe d_Field_414)
          (coe
             MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
             (coe
                MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
                (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe ','))
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                     (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                              (coe
-                                 MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                              (coe
-                                 MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                                 (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                                 (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                        (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))))))))
+               (coe d_Field_414))))
       (coe
          (\ v0 ->
             case coe v0 of
@@ -1398,418 +1101,129 @@ d_nonempty'45'line_434
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
          MAlonzo.Code.Cubed.Grammars.SemZ45Zact.du_semact'45''8855'_372
-         (coe
-            MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-               (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                           (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                           (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                  (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
+         (coe d_Field_414)
          (coe
             MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
             (coe
                MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
                (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe ','))
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                     (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                              (coe
-                                 MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                              (coe
-                                 MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                                 (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                                 (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                        (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))))
-         (coe d_field''_432)
+               (coe d_Field_414)))
+         (coe d_field''_448)
          (coe
             MAlonzo.Code.Cubed.Grammars.SemZ45Zact.du_semact'45''42'_410
             (coe
                MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
                (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe ','))
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                     (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                              (coe
-                                 MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                              (coe
-                                 MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                                 (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                                 (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                        (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))))))
+               (coe d_Field_414))
             (coe
                MAlonzo.Code.Cubed.Grammars.SemZ45Zact.du_semact'45'right_386
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                     (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                              (coe
-                                 MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                              (coe
-                                 MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                                 (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                                 (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                        (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
+               (coe d_Field_414)
                (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe ','))
-               (coe d_field''_432))))
+               (coe d_field''_448))))
 -- Cubed.Example.CSV.Concrete→Abstract.line
-d_line_436 :: MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
-d_line_436
+d_line_452 :: MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
+d_line_452
   = coe
       MAlonzo.Code.Cubed.Grammars.SemZ45Zact.du_semact'45'left_382
       (coe
          MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-         (coe
-            MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                  (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                              (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                              (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                     (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                  (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe ','))
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                        (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                              (coe
-                                 MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                                 (coe
-                                    MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                                 (coe
-                                    MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                                    (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                                    (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                           (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))))))))
+         (coe d_Nonempty'45'line_418)
          (coe MAlonzo.Code.Cubed.Grammars.Base.C_ε_16))
       (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '\n'))
       (coe
          MAlonzo.Code.Cubed.Grammars.SemZ45Zact.du_semact'45''8853'_390
-         (coe
-            MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                  (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                              (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                              (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                     (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                  (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe ','))
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                        (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                              (coe
-                                 MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                                 (coe
-                                    MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                                 (coe
-                                    MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                                    (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                                    (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                           (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))))))))
+         d_Nonempty'45'line_418
          (coe MAlonzo.Code.Cubed.Grammars.Base.C_ε_16)
-         d_nonempty'45'line_434
+         d_nonempty'45'line_450
          (coe
             MAlonzo.Code.Cubed.Grammars.SemZ45Zact.du_pure_318
             (coe MAlonzo.Code.Cubed.Grammars.Base.C_ε_16)
             (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
 -- Cubed.Example.CSV.Concrete→Abstract.ast
-d_ast_438 :: MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
-d_ast_438
+d_ast_454 :: MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
+d_ast_454
   = coe
       MAlonzo.Code.Cubed.Grammars.SemZ45Zact.du_semact'45''42'_410
-      (coe
-         MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-         (coe
-            MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                     (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                              (coe
-                                 MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                              (coe
-                                 MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                                 (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                                 (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                        (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                     (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe ','))
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                           (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                              (coe
-                                 MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                                 (coe
-                                    MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                                    (coe
-                                       MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                                    (coe
-                                       MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                                       (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                                       (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                              (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))))))))
-            (coe MAlonzo.Code.Cubed.Grammars.Base.C_ε_16))
-         (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '\n')))
-      (coe d_line_436)
+      (coe d_Line_422) (coe d_line_452)
 -- Cubed.Example.CSV.parser
-d_parser_440 :: MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
-d_parser_440
+d_parser_456 :: MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
+d_parser_456
   = coe
       MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_map_318
-      (coe
-         MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-         (coe
-            MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-            (coe
-               MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                        (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                              (coe
-                                 MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                                 (coe
-                                    MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                                 (coe
-                                    MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                                    (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                                    (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                           (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                     (coe
-                        MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                        (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe ','))
-                        (coe
-                           MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                              (coe
-                                 MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-                           (coe
-                              MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                              (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                              (coe
-                                 MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                                 (coe
-                                    MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                                    (coe
-                                       MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
-                                       (coe
-                                          MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418)
-                                       (coe
-                                          MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
-                                          (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))
-                                          (coe
-                                             MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"')))))
-                                 (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '"'))))))))
-               (coe MAlonzo.Code.Cubed.Grammars.Base.C_ε_16))
-            (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe '\n'))))
+      (coe d_Cst_426)
       (coe MAlonzo.Code.Cubed.Grammars.SemZ45Zact.du_Δ_302)
-      (coe d_ast_438) (coe d_cst_412)
+      (coe d_ast_454) (coe d_cst_428)
 -- Cubed.Example.CSV.Test.csv1
-d_csv1_444 :: [MAlonzo.Code.Agda.Builtin.Char.T_Char_6]
-d_csv1_444
+d_csv1_460 :: [MAlonzo.Code.Agda.Builtin.Char.T_Char_6]
+d_csv1_460
   = coe
       MAlonzo.Code.Agda.Builtin.String.d_primStringToList_12
       ("a,\"b,x,y\",c\ne,f,g\n" :: Data.Text.Text)
 -- Cubed.Example.CSV.Test.csv1-ast
-d_csv1'45'ast_446 ::
+d_csv1'45'ast_462 ::
   Maybe [[[MAlonzo.Code.Agda.Builtin.Char.T_Char_6]]]
-d_csv1'45'ast_446
+d_csv1'45'ast_462
   = coe
-      MAlonzo.Code.Cubed.Grammars.Semantics.du_run'45'weak'45'parser'45'Δ_772
-      (coe ()) (coe d_parser_440) (coe d_csv1_444)
+      MAlonzo.Code.Cubed.Grammars.Semantics.du_run'45'weak'45'parser'45'Δ_774
+      (coe ()) (coe d_parser_456) (coe d_csv1_460)
 -- Cubed.Example.CSV.Test.small
-d_small_448 :: [MAlonzo.Code.Agda.Builtin.Char.T_Char_6]
-d_small_448
+d_small_464 :: [MAlonzo.Code.Agda.Builtin.Char.T_Char_6]
+d_small_464
   = coe
       MAlonzo.Code.Agda.Builtin.String.d_primStringToList_12
-      ("\"testing\"" :: Data.Text.Text)
+      ("a\"testing\"" :: Data.Text.Text)
 -- Cubed.Example.CSV.Test.small-c
-d_small'45'c_450 :: MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_small'45'c_450
+d_small'45'c_466 :: MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_small'45'c_466
   = coe
-      MAlonzo.Code.Cubed.Grammars.Semantics.du_run'45'weak'45'parser'45'Δ'45'partial_778
+      MAlonzo.Code.Cubed.Grammars.Semantics.du_run'45'weak'45'parser'45'Δ'45'partial_780
       (coe ())
       (coe
          MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_map_318
          (coe
-            MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
+            MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
+            (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe 'a'))
             (coe
-               MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-               (coe
-                  MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-            (coe MAlonzo.Code.Cubed.Grammars.Base.du_String_128))
+               MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
+               (coe d_Quoted'45'field_402) (coe d_Unquoted'45'field_410)))
          (coe MAlonzo.Code.Cubed.Grammars.SemZ45Zact.du_Δ_302)
          (coe
             MAlonzo.Code.Cubed.Grammars.SemZ45Zact.du_semact'45'underlying_420
             (coe
-               MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
+               MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32
+               (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe 'a'))
                (coe
-                  MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
-                  (coe
-                     MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-               (coe MAlonzo.Code.Cubed.Grammars.Base.du_String_128)))
+                  MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
+                  (coe d_Quoted'45'field_402) (coe d_Unquoted'45'field_410))))
          (coe
-            MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du__'60''8853''62'__346
+            MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du__'60''8855''62'__336
+            (coe MAlonzo.Code.Cubed.Grammars.Base.C_Lit_22 (coe 'a'))
             (coe
-               MAlonzo.Code.Cubed.Grammars.Base.du__'42'_122
+               MAlonzo.Code.Cubed.Grammars.Sum.du__'8853'__240
+               (coe d_Quoted'45'field_402) (coe d_Unquoted'45'field_410))
+            (coe
+               MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_char_390
                (coe
-                  MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_None'45'of_418))
-            (coe MAlonzo.Code.Cubed.Grammars.Base.du_String_128)
-            (coe d_unquoted'45'field_404)
+                  (\ v0 v1 ->
+                     coe
+                       MAlonzo.Code.Cubed.Data.Dec.Base.du_map_60 (coe (\ v2 v3 -> v0))
+                       (coe
+                          MAlonzo.Code.Cubed.Data.Dec.Base.du__'8799'__78
+                          (coe MAlonzo.Code.Cubed.Data.Char.Base.d__'8801''7495'__8 v0 v1)
+                          (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10)
+                          (coe
+                             MAlonzo.Code.Cubed.Data.Bool.Properties.d_is'45'discrete_12))))
+               (coe 'a'))
             (coe
-               MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du_rest_356)))
-      (coe d_small_448)
+               MAlonzo.Code.Cubed.Grammars.ParserZ45Zcombinator.du__'60''8853''62'__346
+               (coe d_Quoted'45'field_402) (coe d_Unquoted'45'field_410)
+               (coe d_quoted'45'field_404) (coe d_unquoted'45'field_412))))
+      (coe d_small_464)
 -- Cubed.Example.CSV.stringify-line
-d_stringify'45'line_452 ::
+d_stringify'45'line_468 ::
   [[MAlonzo.Code.Agda.Builtin.Char.T_Char_6]] ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_stringify'45'line_452 v0
+d_stringify'45'line_468 v0
   = case coe v0 of
       [] -> coe ("\n" :: Data.Text.Text)
       (:) v1 v2
@@ -1819,26 +1233,26 @@ d_stringify'45'line_452 v0
              (coe
                 MAlonzo.Code.Cubed.Data.String.Base.d__'43''43'__10
                 (" and also " :: Data.Text.Text)
-                (d_stringify'45'line_452 (coe v2)))
+                (d_stringify'45'line_468 (coe v2)))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Cubed.Example.CSV.stringify
-d_stringify_458 ::
+d_stringify_474 ::
   [[[MAlonzo.Code.Agda.Builtin.Char.T_Char_6]]] ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_stringify_458 v0
+d_stringify_474 v0
   = case coe v0 of
       [] -> coe ("" :: Data.Text.Text)
       (:) v1 v2
         -> coe
              MAlonzo.Code.Cubed.Data.String.Base.d__'43''43'__10
-             (d_stringify'45'line_452 (coe v1)) (d_stringify_458 (coe v2))
+             (d_stringify'45'line_468 (coe v1)) (d_stringify_474 (coe v2))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Cubed.Example.CSV.print-csv
-d_print'45'csv_464 ::
+d_print'45'csv_480 ::
   [[[MAlonzo.Code.Agda.Builtin.Char.T_Char_6]]] ->
   MAlonzo.Code.Agda.Builtin.IO.T_IO_8
     AgdaAny MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6
-d_print'45'csv_464 v0
+d_print'45'csv_480 v0
   = coe
       MAlonzo.Code.Cubed.Effect.Monad.du__'62''62'__38
       (coe MAlonzo.Code.Cubed.IO.Effectful.d_monad_24 (coe ()))
@@ -1855,16 +1269,16 @@ d_print'45'csv_464 v0
          (coe MAlonzo.Code.Cubed.IO.Effectful.d_monad_24 (coe ()))
          (coe
             MAlonzo.Code.Cubed.IO.Base.d_put'45'str'45'ln_14
-            (d_stringify_458 (coe v0)))
+            (d_stringify_474 (coe v0)))
          (coe
             MAlonzo.Code.Cubed.IO.Base.d_pure_10 () erased
             (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
-main = coe d_main_468
+main = coe d_main_484
 -- Cubed.Example.CSV.main
-d_main_468 ::
+d_main_484 ::
   MAlonzo.Code.Agda.Builtin.IO.T_IO_8
     AgdaAny MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6
-d_main_468
+d_main_484
   = coe
       MAlonzo.Code.Cubed.Effect.Monad.du__'62''62'__38
       (coe MAlonzo.Code.Cubed.IO.Effectful.d_monad_24 (coe ()))
@@ -1881,7 +1295,7 @@ d_main_468
                (coe ("failed to parse small" :: Data.Text.Text))
                (coe MAlonzo.Code.Agda.Builtin.String.d_primStringFromList_14)
                (coe
-                  MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe d_small'45'c_450))))
+                  MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe d_small'45'c_466))))
          (coe
             MAlonzo.Code.Cubed.Effect.Monad.du__'62''62'__38
             (coe MAlonzo.Code.Cubed.IO.Effectful.d_monad_24 (coe ()))
@@ -1893,7 +1307,7 @@ d_main_468
                   (coe
                      MAlonzo.Code.Agda.Builtin.String.d_primStringFromList_14
                      (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-                        (coe d_small'45'c_450)))))
+                        (coe d_small'45'c_466)))))
             (coe
                MAlonzo.Code.Cubed.Effect.Monad.du__'62''62'__38
                (coe MAlonzo.Code.Cubed.IO.Effectful.d_monad_24 (coe ()))
@@ -1908,7 +1322,7 @@ d_main_468
                      (coe
                         MAlonzo.Code.Cubed.IO.Base.d_put'45'str'45'ln_14
                         ("failed to parse CSV" :: Data.Text.Text))
-                     (coe d_print'45'csv_464) (coe d_csv1'45'ast_446))
+                     (coe d_print'45'csv_480) (coe d_csv1'45'ast_462))
                   (coe
                      MAlonzo.Code.Cubed.IO.Base.d_pure_10 () erased
                      (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))))))

@@ -680,7 +680,7 @@ du__'60''124''62'__340 v0 v1 v2
             (coe MAlonzo.Code.Cubed.Grammars.Base.du_String_128)))
       (coe v1)
       (coe
-         MAlonzo.Code.Cubed.Grammars.Maybe.du_rec_274
+         MAlonzo.Code.Cubed.Grammars.Maybe.du_elim_274
          (coe
             MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32 (coe v0)
             (coe MAlonzo.Code.Cubed.Grammars.Base.du_String_128))

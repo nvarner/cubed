@@ -93,8 +93,8 @@ du_nothing_272 v0 v1
                 -> coe MAlonzo.Code.Cubed.Grammars.Base.C_'8868'_18
               _ -> MAlonzo.RTE.mazUnreachableError)
          (coe C_'96'nothing_262))
--- Cubed.Grammars.Maybe.rec
-d_rec_274 ::
+-- Cubed.Grammars.Maybe.elim
+d_elim_274 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Cubed.Grammars.Base.T_Lin_10 ->
@@ -102,14 +102,14 @@ d_rec_274 ::
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130 ->
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130 ->
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
-d_rec_274 ~v0 ~v1 v2 v3 v4 v5 = du_rec_274 v2 v3 v4 v5
-du_rec_274 ::
+d_elim_274 ~v0 ~v1 v2 v3 v4 v5 = du_elim_274 v2 v3 v4 v5
+du_elim_274 ::
   MAlonzo.Code.Cubed.Grammars.Base.T_Lin_10 ->
   MAlonzo.Code.Cubed.Grammars.Base.T_Lin_10 ->
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130 ->
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130 ->
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
-du_rec_274 v0 v1 v2 v3
+du_elim_274 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Cubed.Grammars.Base.C_'8853''7472''45'elim_154
       (\ v4 ->
@@ -140,7 +140,7 @@ du_map_282 ::
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
 du_map_282 v0 v1 v2
   = coe
-      du_rec_274 (coe v0) (coe du_Maybe_264 (coe v1))
+      du_elim_274 (coe v0) (coe du_Maybe_264 (coe v1))
       (coe
          MAlonzo.Code.Cubed.Grammars.Base.C__'8902'__134 (coe v0) (coe v1)
          (coe du_Maybe_264 (coe v1)) (coe v2) (coe du_just_270 (coe v1)))
@@ -163,7 +163,7 @@ du_bind_286 ::
   MAlonzo.Code.Cubed.Grammars.Base.T__'8866'__130
 du_bind_286 v0 v1 v2
   = coe
-      du_rec_274 (coe v0) (coe du_Maybe_264 (coe v1)) (coe v2)
+      du_elim_274 (coe v0) (coe du_Maybe_264 (coe v1)) (coe v2)
       (coe
          du_nothing_272 (coe MAlonzo.Code.Cubed.Grammars.Base.C_'8868'_18)
          (coe v1))
@@ -189,7 +189,7 @@ du_'8855'l_290 v0 v1
             MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32 (coe v0) (coe v1)))
       (coe v1)
       (coe
-         du_rec_274 (coe v0)
+         du_elim_274 (coe v0)
          (coe
             MAlonzo.Code.Cubed.Grammars.Base.C__'10204'__36
             (coe
@@ -244,7 +244,7 @@ du_'8855'r_292 v0 v1
          (coe
             MAlonzo.Code.Cubed.Grammars.Base.C__'8855'__32 (coe v0) (coe v1)))
       (coe
-         du_rec_274 (coe v1)
+         du_elim_274 (coe v1)
          (coe
             MAlonzo.Code.Cubed.Grammars.Base.C__'8888'__34 (coe v0)
             (coe

@@ -13,13 +13,14 @@ open import Cubed.Relation.Nullary.Neg.Base using (¬_)
 
 module Cubed.Grammars.Parser-combinator {ℓ} (Alph : Type ℓ) where
 
-open import Cubed.Grammars.Base Alph hiding (map)
+open import Cubed.Grammars.Base Alph as Grammars hiding (map)
+open import Cubed.Grammars.Helper Alph
 open import Cubed.Grammars.Maybe Alph as Maybe using (Maybe; just; nothing)
 open import Cubed.Grammars.Sum Alph as ⊕ using (_⊕_; inl; inr)
 
 private variable
   A : Type ℓ
-  G H K L : Lin
+  G H K L Op : Lin
 
 Weak-parser : Lin → Type (lsuc ℓ)
 Weak-parser G = String ⊢ Maybe (G ⊗ String)
@@ -59,7 +60,7 @@ fail = nothing
 
 infixr 5 _<|>_
 _<|>_ : Weak-parser G → Weak-parser G → Weak-parser G
-p <|> p' = p ⋆ Maybe.rec just (read ⋆ p')
+p <|> p' = p ⋆ Maybe.elim just (read ⋆ p')
 
 infixr 5 _<⊕>_
 _<⊕>_ : Weak-parser G → Weak-parser H → Weak-parser (G ⊕ H)
@@ -71,6 +72,12 @@ many : Weak-parser G → Weak-parser (G *)
 many p =
   p ⋆ Maybe.bind ((id ,⊗  many p) ⋆ Maybe.⊗r ⋆ Maybe.map (⊗-assoc ⋆ (cons ,⊗ id)))
   <|> map nil pure
+
+many1 : Weak-parser G → Weak-parser (G +)
+many1 p = p <⊗> many p
+
+chain1 : Weak-parser G → Weak-parser Op → Weak-parser (Chain1 G Op)
+chain1 p op = p <⊗> many (op <⊗> p)
 
 rest : Weak-parser String
 rest = ⊗-unit-r⁻ ⋆ (id ,⊗ string-in) ⋆ just
