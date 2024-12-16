@@ -35,11 +35,11 @@ data Functor A where
   _⊗F_ : Functor A → Functor A → Functor A
 
 F⟦_⟧ : {A : Type ℓ} → Functor A → (A → Lin) → Lin
-F⟦ k h ⟧ g = h
-F⟦ Var a ⟧ g = g a
-F⟦ &ᴰF B F ⟧ g = &ᴰ B (λ b → F⟦ F b ⟧ g)
-F⟦ ⊕ᴰF B F ⟧ g = ⊕ᴰ B (λ b → F⟦ F b ⟧ g)
-F⟦ F ⊗F F' ⟧ g = F⟦ F ⟧ g ⊗ F⟦ F' ⟧ g
+F⟦ k H ⟧ G = H
+F⟦ Var a ⟧ G = G a
+F⟦ &ᴰF B F ⟧ G = &ᴰ B (λ b → F⟦ F b ⟧ G)
+F⟦ ⊕ᴰF B F ⟧ G = ⊕ᴰ B (λ b → F⟦ F b ⟧ G)
+F⟦ F ⊗F F' ⟧ G = F⟦ F ⟧ G ⊗ F⟦ F' ⟧ G
 
 interleaved mutual
   private variable
