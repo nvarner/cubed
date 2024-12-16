@@ -150,3 +150,7 @@ data Elt {A : Type ℓ} : List A → A → Type ℓ where
   here : {x : A} {xs : List A} → Elt (x ∷ xs) x
   there : {x y : A} {xs : List A} → Elt xs y → Elt (x ∷ xs) y
 
+elt-index : {xs : List A} {x : A} → Elt xs x → Nat
+elt-index here = zero
+elt-index (there elt) = suc (elt-index elt)
+
